@@ -16,6 +16,8 @@ function validerFormulaire(form) {
         isValid = false;
     }
 
+    
+
     return isValid;
 }
 
