@@ -63,6 +63,7 @@
 </footer>
 
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/connexion.js"></script>
 </body>
 
 </html>
