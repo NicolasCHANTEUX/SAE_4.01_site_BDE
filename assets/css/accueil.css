@@ -1,0 +1,58 @@
+/* Carousel Container */
+.carousel-container {
+    position: relative;
+    width: 90%;
+    margin: 2rem auto;
+    overflow: hidden; /* Masquer les éléments hors du conteneur */
+}
+
+.carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: transform 0.5s ease; /* Animation fluide pour le déplacement */
+}
+
+.carousel-item {
+    flex: 0 0 30%; /* Chaque article occupe 30% de la largeur */
+    margin: 0 10px; /* Espacement entre les articles */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    opacity: 0.5; /* Articles non centraux moins visibles */
+    transform: scale(0.8); /* Réduire la taille des articles non centraux */
+    transition: all 0.5s ease; /* Transition fluide pour les changements */
+}
+
+.carousel-item.active {
+    opacity: 1; /* Article central complètement visible */
+    transform: scale(1); /* Agrandir l'article central */
+}
+
+/* Carousel Controls */
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.prev-btn,
+.next-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    color: var(--secondary-color);
+}
