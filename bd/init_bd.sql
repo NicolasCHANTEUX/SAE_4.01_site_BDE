@@ -1,3 +1,13 @@
+
+DROP TABLE IF EXISTS produit;
+DROP TABLE IF EXISTS commande;
+DROP TABLE IF EXISTS inscription_evenement;
+DROP TABLE IF EXISTS contacts;
+DROP TABLE IF EXISTS evenement;
+DROP TABLE IF EXISTS utilisateur;
+
+
+
 CREATE TABLE utilisateur (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
