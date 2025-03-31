@@ -24,12 +24,12 @@ class EvenementRepository {
 	');
 
 		return $stmt->execute([
-			'name' => $evenement->getName(),
+			'name'        => $evenement->getName(),
 			'description' => $evenement->getDescription(),
-			'date' => $evenement->getDate(),
-			'image' => $evenement->getImage(),
-			'place' => $evenement->getPlace(),
-			'price' => $evenement->getPrice()
+			'date'        => $evenement->getDate(),
+			'image'       => $evenement->getImage(),
+			'place'       => $evenement->getPlace(),
+			'price'       => $evenement->getPrice()
 		]);
 	}
 
