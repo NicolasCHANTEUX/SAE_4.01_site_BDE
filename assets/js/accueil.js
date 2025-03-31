@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fonction pour mettre à jour la position des articles
     const updateCarousel = () => {
         items.forEach((item, index) => {
-            const offset = index - currentIndex;
+            const offset = (index - currentIndex + items.length) % items.length;
 
             // Ajouter ou retirer la classe "active"
             item.classList.remove("active");
@@ -23,7 +23,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Positionner les articles
-            item.style.transform = `translateX(${offset * 300}%)`;
+            if (offset === 0) {
+                item.style.transform = `translateX(0) scale(1)`; // Article central
+                item.style.opacity = "1";
+            } else if (offset === 1 || offset === -items.length + 1) {
+                item.style.transform = `translateX(100%) scale(0.8)`; // Article à droite
+                item.style.opacity = "0.6";
+            } else if (offset === items.length - 1 || offset === -1) {
+                item.style.transform = `translateX(-100%) scale(0.8)`; // Article à gauche
+                item.style.opacity = "0.6";
+            } else {
+                item.style.transform = `translateX(${offset * 100}%)`; // Articles hors de vue
+                item.style.opacity = "0";
+            }
         });
     };
 
