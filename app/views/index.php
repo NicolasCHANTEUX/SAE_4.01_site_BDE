@@ -5,75 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDE IUT Informatique</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/accueil.css"> <!-- Ajout du CSS spécifique à l'accueil -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="/assets/js/main.js" defer></script>
 </head>
 <body>
     <header>
-        <nav class="main-nav">
-            <div class="nav-brand">
-                <a href="#accueil">
-                    <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
-                    <span>BDE Info</span>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="#accueil">Accueil</a>
-                <a href="#evenements">Événements</a>
-                <a href="#boutique">Boutique</a>
-                <a href="/contact.php">Contact</a>
-            </div>
-            <div class="nav-actions">
-                <button id="loginBtn" class="btn-login">
-                    <i class="fas fa-user"></i>
-                    Se connecter
-                </button>
-            </div>
+        <nav class="new-nav">
+            <a href="#accueil" class="active">Accueil</a>
+            <a href="#evenements">Événements</a>
+            <a href="#boutique">Boutique</a>
+            <a href="#contact">Contact</a>
+            <a href="#compte">Compte</a>
         </nav>
     </header>
     <main id="app">
 
-<section id="presentation">
-	<h2>Bienvenue sur le site du BDE</h2>
-	<p>Découvrez nos événements, nos produits et bien plus encore !</p>
+    <main id="app">
+        <!-- Autres sections -->
+        <section id="presentation">
+            <h2>Bienvenue sur le site du BDE</h2>
+            <p>Découvrez nos événements, nos produits et bien plus encore !</p>
+        </section>
+
+
+        <section id="carousel" class="carousel-container">
+    <div class="carousel">
+        <div class="carousel-item active">
+            <h3>Article 1</h3>
+            <p>Description de l'article central.</p>
+        </div>
+        <div class="carousel-item">
+            <h3>Article 2</h3>
+            <p>Description de l'article à gauche.</p>
+        </div>
+        <div class="carousel-item">
+            <h3>Article 3</h3>
+            <p>Description de l'article à droite.</p>
+        </div>
+        <div class="carousel-item">
+            <h3>Article 4</h3>
+            <p>
+                Cet article contient plus de texte pour illustrer une présentation détaillée. 
+                Découvrez nos événements, nos produits, et bien plus encore ! Nous organisons 
+                régulièrement des activités pour les étudiants, comme des soirées cinéma, des 
+                conférences sur l'innovation, et des tournois sportifs. Rejoignez-nous pour 
+                vivre une expérience unique !
+            </p>
+        </div>
+        <div class="carousel-item">
+            <h3>Article 5</h3>
+            <p>Description d'un autre article.</p>
+        </div>
+    </div>
+
+    <!-- Boutons de navigation -->
+    <div class="carousel-controls">
+        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
 </section>
 
-<section id="evenements">
-	<h2>Événements à venir</h2>
-	<!-- Exemple de contenu statique ou dynamique -->
-	<ul>
-		<li>Soirée cinéma - 15 avril 2025</li>
-		<li>Tournoi de football - 20 avril 2025</li>
-		<li>Conférence sur l'innovation - 25 avril 2025</li>
-	</ul>
-</section>
-
-<section id="boutique">
-	<h2>Boutique</h2>
-	<!-- Exemple de contenu statique ou dynamique -->
-	<div class="product">
-		<h3>T-shirt BDE</h3>
-		<p>Prix : 15 €</p>
-	</div>
-	<div class="product">
-		<h3>Mug BDE</h3>
-		<p>Prix : 10 €</p>
-	</div>
-</section>
-
-<section id="faq">
-	<h2>FAQ</h2>
-	<!-- Exemple de contenu statique ou dynamique -->
-	<div class="faq-item">
-		<h3>Comment rejoindre le BDE ?</h3>
-		<p>Pour rejoindre le BDE, contactez-nous via la page "Contact".</p>
-	</div>
-	<div class="faq-item">
-		<h3>Quels sont les prochains événements ?</h3>
-		<p>Consultez la section "Événements" pour découvrir ce qui est prévu.</p>
-	</div>
-</section>
-</main>
+        
+    </main>
 
 <footer>
 	<div class="footer-bottom">
@@ -83,7 +77,8 @@
 	</div>
 </footer>
 
-<script src="/assets/js/main.js"></script>
+    <!-- Script JS -->
+    <script src="/assets/js/accueil.js"></script> <!-- Ajout du fichier JS pour le carousel -->
 </body>
 
 </html>
