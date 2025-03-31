@@ -125,8 +125,19 @@ header {
 	transition: all 0.3s ease;
 }
 
+.btn-login a {
+	color: var(--text-color-light);
+	text-decoration: none;
+	font-weight: bold;
+	font-family: 'Poppins', sans-serif;
+}
+
 .btn-login:hover {
 	background-color: var(--text-color-light);
+	color: var(--primary-color);
+}
+
+.btn-login:hover a {
 	color: var(--primary-color);
 }
 

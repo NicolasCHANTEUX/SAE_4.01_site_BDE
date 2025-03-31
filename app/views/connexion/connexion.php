@@ -28,7 +28,7 @@
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">
                     <i class="fas fa-user"></i>
-                    Se connecter
+                    <a href="/connexion.php">Se connecter</a>
                 </button>
             </div>
         </nav>
@@ -46,7 +46,7 @@
             
             <button type="submit">Valider</button>
         </form>
-        <a href="creerCompte.php">Créer mon compte</a>
+        <p>Vous n'avez pas de compte ? <a href="creerCompte.php">Créer mon compte</a></p>
     </div>
 </body>
 
