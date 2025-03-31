@@ -3,20 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($title); ?></title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <title>BDE IUT Informatique</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="/assets/js/main.js" defer></script>
 </head>
 <body>
     <header>
-        <h1><?php echo htmlspecialchars($title); ?></h1>
-        <nav>
-            <ul>
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="about.php">À propos</a></li>
-                <li><a href="contact.php">Contact</a></li>
-            </ul>
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="#accueil">
+                    <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
+                    <span>BDE Info</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="#accueil">Accueil</a>
+                <a href="#evenements">Événements</a>
+                <a href="#boutique">Boutique</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button id="loginBtn" class="btn-login">
+                    <i class="fas fa-user"></i>
+                    Se connecter
+                </button>
+            </div>
         </nav>
     </header>
+    <main id="app">
+</main>
+<div id="forms" class="forms-container">
+    <form id="loginForm" class="auth-form">
+        <h2>Connexion</h2>
+        <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Mot de passe</label>
+            <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Se connecter</button>
+        </div>
+    </form>
+</div>
+
 
     <main>
         <section id="presentation">
