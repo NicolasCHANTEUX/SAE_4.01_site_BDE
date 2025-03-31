@@ -10,25 +10,12 @@
 </head>
 <body>
     <header>
-        <nav class="main-nav">
-            <div class="nav-brand">
-                <a href="#accueil">
-                    <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
-                    <span>BDE Info</span>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="#accueil">Accueil</a>
-                <a href="#evenements">Événements</a>
-                <a href="#boutique">Boutique</a>
-                <a href="/contact.php">Contact</a>
-            </div>
-            <div class="nav-actions">
-                <button id="loginBtn" class="btn-login">
-                    <i class="fas fa-user"></i>
-                    Se connecter
-                </button>
-            </div>
+        <nav class="new-nav">
+            <a href="#accueil" class="active">Accueil</a>
+            <a href="#evenements">Événements</a>
+            <a href="#boutique">Boutique</a>
+            <a href="#contact">Contact</a>
+            <a href="#compte">Compte</a>
         </nav>
     </header>
     <main id="app">

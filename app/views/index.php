@@ -19,7 +19,7 @@
             <a href="#compte">Compte</a>
         </nav>
     </header>
-    <main id="app">
+
 
     <main id="app">
         <!-- Autres sections -->
