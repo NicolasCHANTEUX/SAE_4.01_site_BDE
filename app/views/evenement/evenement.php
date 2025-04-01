@@ -33,7 +33,26 @@
     <div class="container">
         <div id="evenement-app" class="evenement-container">
             <h2>Les événements du BDE</h2>
-            <!-- Le contenu sera chargé dynamiquement ici -->
+            <?php foreach ($evenements as $evenement): ?>
+                <div class="evenement-card">
+                    <?php if ($evenement['chemin_image']): ?>
+                        <div class="evenement-image">
+                            <img src="/<?= $evenement['chemin_image'] ?>" 
+                                 alt="<?= htmlspecialchars($evenement['titre']) ?>"
+                                 loading="lazy"
+                                 onerror="this.src='/assets/images/product-default.jpg'">
+                        </div>
+                    <?php endif; ?>
+                    <h3><?= htmlspecialchars($evenement['titre']) ?></h3>
+                    <p><?= htmlspecialchars($evenement['description']) ?></p>
+                    <div class="evenement-details">
+                        <span class="date">Date: <?= date('d/m/Y H:i', strtotime($evenement['date_evenement'])) ?></span>
+                        <span class="prix">Prix: <?= number_format($evenement['prix'], 2) ?> €</span>
+                        <span class="places">Places: <?= $evenement['nb_inscrits'] ?>/<?= $evenement['max_participants'] ?: '∞' ?></span>
+                    </div>
+                    <button class="btn-participer" data-id="<?= $evenement['id'] ?>">Participer</button>
+                </div>
+            <?php endforeach; ?>
         </div>
 	</div>
 
