@@ -322,3 +322,27 @@ function toggleFAQ(element) {
         answer.style.maxHeight = answer.scrollHeight + "px";
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const accountLink = document.getElementById('accountLink');
+
+
+    let isLoggedIn = false;
+
+    function updateAccountLink() {
+        if (isLoggedIn) {
+            accountLink.textContent = 'Compte';
+            accountLink.href = '/compte.php';
+        } else {
+            accountLink.textContent = 'Se connecter';
+            accountLink.href = '/connexion.php';
+        }
+    }
+
+    document.addEventListener('loginSuccess', function () {
+        isLoggedIn = true;
+        updateAccountLink();
+    });
+
+    updateAccountLink();
+});
