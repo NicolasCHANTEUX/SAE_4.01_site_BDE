@@ -40,6 +40,7 @@
                 <p>Découvrez nos événements, nos produits et bien plus encore !</p>
             </section>
 
+            <!-- Section des articles -->
             <section id="carousel" class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-item active">
@@ -78,6 +79,14 @@
                     </button>
                 </div>
             </section>
+
+            <!-- Section des evenements -->
+            <section>
+                
+
+            </section>
+
+
         </div>
     </main>
 
