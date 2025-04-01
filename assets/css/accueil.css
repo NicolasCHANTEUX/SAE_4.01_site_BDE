@@ -91,31 +91,49 @@
 .evenements-container {
     margin: 2rem auto;
     padding: 1rem;
+	
 }
 
 .evenements-container h2 {
     text-align: center;
     margin-bottom: 1rem;
+	
+
 }
 
 .evenements-grid {
     display: flex;
     justify-content: space-around;
     align-items: center;
+	
 }
 
-.evenement-item,
-.voir-plus-item {
+.evenement-item{
     width: 30%;
     background-color: #fff;
     padding: 1rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     text-align: center;
+	background: rgb(231, 231, 231);
+	border: 3px solid var(--primary-color);
+	border-radius: var(--border-radius);
+}
+
+.voir-plus-item {
+    width: 20%;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+	background: rgb(216, 216, 216);
+	border: 3px solid var(--primary-color);
+	border-radius: var(--border-radius);
 }
 
 .evenement-item img {
-    width: 100%;
+    width: 60%;
     border-radius: var(--border-radius);
 }
 

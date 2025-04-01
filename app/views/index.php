@@ -22,7 +22,6 @@
                 <a href="/evenement.php">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="/connexion.php">Se Connecter</a>
             </div>
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">

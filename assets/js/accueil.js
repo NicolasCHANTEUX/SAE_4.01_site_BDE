@@ -69,4 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
     voirPlusItem.addEventListener('click', () => {
         window.location.href = 'evenement.php';
     });
+
+    voirPlusItem.addEventListener('mouseover', () => {
+        voirPlusItem.style.transform = 'scale(1.05)';
+        voirPlusItem.style.transition = 'transform 0.3s ease';
+    });
+
+    voirPlusItem.addEventListener('mouseout', () => {
+        voirPlusItem.style.transform = 'scale(1)';
+    });
 });
