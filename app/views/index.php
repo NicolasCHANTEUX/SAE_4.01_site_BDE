@@ -1,5 +1,6 @@
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/views/template/header.php'; ?>
-
+<?php
+require_once 'app/views/template/header.php';
+?>
     <main id="app">
         <div class="container">
             <section id="presentation" class="hero-section">
