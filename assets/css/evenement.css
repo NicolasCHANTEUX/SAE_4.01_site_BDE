@@ -1,0 +1,125 @@
+/* Layout principal */
+.evenement-container {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    gap: 30px;
+    max-width: 500px;
+    margin: 0 20px;
+    padding: 20px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    padding: 0;
+    margin-right: 40px;
+}
+
+.evenement-card {
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.evenement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.evenement-image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.evenement-title {
+    font-size: 1.6em;
+    margin: 20px 0;
+    color: var(--primary-color);
+}
+
+.evenement-date {
+    font-size: 1.2em;
+    color: #666;
+    margin: 15px 0;
+}
+
+.evenement-price {
+    font-size: 1.4em;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Panneau de détails */
+.event-details {
+    position: sticky;
+    top: 100px;
+    background: white;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    height: fit-content;
+    min-width: 300px;
+}
+
+.event-details h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.event-details-item {
+    margin-bottom: 15px;
+}
+
+.event-details-label {
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Bouton */
+.btn-secondary {
+    width: 100%;
+    padding: 12px;
+    margin: 20px 0 0 0;
+    font-size: 1.1em;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Media Queries */
+@media (max-width: 1400px) {
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .evenement-container {
+        grid-template-columns: 1fr;
+        margin: 10px;
+    }
+    
+    .events-grid {
+        grid-template-columns: 1fr;
+        margin-right: 0;
+    }
+    
+    .event-details {
+        position: static;
+    }
+}
