@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDE IUT Informatique</title>
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/connexion.css">
+    <link rel="stylesheet" href="/assets/css/evenement.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="/assets/js/evenement.js" defer></script>
 </head>
 <body>
 <header>
@@ -33,30 +34,21 @@
 	</header>
     <main id="app">
 
-    <div class="login-container">
-        <h1>Connectez-vous</h1>
-        <form action="authentification.php" method="post">
-            <label for="email">Adresse e-mail</label>
-            <input type="email" id="email" name="email" placeholder="Votre adresse e-mail" required>
-            
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
-            
-            <button type="submit">Valider</button>
-        </form>
-        <p>Vous n'avez pas de compte ? <a href="creerCompte.php">Créer mon compte</a></p>
-    </div>
-</body>
+    <div class="container">
+        <div id="evenement-app" class="evenement-container">
+            <h2>Les événements du BDE</h2>
+            <!-- Le contenu sera chargé dynamiquement ici -->
+        </div>
+	</div>
 
 <footer>
-    <div class="footer-bottom">
-        <p>&copy;
-            <?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés
-        </p>
-    </div>
+	<div class="footer-bottom">
+		<p>&copy;
+			<?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés
+		</p>
+	</div>
 </footer>
 
-<script src="/assets/js/connexion.js"></script>
 </body>
 
 </html>

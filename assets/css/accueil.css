@@ -1,58 +1,162 @@
-/* Carousel Container */
+/* Styles du carousel */
 .carousel-container {
-    position: relative;
-    width: 90%;
-    margin: 2rem auto;
-    overflow: hidden; /* Masquer les éléments hors du conteneur */
+	position: relative;
+	width: 100%;
+	padding: 2rem 4rem;
+	margin-top: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center; /* Centrer verticalement si nécessaire */
 }
 
 .carousel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    transition: transform 0.5s ease; /* Animation fluide pour le déplacement */
+	position: relative;
+	overflow: hidden;
+	width: 90%;
+	height: 250px;
+	border: 3px solid var(--primary-color);
+	border-radius: var(--border-radius);
+	background-color: white;
 }
 
 .carousel-item {
-    flex: 0 0 30%; /* Chaque article occupe 30% de la largeur */
-    margin: 0 10px; /* Espacement entre les articles */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: var(--border-radius);
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    opacity: 0.5; /* Articles non centraux moins visibles */
-    transform: scale(0.8); /* Réduire la taille des articles non centraux */
-    transition: all 0.5s ease; /* Transition fluide pour les changements */
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgb(231, 231, 231);
+	padding: 2rem;
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	opacity: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: transform 0.5s ease, opacity 0.5s ease;
+	transform: translateX(100%);
+
 }
 
 .carousel-item.active {
-    opacity: 1; /* Article central complètement visible */
-    transform: scale(1); /* Agrandir l'article central */
+	opacity: 1;
+	transform: translateX(0);
 }
 
-/* Carousel Controls */
 .carousel-controls {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	transform: translateY(-50%);
+	display: flex;
+	justify-content: space-between;
+	padding: 0 1rem;
+	pointer-events: none;
 }
 
 .prev-btn,
 .next-btn {
-    background-color: transparent;
-    border: none;
-    font-size: 2rem;
-    color: var(--text-color);
-    cursor: pointer;
+	background: var(--primary-color);
+	color: white;
+	border: none;
+	padding: 1rem;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	pointer-events: auto;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .prev-btn:hover,
 .next-btn:hover {
-    color: var(--secondary-color);
+	background: var(--secondary-color);
+	transform: scale(1.1);
+}
+
+.carousel-item h3 {
+	color: var(--primary-color);
+	margin-bottom: 1rem;
+	font-size: 1.5rem;
+}
+
+.carousel-item p {
+	color: var(--text-color);
+	line-height: 1.6;
+}
+
+/* Section Événements */
+.evenements-container {
+    margin: 2rem auto;
+    padding: 1rem;
+	
+}
+
+.evenements-container h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+	
+
+}
+
+.evenements-grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+	
+}
+
+.evenement-item{
+    width: 30%;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+	background: rgb(231, 231, 231);
+	border: 3px solid var(--primary-color);
+	border-radius: var(--border-radius);
+}
+
+.voir-plus-item {
+    width: 20%;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+	background: rgb(216, 216, 216);
+	border: 3px solid var(--primary-color);
+	border-radius: var(--border-radius);
+}
+
+.evenement-item img {
+    width: 60%;
+    border-radius: var(--border-radius);
+}
+
+.evenement-item h3 {
+    margin-top: 0.5rem;
+}
+
+.evenement-item p {
+    color: var(--text-color);
+}
+
+.voir-plus-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.voir-plus-item span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.voir-plus-item p {
+    margin-top: 0.5rem;
 }

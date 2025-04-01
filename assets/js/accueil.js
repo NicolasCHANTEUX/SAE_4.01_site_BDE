@@ -1,61 +1,81 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const carousel = document.querySelector(".carousel");
-    const items = document.querySelectorAll(".carousel-item");
-    const prevBtn = document.querySelector(".prev-btn");
-    const nextBtn = document.querySelector(".next-btn");
-
-    if (!carousel || !items.length || !prevBtn || !nextBtn) {
-        console.error("Carousel elements not found!");
-        return;
-    }
-
+document.addEventListener('DOMContentLoaded', () => {
+    // Gestion du carousel
+    const carousel = document.querySelector('.carousel');
+    const items = document.querySelectorAll('.carousel-item');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
     let currentIndex = 0;
 
-    // Fonction pour mettre à jour la position des articles
-    const updateCarousel = () => {
-        items.forEach((item, index) => {
-            const offset = index - currentIndex;
-
-            // Ajouter ou retirer la classe "active"
-            item.classList.remove("active");
-            if (offset === 0) {
-                item.classList.add("active");
-            }
-
-            // Positionner les articles
-            item.style.transform = `translateX(${offset * 300}%)`;
+    function showItem(index) {
+        items.forEach((item, i) => {
+            item.classList.remove('active');
+            item.style.transform = `translateX(${(i - index) * 100}%)`;
         });
-    };
 
-    // Gestion du bouton "Précédent"
-    prevBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + items.length) % items.length; // Boucle circulaire
-        updateCarousel();
-        resetTimer(); // Réinitialiser le timer
+        items[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % items.length;
+        showItem(currentIndex);
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showItem(currentIndex);
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Timer pour le défilement automatique
+    let slideInterval = setInterval(nextSlide, 5000);
+
+    // Pause le défilement au survol du carousel
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
     });
 
-    // Gestion du bouton "Suivant"
-    nextBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % items.length; // Boucle circulaire
-        updateCarousel();
-        resetTimer(); // Réinitialiser le timer
+    // Reprend le défilement quand la souris quitte le carousel
+    carousel.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(nextSlide, 5000);
     });
 
-    // Timer automatique toutes les 5 secondes
-    let timer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % items.length; // Passer au suivant
-        updateCarousel();
-    }, 5000);
+    // Afficher le premier élément au chargement
+    showItem(0);
 
-    // Réinitialiser le timer lorsqu'une flèche est cliquée
-    const resetTimer = () => {
-        clearInterval(timer); // Arrêter le timer actuel
-        timer = setInterval(() => {
-            currentIndex = (currentIndex + 1) % items.length; // Passer au suivant
-            updateCarousel();
-        }, 5000); // Relancer le timer
-    };
+    // Gestion des événements
+    const evenementItems = document.querySelectorAll('.evenement-item');
+    const voirPlusItem = document.querySelector('.voir-plus-item');
 
-    // Initialisation
-    updateCarousel();
+    // Ajouter un effet de survol pour rendre les vignettes plus interactives
+    evenementItems.forEach((item) => {
+        item.addEventListener('mouseover', () => {
+            item.style.transform = 'scale(1.05)';
+            item.style.transition = 'transform 0.3s ease';
+        });
+
+        item.addEventListener('mouseout', () => {
+            item.style.transform = 'scale(1)';
+        });
+
+        // Redirection vers evenement.php au clic
+        item.addEventListener('click', () => {
+            window.location.href = 'evenement.php';
+        });
+    });
+
+    // Ajouter une redirection au clic sur "Voir plus d'événements"
+    voirPlusItem.addEventListener('click', () => {
+        window.location.href = 'evenement.php';
+    });
+
+    voirPlusItem.addEventListener('mouseover', () => {
+        voirPlusItem.style.transform = 'scale(1.05)';
+        voirPlusItem.style.transition = 'transform 0.3s ease';
+    });
+
+    voirPlusItem.addEventListener('mouseout', () => {
+        voirPlusItem.style.transform = 'scale(1)';
+    });
 });

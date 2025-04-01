@@ -1,0 +1,123 @@
+const API_URL = 'http://localhost:8000';
+const DEFAULT_IMAGE = './images/product-default.jpg';
+
+// Données de test pour les produits
+const TEST_PRODUCTS = [
+    {
+        id: 1,
+        nom: "T-Shirt BDE Info",
+        prix: 15.99,
+        image: "./assets/images/product-default.jpg",
+        description: "T-Shirt officiel du BDE Informatique"
+    },
+    {
+        id: 2,
+        nom: "Sweat à capuche BDE",
+        prix: 29.99,
+		image: "./assets/images/product-default.jpg",
+        description: "Sweat chaud et confortable avec logo du BDE"
+    },
+    {
+        id: 3,
+        nom: "Mug BDE",
+        prix: 8.99,
+		image: "./assets/images/product-default.jpg",
+        description: "Mug en céramique avec logo du BDE"
+    },
+    {
+        id: 4,
+        nom: "Stickers Pack",
+        prix: 4.99,
+		image: "./assets/images/product-default.jpg",
+        description: "Lot de 5 stickers BDE"
+    }
+];
+
+// Fonction pour charger les produits
+async function loadProducts() {
+    try {
+        // Simuler un délai de chargement
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Utiliser les données de test au lieu de l'API
+        displayProducts(TEST_PRODUCTS);
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        displayError("Impossible de charger les produits pour le moment.");
+    }
+}
+
+function displayProducts(products) {
+    const boutiqueApp = document.getElementById('boutique-app');
+    
+    if (!products || products.length === 0) {
+        displayEmptyShop(boutiqueApp);
+        return;
+    }
+
+    try {
+        boutiqueApp.innerHTML = `
+            <div class="products-grid">
+                ${products.map(product => createProductCard(product)).join('')}
+            </div>
+        `;
+    } catch (error) {
+        console.error('Erreur lors de l\'affichage des produits:', error);
+        displayError("Une erreur est survenue lors de l'affichage des produits.");
+    }
+}
+
+function createProductCard(product) {
+    const name = product.nom || 'Produit sans nom';
+    const price = product.prix || 0;
+    const image = product.image || DEFAULT_IMAGE;
+    const id = product.id || null;
+    const description = product.description || '';
+
+    return `
+        <div class="product-card">
+            <a href="/produit.php?id=${id}" class="product-link">
+                <div class="product-image">
+                    <img src="${image}" alt="${name}" 
+                         onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
+                </div>
+                <h3 class="product-title">${name}</h3>
+                <p class="product-description">${description}</p>
+                <div class="product-footer">
+                    <span class="product-price">${price.toFixed(2)}€</span>
+                    <div class="btn btn-secondary">
+                        <i class="fas fa-shopping-cart"></i>
+                        Voir le produit
+                    </div>
+                </div>
+            </a>
+        </div>
+    `;
+}
+
+function displayEmptyShop(container) {
+    container.innerHTML = `
+        <div class="boutique-empty">
+            <img src="./images/empty-shop.svg" alt="Boutique vide" 
+                 onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
+            <p>Notre boutique est temporairement vide</p>
+            <p class="subtitle">Revenez bientôt pour découvrir nos nouveaux produits !</p>
+        </div>
+    `;
+}
+
+function displayError(message) {
+    const boutiqueApp = document.getElementById('boutique-app');
+    boutiqueApp.innerHTML = `
+        <div class="error-container">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>${message}</p>
+            <button onclick="loadProducts()" class="btn-retry">
+                Réessayer
+            </button>
+        </div>
+    `;
+}
+
+document.addEventListener('DOMContentLoaded', loadProducts);

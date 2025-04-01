@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDE IUT Informatique</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="/assets/css/accueil.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="/assets/js/main.js" defer></script>
 </head>
 <body>
     <header>
@@ -19,19 +19,18 @@
             </div>
             <div class="nav-links">
                 <a href="/" class="active">Accueil</a>
-                <a href="#evenements">Événements</a>
-                <a href="#boutique">Boutique</a>
+                <a href="/evenement.php">Événements</a>
+                <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="#compte">Compte</a>
             </div>
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">
                     <i class="fas fa-user"></i>
 					<a href="/connexion.php">Se connecter</a>
-                </button>
-            </div>
-        </nav>
-    </header>
+				</button>
+			</div>
+		</nav>
+	</header>
 
     <main id="app">
         <div class="container">
@@ -40,6 +39,7 @@
                 <p>Découvrez nos événements, nos produits et bien plus encore !</p>
             </section>
 
+            <!-- Section des articles -->
             <section id="carousel" class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-item active">
@@ -78,6 +78,35 @@
                     </button>
                 </div>
             </section>
+
+            <!-- Section Événements -->
+            <section id="evenements" class="evenements-container">
+            <h2>Événements à venir</h2>
+
+            <!-- Grille des événements -->
+            <div class="evenements-grid">
+                <!-- Événement 1 -->
+                <div class="evenement-item">
+                    <img src="/assets/images/bowling.png" alt="Événement Bowling" />
+                    <h3>Soirée Bowling</h3>
+                    <p>Le 2 avril 2025 - 10 places disponibles</p>
+                </div>
+
+                <!-- Événement 2 -->
+                <div class="evenement-item">
+                    <img src="/assets/images/poker.png" alt="Événement Poker" />
+                    <h3>Tournoi de Poker</h3>
+                    <p>Le 5 avril 2025 - 6 places disponibles</p>
+                </div>
+
+                <!-- Voir plus d'événements -->
+                <div class="voir-plus-item">
+                    <span>+</span>
+                    <p>Voir plus d'événements</p>
+                </div>
+            </div>
+        </section>
+
         </div>
     </main>
 
@@ -86,6 +115,6 @@
             <p>&copy; <?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés</p>
         </div>
     </footer>
-    <script src="/assets/js/carousel.js"></script>
+    <script src="/assets/js/accueil.js"></script>
 </body>
 </html>

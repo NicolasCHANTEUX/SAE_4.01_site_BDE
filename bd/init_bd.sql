@@ -1,4 +1,4 @@
-
+DROP table IF EXISTS article;
 DROP TABLE IF EXISTS produit;
 DROP TABLE IF EXISTS commande;
 DROP TABLE IF EXISTS inscription_evenement;
@@ -6,7 +6,12 @@ DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS evenement;
 DROP TABLE IF EXISTS utilisateur;
 
-
+Create table article (
+	id serial primary key, 
+	titre VARCHAR(255) NOT NULL,
+	description TEXT NOT NULL, 
+	date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
 
 CREATE TABLE utilisateur (
     id SERIAL PRIMARY KEY,
