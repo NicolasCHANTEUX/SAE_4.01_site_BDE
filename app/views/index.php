@@ -12,7 +12,7 @@
     <header>
         <nav class="main-nav">
             <div class="nav-brand">
-                <a href="#accueil">
+                <a href="/">
                     <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
                     <span>BDE Info</span>
                 </a>
@@ -24,9 +24,14 @@
                 <a href="/contact.php">Contact</a>
                 <a href="/connexion.php">Se Connecter</a>
             </div>
-            <div></div>
-        </nav>
-    </header>
+            <div class="nav-actions">
+                <button id="loginBtn" class="btn-login">
+                    <i class="fas fa-user"></i>
+					<a href="/connexion.php">Se connecter</a>
+				</button>
+			</div>
+		</nav>
+	</header>
 
     <main id="app">
         <div class="container">
