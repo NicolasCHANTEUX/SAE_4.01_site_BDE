@@ -1,3 +1,7 @@
+<?php
+require_once 'app/middlewares/AuthMiddleware.php';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
