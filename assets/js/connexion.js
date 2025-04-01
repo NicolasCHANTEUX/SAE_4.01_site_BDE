@@ -4,13 +4,11 @@ function validerFormulaire(form) {
     const password = form.password.value;
     let isValid = true;
 
-    // Validation simple de l'email
     if (!email.includes('@')) {
         alert("L'adresse email n'est pas valide.");
         isValid = false;
     }
 
-    // Validation simple du mot de passe (minimum 6 caractères)
     if (password.length < 6) {
         alert("Le mot de passe doit contenir au moins 6 caractères.");
         isValid = false;
@@ -27,14 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche la soumission réelle du formulaire
+            event.preventDefault();
 
             if (validerFormulaire(loginForm)) {
-                // Simulation de connexion réussie
                 alert('Connexion réussie!');
-                // Ici, on redirigerait vers la page d'accueil ou une page de profil
             } else {
-                // Gestion des erreurs de validation
                 console.log('Formulaire de connexion invalide.');
             }
         });
@@ -45,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (signupForm) {
         signupForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche la soumission réelle du formulaire
+            event.preventDefault();
 
             const confirmPassword = signupForm['confirm-password'].value;
             const password = signupForm.password.value;
@@ -56,13 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (validerFormulaire(signupForm)) {
-                // Simulation d'inscription réussie
                 alert('Inscription réussie!');
-                // Ici, on redirigerait vers la page de connexion
             } else {
-                // Gestion des erreurs de validation
                 console.log('Formulaire d\'inscription invalide.');
             }
         });
     }
+    
 });

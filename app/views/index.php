@@ -12,7 +12,7 @@
     <header>
         <nav class="main-nav">
             <div class="nav-brand">
-                <a href="/">
+                <a href="#accueil">
                     <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
                     <span>BDE Info</span>
                 </a>
@@ -22,14 +22,9 @@
                 <a href="#evenements">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="#compte">Compte</a>
+                <a href="#" id="accountLink">Se Connecter</a>
             </div>
-            <div class="nav-actions">
-                <button id="loginBtn" class="btn-login">
-                    <i class="fas fa-user"></i>
-					<a href="/connexion.php">Se connecter</a>
-                </button>
-            </div>
+            <div></div>
         </nav>
     </header>
 
