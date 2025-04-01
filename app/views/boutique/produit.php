@@ -33,6 +33,17 @@
         </nav>
     </header>
 
+    <div class="navigation-buttons">
+        <a href="/boutique.php" class="nav-btn back-btn">
+            <i class="fas fa-arrow-left"></i>
+            <span>Retour</span>
+        </a>
+        <a href="/panier.php" class="nav-btn cart-btn">
+            <span>Panier</span>
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+    </div>
+
     <main id="app">
         <div class="container">
             <div class="product-details">
