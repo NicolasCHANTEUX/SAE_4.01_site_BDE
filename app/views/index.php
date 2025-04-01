@@ -36,7 +36,10 @@ require_once 'app/views/template/header.php';
 
             <!-- Section Événements -->
             <section id="evenements" class="evenements-container">
-                <h2>Événements à venir</h2>
+
+            <h2>Événements à venir</h2>
+            <!-- Section des evenements -->
+            <section id="Events" class="event-container">
 
                 <div class="evenements-grid">
                     <?php if (isset($evenements) && !empty($evenements)): ?>
