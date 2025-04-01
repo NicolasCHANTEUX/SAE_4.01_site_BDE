@@ -79,16 +79,10 @@ require_once 'app/views/template/header.php';
                 </div>
             </section>
 
-<<<<<<< HEAD
+
             <!-- Section Événements -->
             <section id="evenements" class="evenements-container">
             <h2>Événements à venir</h2>
-=======
-            <!-- Section des evenements -->
-            <section id="Events" class="event-container">
-
-                
->>>>>>> aa7de13 (tmp)
 
             <!-- Grille des événements -->
             <div class="evenements-grid">
