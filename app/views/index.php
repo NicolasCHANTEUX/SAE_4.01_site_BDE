@@ -68,7 +68,6 @@ require_once 'app/views/template/header.php';
                 </div>
             </section>
 
-
             <!-- Section Événements -->
             <section id="evenements" class="evenements-container">
             <h2>Événements à venir</h2>
