@@ -23,9 +23,14 @@
                 <a href="#evenements">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="#" id="accountLink">Se Connecter</a>
+                <a href="#compte">Compte</a>
             </div>
-            <div></div>
+            <div class="nav-actions">
+                <button id="loginBtn" class="btn-login">
+                    <i class="fas fa-user"></i>
+                    <a href="/connexion.php">Se connecter</a>
+                </button>
+            </div>
         </nav>
     </header>
     <main id="app">
