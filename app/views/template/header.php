@@ -8,10 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <?php
+    // Détermine la page actuelle
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
+
     <header>
         <!-- Titre de la page actuelle -->
         <div class="page-title">
-            <h1 id="current-page-title">Accueil</h1>
+            <h1 id="current-page-title">
+                <?= $currentPage === '' || $currentPage === 'index.php' ? 'Accueil' : ucfirst(pathinfo($currentPage, PATHINFO_FILENAME)) ?>
+            </h1>
         </div>
 
         <!-- Bouton pour ouvrir le menu mobile -->
@@ -22,11 +29,11 @@
         <!-- Menu déroulant mobile -->
         <nav id="mobile-menu" class="mobile-menu">
             <ul>
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/evenement.php">Événements</a></li>
-                <li><a href="/boutique.php">Boutique</a></li>
-                <li><a href="/contact.php">Contact</a></li>
-                <li><a href="/connexion.php">Se connecter</a></li>
+                <li><a href="/" class="<?= $currentPage === '' || $currentPage === 'index.php' ? 'active' : '' ?>">Accueil</a></li>
+                <li><a href="/evenement.php" class="<?= $currentPage === 'evenement.php' ? 'active' : '' ?>">Événements</a></li>
+                <li><a href="/boutique.php" class="<?= $currentPage === 'boutique.php' ? 'active' : '' ?>">Boutique</a></li>
+                <li><a href="/contact.php" class="<?= $currentPage === 'contact.php' ? 'active' : '' ?>">Contact</a></li>
+                <li><a href="/connexion.php" class="<?= $currentPage === 'connexion.php' ? 'active' : '' ?>">Se connecter</a></li>
             </ul>
         </nav>
 
@@ -39,16 +46,18 @@
                 </a>
             </div>
             <div class="nav-links">
-                <a href="/" class="active">Accueil</a>
-                <a href="/evenement.php">Événements</a>
-                <a href="/boutique.php">Boutique</a>
-                <a href="/contact.php">Contact</a>
+                <a href="/" class="<?= $currentPage === '' || $currentPage === 'index.php' ? 'active' : '' ?>">Accueil</a>
+                <a href="/evenement.php" class="<?= $currentPage === 'evenement.php' ? 'active' : '' ?>">Événements</a>
+                <a href="/boutique.php" class="<?= $currentPage === 'boutique.php' ? 'active' : '' ?>">Boutique</a>
+                <a href="/contact.php" class="<?= $currentPage === 'contact.php' ? 'active' : '' ?>">Contact</a>
             </div>
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">
                     <i class="fas fa-user"></i>
-                    <a href="/connexion.php">Se connecter</a>
+                    <a href="/connexion.php" class="<?= $currentPage === 'connexion.php' ? 'active' : '' ?>">Se connecter</a>
                 </button>
             </div>
         </nav>
     </header>
+</body>
+</html>
