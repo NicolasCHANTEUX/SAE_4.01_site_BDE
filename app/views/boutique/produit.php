@@ -32,7 +32,7 @@
 		</nav>
 	</header>
 
-    <div class="navigation-buttons">
+    <div class="navigation-buttons">○
         <a href="/boutique.php" class="nav-btn back-btn">
             <i class="fas fa-arrow-left"></i>
             <span>Retour</span>
