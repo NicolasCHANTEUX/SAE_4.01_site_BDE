@@ -32,7 +32,8 @@ CREATE TABLE evenement (
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     prix DECIMAL(10,2) DEFAULT 0,
     max_participants INTEGER,
-    nb_inscrits INTEGER DEFAULT 0
+    nb_inscrits INTEGER DEFAULT 0,
+	chemin_image VARCHAR(255)
 );
 
 CREATE TABLE produit (

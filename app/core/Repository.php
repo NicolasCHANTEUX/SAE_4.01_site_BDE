@@ -10,16 +10,19 @@ class Repository {
     private function __construct() {
         try {
             $this->pdo = new PDO(
-                "mysql:host=localhost;dbname=bde_site;charset=utf8",
-                "root",
-                "",
+                "pgsql:host=" . DB_HOST . 
+                ";port=" . DB_PORT . 
+                ";dbname=" . DB_NAME . 
+                ";user=" . DB_USER . 
+                ";password=" . DB_PASS,
+                DB_USER,
+                DB_PASS,
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                 ]
             );
         } catch (PDOException $e) {
-            // Log l'erreur
             error_log("Erreur de connexion : " . $e->getMessage());
             throw new Exception("Erreur de connexion à la base de données");
         }

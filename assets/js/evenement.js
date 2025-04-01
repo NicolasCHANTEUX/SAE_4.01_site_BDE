@@ -1,68 +1,23 @@
 const DEFAULT_IMAGE = './assets/images/product-default.jpg';
 
-// Données de test pour les événements
-const TEST_EVENTS = [
-    {
-        id: 1,
-        nom: "Bowling",
-        prix: 10.00,
-        image: "./assets/images/product-default.jpg",
-        description: "Partie de bowling avec le BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "2 heures",
-		date: "2023-09-01"
-    },
-    {
-        id: 2,
-        nom: "Poker",
-        prix: 0,
-		image: "./assets/images/product-default.jpg",
-        description: "Sweat chaud et confortable avec logo du BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "3 heures",
-		date: "2025-05-01"
-    },
-    {
-        id: 3,
-        nom: "Minigolf",
-        prix: 8.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Mug en céramique avec logo du BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "2 heures",
-		date: "2025-04-03"
-    },
-    {
-        id: 4,
-        nom: "Karting",
-        prix: 4.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Lot de 5 stickers BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "1 heure",
-		date: "2025-04-01"
-    },
-	{
-        id: 5,
-        nom: "Laser Game",
-        prix: 9.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Lot de 5 stickers BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "1 heure 30 minutes",
-		date: "2025-09-01"
-    }
-];
-
 // Fonction pour charger les événements
 async function loadEvents() {
     try {
-        // Simuler un délai de chargement
-        await new Promise(resolve => setTimeout(resolve, 500));
+		const response = await fetch('/evenement.php?action=list');
         
-        // Utiliser les données de test au lieu de l'API
-        displayEvents(TEST_EVENTS);
-        
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des événements');
+        }
+
+        const events = await response.json();
+
+        if (!events || events.length === 0) {
+            displayEmptyEvents();
+            return;
+        }
+
+        displayEvents(events);
+
     } catch (error) {
         console.error('Erreur:', error);
         displayError("Impossible de charger les événements pour le moment.");
@@ -195,6 +150,20 @@ function displayError(message) {
             <button onclick="loadEvents()" class="btn-retry">
                 Réessayer
             </button>
+        </div>
+    `;
+}
+
+function displayEmptyEvents() {
+    const evenementApp = document.getElementById('evenement-app');
+    evenementApp.innerHTML = `
+        <div class="empty-events">
+            <img src="/assets/images/calendrier-empty.jpg" 
+                 alt="Aucun événement" 
+                 onerror="this.src='${DEFAULT_IMAGE}'">
+            <h2>Aucun événement prévu pour le moment</h2>
+            <p>Notre équipe travaille à l'organisation de nouveaux événements.</p>
+            <p class="subtitle">Revenez bientôt pour découvrir nos prochaines activités !</p>
         </div>
     `;
 }
