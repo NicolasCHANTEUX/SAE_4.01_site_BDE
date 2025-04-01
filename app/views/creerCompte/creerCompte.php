@@ -1,6 +1,7 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
+<link rel="stylesheet" href="/assets/css/connexion.css">
     <main id="app">
         
     <div class="signup-container">
