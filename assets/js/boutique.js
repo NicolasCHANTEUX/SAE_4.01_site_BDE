@@ -77,21 +77,21 @@ function createProductCard(product) {
 
     return `
         <div class="product-card">
-            <div class="product-image">
-                <img src="${image}" alt="${name}" 
-                     onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
-            </div>
-            <h3 class="product-title">${name}</h3>
-            <p class="product-description">${description}</p>
-            <div class="product-footer">
-                <span class="product-price">${price.toFixed(2)}€</span>
-                ${id ? `
-                    <button onclick="showOrderForm(${id})" class="add-to-cart">
+            <a href="/produit.php?id=${id}" class="product-link">
+                <div class="product-image">
+                    <img src="${image}" alt="${name}" 
+                         onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
+                </div>
+                <h3 class="product-title">${name}</h3>
+                <p class="product-description">${description}</p>
+                <div class="product-footer">
+                    <span class="product-price">${price.toFixed(2)}€</span>
+                    <div class="btn btn-secondary">
                         <i class="fas fa-shopping-cart"></i>
-                        Ajouter
-                    </button>
-                ` : '<span class="error-text">Indisponible</span>'}
-            </div>
+                        Voir le produit
+                    </div>
+                </div>
+            </a>
         </div>
     `;
 }

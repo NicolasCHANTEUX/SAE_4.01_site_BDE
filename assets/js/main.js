@@ -91,17 +91,19 @@ function handleRoute() {
                             <div class="products-grid">
                                 ${products.map(product => `
                                     <div class="product-card">
-                                        <div class="product-image">
-                                            <img src="${product.image || 'assets/images/product-default.jpg'}" alt="${product.nom}">
-                                        </div>
-                                        <h3 class="product-title">${product.nom}</h3>
-                                        <div class="product-footer">
-                                            <span class="product-price">${product.prix}€</span>
-                                            <button onclick="showOrderForm(${product.id})" class="add-to-cart">
-                                                <i class="fas fa-shopping-cart"></i>
-                                                Ajouter
-                                            </button>
-                                        </div>
+                                        <a href="/produit.php?id=${product.id}" class="product-link">
+                                            <div class="product-image">
+                                                <img src="${product.image || 'assets/images/product-default.jpg'}" alt="${product.nom}">
+                                            </div>
+                                            <h3 class="product-title">${product.nom}</h3>
+                                            <div class="product-footer">
+                                                <span class="product-price">${product.prix}€</span>
+                                                <button class="add-to-cart">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    Voir le produit
+                                                </button>
+                                            </div>
+                                        </a>
                                     </div>
                                 `).join('')}
                             </div>
