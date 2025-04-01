@@ -12,9 +12,8 @@
 .carousel {
 	position: relative;
 	overflow: hidden;
-	width: 100%;
+	width: 90%;
 	height: 250px;
-	background: rgb(131, 70, 70);
 	border: 3px solid var(--primary-color);
 	border-radius: var(--border-radius);
 	background-color: white;
