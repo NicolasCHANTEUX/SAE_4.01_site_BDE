@@ -22,7 +22,6 @@
                 <a href="/evenement.php">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="/connexion.php">Se Connecter</a>
             </div>
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">
@@ -88,14 +87,14 @@
             <div class="evenements-grid">
                 <!-- Événement 1 -->
                 <div class="evenement-item">
-                    <img src="/assets/images/bowling.jpg" alt="Événement Bowling" />
+                    <img src="/assets/images/bowling.png" alt="Événement Bowling" />
                     <h3>Soirée Bowling</h3>
                     <p>Le 2 avril 2025 - 10 places disponibles</p>
                 </div>
 
                 <!-- Événement 2 -->
                 <div class="evenement-item">
-                    <img src="/assets/images/poker.jpg" alt="Événement Poker" />
+                    <img src="/assets/images/poker.png" alt="Événement Poker" />
                     <h3>Tournoi de Poker</h3>
                     <p>Le 5 avril 2025 - 6 places disponibles</p>
                 </div>
