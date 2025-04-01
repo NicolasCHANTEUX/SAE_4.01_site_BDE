@@ -9,27 +9,29 @@
     <script src="/assets/js/main.js" defer></script>
 </head>
 <body>
-    <header>
+<header>
         <nav class="main-nav">
             <div class="nav-brand">
-                <a href="#accueil">
+                <a href="/">
                     <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
                     <span>BDE Info</span>
                 </a>
             </div>
             <div class="nav-links">
-                <a href="#accueil">Accueil</a>
+                <a href="/">Accueil</a>
                 <a href="#evenements">Événements</a>
-                <a href="#boutique">Boutique</a>
-                <a href="#contact">Contact</a>
+                <a href="/boutique.php" class="active">Boutique</a>
+                <a href="/contact.php">Contact</a>
+                <a href="#compte">Compte</a>
             </div>
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">
                     <i class="fas fa-user"></i>
-                    Se connecter
+                    <a href="/connexion.php">Se connecter</a>
                 </button>
             </div>
         </nav>
+    </header>
     </header>
     <main id="app">
 
