@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/connexion.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="/assets/js/main.js" defer></script>
 </head>
 <body>
     <header>
@@ -23,7 +22,7 @@
                 <a href="/evenement.php">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="#" id="accountLink">Se Connecter</a>
+                <a href="/connexion.php">Se Connecter</a>
             </div>
             <div></div>
         </nav>
@@ -58,7 +57,6 @@
     </div>
 </footer>
 
-<script src="/assets/js/main.js"></script>
 <script src="/assets/js/connexion.js"></script>
 </body>
 
