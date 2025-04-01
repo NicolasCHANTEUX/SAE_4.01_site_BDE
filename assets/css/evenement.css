@@ -1,10 +1,10 @@
 /* Layout principal */
 .evenement-container {
     display: grid;
-    grid-template-columns: 9fr 1fr;
+    grid-template-columns: 9fr 1fr; /* Grille principale */
     gap: 30px;
     max-width: 500px;
-    margin: 0 20px;
+    margin: 0;
     padding: 20px;
 }
 
@@ -14,11 +14,12 @@
     gap: 40px;
     padding: 0;
     margin-right: 40px;
+    justify-content: start;
 }
 
 .evenement-card {
     aspect-ratio: 2 / 3;
-    height: 500px; /* Hauteur fixe pour toutes les cartes */
+    min-height: 500px;
     cursor: pointer;
     border: 1px solid #e0e0e0;
     border-radius: var(--border-radius);

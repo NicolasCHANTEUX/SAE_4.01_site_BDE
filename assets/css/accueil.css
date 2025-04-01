@@ -92,7 +92,7 @@
 /*//////////////////////
 // Section Événements //
 //////////////////////*/
-/* Section Événements */
+
 .evenements-container {
     margin: 2rem auto;
     padding: 1rem;
@@ -166,4 +166,3 @@
 .voir-plus-item p {
     margin-top: 0.2rem; /* Réduction de l'espacement vertical */
 }
-
