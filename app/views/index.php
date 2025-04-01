@@ -75,13 +75,33 @@
                 </div>
             </section>
 
-            <!-- Section des evenements -->
-            <section id="Events" class="event-container">
+            <!-- Section Événements -->
+            <section id="evenements" class="evenements-container">
+            <h2>Événements à venir</h2>
 
-                
+            <!-- Grille des événements -->
+            <div class="evenements-grid">
+                <!-- Événement 1 -->
+                <div class="evenement-item">
+                    <img src="/assets/images/bowling.jpg" alt="Événement Bowling" />
+                    <h3>Soirée Bowling</h3>
+                    <p>Le 2 avril 2025 - 10 places disponibles</p>
+                </div>
 
-            </section>
+                <!-- Événement 2 -->
+                <div class="evenement-item">
+                    <img src="/assets/images/poker.jpg" alt="Événement Poker" />
+                    <h3>Tournoi de Poker</h3>
+                    <p>Le 5 avril 2025 - 6 places disponibles</p>
+                </div>
 
+                <!-- Voir plus d'événements -->
+                <div class="voir-plus-item">
+                    <span>+</span>
+                    <p>Voir plus d'événements</p>
+                </div>
+            </div>
+        </section>
 
         </div>
     </main>
@@ -91,6 +111,6 @@
             <p>&copy; <?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés</p>
         </div>
     </footer>
-    <script src="/assets/js/carousel.js"></script>
+    <script src="/assets/accueil.js"></script>
 </body>
 </html>
