@@ -68,6 +68,34 @@ require_once 'app/views/template/header.php';
                 </div>
             </section>
 
+            <!-- Section Événements -->
+            <section id="evenements" class="evenements-container">
+            <h2>Événements à venir</h2>
+
+            <!-- Grille des événements -->
+            <div class="evenements-grid">
+                <!-- Événement 1 -->
+                <div class="evenement-item">
+                    <img src="/assets/images/bowling.jpg" alt="Événement Bowling" />
+                    <h3>Soirée Bowling</h3>
+                    <p>Le 2 avril 2025 - 10 places disponibles</p>
+                </div>
+
+                <!-- Événement 2 -->
+                <div class="evenement-item">
+                    <img src="/assets/images/poker.jpg" alt="Événement Poker" />
+                    <h3>Tournoi de Poker</h3>
+                    <p>Le 5 avril 2025 - 6 places disponibles</p>
+                </div>
+
+                <!-- Voir plus d'événements -->
+                <div class="voir-plus-item">
+                    <span>+</span>
+                    <p>Voir plus d'événements</p>
+                </div>
+            </div>
+        </section>
+
         </div>
     </main>
     <script src="/assets/js/accueil.js"></script>
