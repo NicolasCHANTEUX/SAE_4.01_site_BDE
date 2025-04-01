@@ -64,20 +64,20 @@ function displayEvents(events) {
 }
 
 function createEventCard(event) {
-    const name = event.nom || 'Produit sans nom';
-    const price = event.prix || 0;
-    const image = event.image || DEFAULT_IMAGE;
-    const eventDate = event.date ? new Date(event.date).toLocaleDateString('fr-FR') : 'Date non définie';
-    const priceDisplay = price === 0 ? 'Gratuit' : price + '€';
+    const titre = event.titre || 'Événement sans nom';
+    const prix = event.prix || 0;
+    const image = event.chemin_image || DEFAULT_IMAGE;
+    const date = new Date(event.date_evenement);
+    const priceDisplay = prix === 0 ? 'Gratuit' : prix + '€';
 
     return `
         <div class="evenement-card" data-event-id="${event.id}">
             <div class="evenement-image">
-                <img src="${image}" alt="${name}" 
+                <img src="/${image}" alt="${titre}" 
                      onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
             </div>
-            <h3 class="evenement-title">${name}</h3>
-            <p class="evenement-date">${eventDate}</p>
+            <h3 class="evenement-title">${titre}</h3>
+            <p class="evenement-date">${date.toLocaleDateString('fr-FR')}</p>
             <p class="evenement-price">${priceDisplay}</p>
         </div>
     `;
@@ -87,28 +87,26 @@ function showEventDetails(event) {
     const detailsContainer = document.getElementById('event-details');
     detailsContainer.classList.remove('hidden');
     
-    const eventDate = new Date(event.date);
-    const formattedDate = eventDate.toLocaleDateString('fr-FR', {
+    const date = new Date(event.date_evenement);
+    const formattedDate = date.toLocaleDateString('fr-FR', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
     });
     
     detailsContainer.innerHTML = `
-        <h2>${event.nom}</h2>
+        <h2>${event.titre}</h2>
         <div class="event-details-content">
             <div class="event-details-item">
                 <span class="event-details-label">Date:</span>
                 <span>${formattedDate}</span>
             </div>
             <div class="event-details-item">
-                <span class="event-details-label">Durée:</span>
-                <span>${event.duree}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Adresse:</span>
-                <span>${event.addresse}</span>
+                <span class="event-details-label">Places:</span>
+                <span>${event.nb_inscrits}/${event.max_participants || '∞'}</span>
             </div>
             <div class="event-details-item">
                 <span class="event-details-label">Prix:</span>
