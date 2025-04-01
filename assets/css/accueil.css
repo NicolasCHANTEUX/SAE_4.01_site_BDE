@@ -21,7 +21,7 @@
 
 .carousel-item {
 	position: absolute;
-	width: 90%;
+	width: 100%;
 	height: 100%;
 	background: rgb(231, 231, 231);
 	padding: 2rem;
