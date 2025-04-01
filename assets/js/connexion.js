@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('.login-container form');
     const signupForm = document.querySelector('.signup-container form');
 
-    /*if (loginForm) {
+    if (loginForm) {
         loginForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-    }*/
+    }
 
     // JavaScript pour le formulaire d'inscription
     if (signupForm) {
