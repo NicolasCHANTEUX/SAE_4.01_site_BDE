@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDE IUT Informatique</title>
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="/assets/js/main.js" defer></script>
 </head>
@@ -33,6 +34,14 @@
         </nav>
     </header>
     <main id="app">
+
+        <div class="faq-text-container">
+            <p class="faq-text">Si vous avez des questions, nous pouvons peut-être déjà y répondre !</p>
+        </div>
+
+            <div class="faq-button-container">
+                    <a href="/questionsFrequentes.php" class="btn btn-secondary">Questions fréquentes</a>
+            </div>
 
         <div class="container">
             <h1>Contactez-nous</h1>
@@ -88,7 +97,9 @@
                         </a>
                     </div>
                 </div>
+
             </section>
+
         </div>
 
     </main>
