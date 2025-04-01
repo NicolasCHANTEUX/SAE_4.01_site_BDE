@@ -22,22 +22,35 @@ function validerFormulaire(form) {
 // JavaScript pour le formulaire de connexion
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('.login-container form');
+    const signupForm = document.querySelector('.signup-container form');
 
     if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
+        loginForm.addEventListener('submit', async function(event) {
             event.preventDefault();
-
+            
             if (validerFormulaire(loginForm)) {
-                alert('Connexion réussie!');
-            } else {
-                console.log('Formulaire de connexion invalide.');
+                const formData = new FormData(loginForm);
+                try {
+                    const response = await fetch('/connexion.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la connexion');
+                }
             }
         });
     }
 
     // JavaScript pour le formulaire d'inscription
-    const signupForm = document.querySelector('.signup-container form');
-
     if (signupForm) {
         signupForm.addEventListener('submit', function(event) {
             event.preventDefault();

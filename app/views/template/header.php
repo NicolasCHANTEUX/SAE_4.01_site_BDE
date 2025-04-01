@@ -6,7 +6,6 @@
     <title>BDE IUT Informatique</title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="/assets/js/main.js" defer></script>
 </head>
 <body>
     <header>
@@ -24,10 +23,18 @@
                 <a href="/contact.php">Contact</a>
             </div>
             <div class="nav-actions">
-                <button id="loginBtn" class="btn-login">
-                    <i class="fas fa-user"></i>
-                    Se connecter
-                </button>
+                <?php if (AuthMiddleware::isAuthenticated()): ?>
+                    <div class="user-menu">
+                        <span>Bonjour, <?= htmlspecialchars($_SESSION['user_prenom']) ?></span>
+                        <a href="/compte.php" class="btn-account">Mon compte</a>
+                        <a href="/deconnexion.php" class="btn-logout">Déconnexion</a>
+                    </div>
+                <?php else: ?>
+                    <button id="loginBtn" class="btn-login">
+                        <i class="fas fa-user"></i>
+                        <a href="/connexion.php">Se connecter</a>
+                    </button>
+                <?php endif; ?>
             </div>
         </nav>
     </header>
