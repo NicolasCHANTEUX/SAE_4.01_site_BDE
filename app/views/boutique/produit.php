@@ -61,12 +61,5 @@ require_once 'app/views/template/header.php';
             </div>
         </div>
     </main>
-
-    <footer>
-        <div class="footer-bottom">
-            <p>&copy; <?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés</p>
-        </div>
-    </footer>
     <script src="/assets/js/produit.js"></script>
-</body>
-</html>
+<?php require_once 'app/views/template/footer.php'; ?>

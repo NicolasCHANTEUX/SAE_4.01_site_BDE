@@ -28,15 +28,5 @@ require_once 'app/views/template/header.php';
             <?php endforeach; ?>
         </div>
 	</div>
-
-<footer>
-	<div class="footer-bottom">
-		<p>&copy;
-			<?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés
-		</p>
-	</div>
-</footer>
-
-</body>
-
-</html>
+<script src="/assets/js/evenement.js"></script>
+<?php require_once 'app/views/template/footer.php'; ?>
