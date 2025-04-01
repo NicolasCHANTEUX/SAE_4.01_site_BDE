@@ -28,8 +28,10 @@ function handleRoute() {
     const app = document.getElementById('app');
     const forms = document.getElementById('forms');
     
-    // Cacher tous les formulaires par défaut
-    forms.style.display = 'none';
+    // Ne cache le formulaire que s'il existe
+    if (forms) {
+        forms.style.display = 'none';
+    }
     
     // Attendre que le contenu soit chargé avant de continuer
     return new Promise(async (resolve) => {
