@@ -4,11 +4,25 @@ require_once './config/config.php';
 
 class Repository {
     private static $instance = null;  // Instance unique de la classe
-    protected $pdo;
+    private $pdo;
 
     // Le constructeur est maintenant privé pour empêcher une instanciation directe
     private function __construct() {
-        $this->pdo = $this->getDatabaseConnection();
+        try {
+            $this->pdo = new PDO(
+                "mysql:host=localhost;dbname=bde_site;charset=utf8",
+                "root",
+                "",
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ]
+            );
+        } catch (PDOException $e) {
+            // Log l'erreur
+            error_log("Erreur de connexion : " . $e->getMessage());
+            throw new Exception("Erreur de connexion à la base de données");
+        }
     }
 
     // Méthode pour obtenir l'instance unique de la classe (Singleton)
@@ -17,19 +31,6 @@ class Repository {
             self::$instance = new Repository();
         }
         return self::$instance;
-    }
-
-    // Fonction pour se connecter à la base de données
-    protected function getDatabaseConnection() {
-        $dsn = 'pgsql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME;
-
-        try {
-            $pdo = new PDO($dsn, DB_USER, DB_PASS);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  // Mode d'erreur
-            return $pdo;
-        } catch (PDOException $e) {
-            die('Erreur de connexion : ' . $e->getMessage());
-        }
     }
 
     // Méthode pour obtenir la connexion PDO

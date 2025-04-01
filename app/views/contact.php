@@ -20,14 +20,14 @@
             <div class="nav-links">
                 <a href="/">Accueil</a>
                 <a href="#evenements">Événements</a>
-                <a href="#boutique">Boutique</a>
+                <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php" class="active">Contact</a>
                 <a href="#compte">Compte</a>
             </div>
             <div class="nav-actions">
                 <button id="loginBtn" class="btn-login">
                     <i class="fas fa-user"></i>
-                    Se connecter
+                    <a href="/connexion.php">Se connecter</a>
                 </button>
             </div>
         </nav>
@@ -37,7 +37,7 @@
         <div class="container">
             <h1>Contactez-nous</h1>
             
-            <form id="contactForm" method="POST" action="/contact" class="contact-form">
+            <form id="contactForm" method="POST" action="/contact" class="contact-form" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="nom">Nom</label>
                     <input type="text" class="form-control" id="nom" name="nom" required>
@@ -101,6 +101,7 @@
     </footer>
 
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/contact.js"></script>
 </body>
 
 </html>

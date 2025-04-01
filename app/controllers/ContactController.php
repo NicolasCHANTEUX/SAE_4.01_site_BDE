@@ -7,14 +7,37 @@ class ContactController extends Controller {
     private $repository;
 
     public function __construct() {
-        $this->repository = Repository::getInstance();
+        try {
+            $this->repository = Repository::getInstance();
+        } catch (Exception $e) {
+            // Si la connexion échoue, on affiche quand même la page sans fonctionnalités DB
+            error_log($e->getMessage());
+        }
     }
 
     public function index() {
-        $this->view('contact.php', [
-            'title' => 'Contact - BDE',
-            'socialLinks' => $this->getSocialLinks()
-        ]);
+        $socialLinks = $this->getSocialLinks();
+        $errorMessage = '';
+        
+        try {
+            // Vérification de la connexion
+            if (!$this->repository) {
+                throw new Exception("La connexion à la base de données n'est pas disponible");
+            }
+            
+            $this->view('contact.php', [
+                'title' => 'Contact - BDE',
+                'socialLinks' => $socialLinks,
+                'error' => $errorMessage
+            ]);
+        } catch (Exception $e) {
+            // Afficher la page avec un message d'erreur
+            $this->view('contact.php', [
+                'title' => 'Contact - BDE',
+                'socialLinks' => $socialLinks,
+                'error' => "Le service est temporairement indisponible"
+            ]);
+        }
     }
 
     public function handleContact($data) {

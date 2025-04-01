@@ -12,7 +12,7 @@
     <header>
         <nav class="main-nav">
             <div class="nav-brand">
-                <a href="/">
+                <a href="#accueil">
                     <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
                     <span>BDE Info</span>
                 </a>
@@ -20,16 +20,11 @@
             <div class="nav-links">
                 <a href="/" class="active">Accueil</a>
                 <a href="#evenements">Événements</a>
-                <a href="#boutique">Boutique</a>
+                <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="#compte">Compte</a>
+                <a href="#" id="accountLink">Se Connecter</a>
             </div>
-            <div class="nav-actions">
-                <button id="loginBtn" class="btn-login">
-                    <i class="fas fa-user"></i>
-                    Se connecter
-                </button>
-            </div>
+            <div></div>
         </nav>
     </header>
 
@@ -40,6 +35,7 @@
                 <p>Découvrez nos événements, nos produits et bien plus encore !</p>
             </section>
 
+            <!-- Section des articles -->
             <section id="carousel" class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-item active">
@@ -78,6 +74,14 @@
                     </button>
                 </div>
             </section>
+
+            <!-- Section des evenements -->
+            <section>
+                
+
+            </section>
+
+
         </div>
     </main>
 
