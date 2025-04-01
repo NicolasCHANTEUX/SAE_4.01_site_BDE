@@ -77,3 +77,59 @@
 	color: var(--text-color);
 	line-height: 1.6;
 }
+
+/* Section Événements */
+.evenements-container {
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.evenements-container h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.evenements-grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.evenement-item,
+.voir-plus-item {
+    width: 30%;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+.evenement-item img {
+    width: 100%;
+    border-radius: var(--border-radius);
+}
+
+.evenement-item h3 {
+    margin-top: 0.5rem;
+}
+
+.evenement-item p {
+    color: var(--text-color);
+}
+
+.voir-plus-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.voir-plus-item span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.voir-plus-item p {
+    margin-top: 0.5rem;
+}
