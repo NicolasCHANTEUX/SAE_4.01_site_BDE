@@ -1,7 +1,7 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
-
+<link rel="stylesheet" href="/assets/css/panier.css">
     <main>
         <div class="container">
             <h1>Mon Panier</h1>

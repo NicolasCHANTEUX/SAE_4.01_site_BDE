@@ -1,8 +1,8 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
+<link rel="stylesheet" href="/assets/css/evenement.css">
     <main id="app">
-
     <div class="container">
         <div id="evenement-app" class="evenement-container">
             <h2>Les événements du BDE</h2>

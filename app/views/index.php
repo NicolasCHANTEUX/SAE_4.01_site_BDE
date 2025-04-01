@@ -1,6 +1,7 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
+    <link rel="stylesheet" href="/assets/css/accueil.css">
     <main id="app">
         <div class="container">
             <section id="presentation" class="hero-section">
