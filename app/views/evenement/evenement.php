@@ -23,7 +23,7 @@
                 <a href="/evenement.php" class="active">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="/connexion.php">Compte</a>
+                <a href="/connexion.php">Se Connecter</a>
             </div>
             <div></div>
         </nav>
