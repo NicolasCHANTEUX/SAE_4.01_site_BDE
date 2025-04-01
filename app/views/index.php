@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDE IUT Informatique</title>
     <link rel="stylesheet" href="/assets/css/style.css">
-<<<<<<< HEAD
 	<link rel="stylesheet" href="/assets/css/accueil.css">
-=======
-    
->>>>>>> aa7de13 (tmp)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
