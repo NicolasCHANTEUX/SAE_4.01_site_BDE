@@ -40,6 +40,11 @@ $adminPageLink = $adminPages[$currentPage] ?? 'accueilAdmin.php'; // Par défaut
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <?php
+    // Détermine la page actuelle
+    $currentPage = basename($_SERVER['REQUEST_URI']);
+    ?>
+
     <header>
         <!-- Titre de la page actuelle -->
         <div class="page-title">
