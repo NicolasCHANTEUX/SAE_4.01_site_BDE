@@ -7,16 +7,29 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
-    <header>
-        <h1><?php echo htmlspecialchars($title); ?></h1>
-        <nav>
-            <ul>
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="about.php">À propos</a></li>
-                <li><a href="contact.php">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+		<nav class="main-nav">
+			<div class="nav-brand">
+				<a href="/">
+					<img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
+					<span>BDE Info</span>
+				</a>
+			</div>
+			<div class="nav-links">
+				<a href="/">Accueil</a>
+				<a href="#evenements">Événements</a>
+				<a href="/boutique.php" class="active">Boutique</a>
+				<a href="/contact.php">Contact</a>
+				<a href="#compte">Compte</a>
+			</div>
+			<div class="nav-actions">
+				<button id="loginBtn" class="btn-login">
+					<i class="fas fa-user"></i>
+					<a href="/connexion.php">Se connecter</a>
+				</button>
+			</div>
+		</nav>
+	</header>
 
     <main>
         <section id="presentation">
