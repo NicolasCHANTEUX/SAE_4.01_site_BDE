@@ -10,20 +10,25 @@
 	position: relative;
 	overflow: hidden;
 	width: 100%;
-	height: 400px;
+	height: 250px;
+	background: rgb(131, 70, 70);
 }
 
 .carousel-item {
 	position: absolute;
-	width: 100%;
+	width: 90%;
 	height: 100%;
-	background: white;
+	background: rgb(231, 231, 231);
 	padding: 2rem;
 	border-radius: var(--border-radius);
 	box-shadow: var(--box-shadow);
 	opacity: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	transition: transform 0.5s ease, opacity 0.5s ease;
 	transform: translateX(100%);
+
 }
 
 .carousel-item.active {

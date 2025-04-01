@@ -111,6 +111,6 @@
             <p>&copy; <?php echo date('Y'); ?> BDE IUT Informatique - Tous droits réservés</p>
         </div>
     </footer>
-    <script src="/assets/accueil.js"></script>
+    <script src="/assets/js/accueil.js"></script>
 </body>
 </html>
