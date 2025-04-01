@@ -19,15 +19,19 @@
                 </a>
             </div>
             <div class="nav-links">
-                <a href="/">Accueil</a>
-                <a href="/evenement.php" class="active">Événements</a>
+                <a href="/" class="active">Accueil</a>
+                <a href="/evenement.php">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="/connexion.php">Se Connecter</a>
             </div>
-            <div></div>
-        </nav>
-</header>
+            <div class="nav-actions">
+                <button id="loginBtn" class="btn-login">
+                    <i class="fas fa-user"></i>
+					<a href="/connexion.php">Se connecter</a>
+				</button>
+			</div>
+		</nav>
+	</header>
     <main id="app">
 
     <div class="container">
