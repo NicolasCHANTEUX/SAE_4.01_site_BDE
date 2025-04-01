@@ -16,7 +16,7 @@ require_once 'app/views/template/header.php';
     <header>
         <nav class="main-nav">
             <div class="nav-brand">
-                <a href="#accueil">
+                <a href="/">
                     <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
                     <span>BDE Info</span>
                 </a>
