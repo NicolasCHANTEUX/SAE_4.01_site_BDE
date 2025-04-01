@@ -22,7 +22,7 @@
                 <a href="/evenement.php">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
-                <a href="#" id="accountLink">Se Connecter</a>
+                <a href="/connexion.php">Se Connecter</a>
             </div>
             <div></div>
         </nav>
