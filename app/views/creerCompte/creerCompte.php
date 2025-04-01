@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="nav-links">
-                <a href="/" class="active">Accueil</a>
+                <a href="/">Accueil</a>
                 <a href="/evenement.php">Événements</a>
                 <a href="/boutique.php">Boutique</a>
                 <a href="/contact.php">Contact</a>
