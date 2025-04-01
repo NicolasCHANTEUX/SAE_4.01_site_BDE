@@ -7,7 +7,6 @@
 	<link rel="stylesheet" href="/assets/css/style.css">
 	<link rel="stylesheet" href="/assets/css/boutique.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<script src="/assets/js/main.js" defer></script>
 </head>
 <body>
 	<header>
@@ -21,7 +20,7 @@
 			<div class="nav-links">
 				<a href="/">Accueil</a>
 				<a href="#evenements">Événements</a>
-				<a href="/boutique/boutique.php" class="active">Boutique</a>
+				<a href="/boutique.php" class="active">Boutique</a>
 				<a href="/contact.php">Contact</a>
 				<a href="#compte">Compte</a>
 			</div>
