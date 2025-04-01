@@ -76,7 +76,8 @@
             </section>
 
             <!-- Section des evenements -->
-            <section>
+            <section id="Events" class="event-container">
+
                 
 
             </section>
