@@ -18,38 +18,20 @@ INSERT INTO evenement (
     'assets/images/events/bowling.png'
 ),
 (
-    'Tournoi CS:GO',
-    'Grand tournoi CS:GO organisé dans les salles info. 5vs5, lots à gagner pour les meilleures équipes !',
+    'Tournoi Poker',
+    'Grand tournoi de poker organisé en 3 table de 6, lots à gagner pour les meilleures !',
     '2024-04-20 14:00:00',
     0.00,
-    40,
+    18,
     0,
-    'assets/images/events/csgo.png'
+    'assets/images/events/poker.png'
 ),
 (
-    'Soirée Jeux de Société',
-    'Une soirée détente autour de jeux de société. Snacks et boissons offerts !',
-    '2024-04-25 18:30:00',
-    2.00,
-    25,
-    0,
-    'assets/images/events/board-games.png'
-),
-(
-    'LAN Party',
-    'Une nuit complète de gaming ! Amenez vos PC, on s''occupe du reste.',
+    'Patie de mini-golf',
+    'Une soirée complète de mini-golf !',
     '2024-05-03 20:00:00',
     8.00,
-    50,
+    25,
     0,
-    'assets/images/events/lan-party.png'
-),
-(
-    'Barbecue de fin d''année',
-    'Le traditionnel barbecue pour célébrer la fin de l''année scolaire ! Venez nombreux !',
-    '2024-06-15 12:00:00',
-    10.00,
-    100,
-    0,
-    'assets/images/events/bbq.png'
+    'assets/images/events/golf.png'
 );
