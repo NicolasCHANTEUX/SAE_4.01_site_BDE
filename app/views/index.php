@@ -9,44 +9,29 @@ require_once 'app/views/template/header.php';
                 <p>Découvrez nos événements, nos produits et bien plus encore !</p>
             </section>
 
-            <!-- Section des articles -->
+
             <section id="carousel" class="carousel-container">
                 <div class="carousel">
-                    <div class="carousel-item active">
-                        <h3>Article 1</h3>
-                        <p>Description de l'article central.</p>
+                    <?php if (isset($articles) && is_array($articles) && !empty($articles)): ?>
+                        <?php foreach ($articles as $key => $article): ?>
+                            <div class="carousel-item <?= $key === 0 ? 'active' : '' ?>">
+                                <h2><?= htmlspecialchars($article['titre']) ?></h2>
+                                <p><?= htmlspecialchars($article['description']) ?></p>
+                                <small>Créé le : <?= htmlspecialchars($article['date_creation']) ?></small>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Aucun article à afficher pour le moment.</p>
+                    <?php endif; ?>
                     </div>
-                    <div class="carousel-item">
-                        <h3>Article 2</h3>
-                        <p>Description de l'article à gauche.</p>
+                    <div class="carousel-controls">
+                        <button class="prev-btn" aria-label="Article précédent">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="next-btn" aria-label="Article suivant">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
-                    <div class="carousel-item">
-                        <h3>Article 3</h3>
-                        <p>Description de l'article à droite.</p>
-                    </div>
-                    <div class="carousel-item">
-                        <h3>Article 4</h3>
-                        <p>
-                            Cet article contient plus de texte pour illustrer une présentation détaillée. 
-                            Découvrez nos événements, nos produits, et bien plus encore ! Nous organisons 
-                            régulièrement des activités pour les étudiants, comme des soirées cinéma, des 
-                            conférences sur l'innovation, et des tournois sportifs. Rejoignez-nous pour 
-                            vivre une expérience unique !
-                        </p>
-                    </div>
-                    <div class="carousel-item">
-                        <h3>Article 5</h3>
-                        <p>Description d'un autre article.</p>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="prev-btn" aria-label="Article précédent">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="next-btn" aria-label="Article suivant">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </section>
 
             <!-- Section Événements -->
