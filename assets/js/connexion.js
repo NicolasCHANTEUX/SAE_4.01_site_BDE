@@ -14,8 +14,6 @@ function validerFormulaire(form) {
         isValid = false;
     }
 
-    
-
     return isValid;
 }
 
@@ -24,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('.login-container form');
     const signupForm = document.querySelector('.signup-container form');
 
-    if (loginForm) {
+    /*if (loginForm) {
         loginForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             
@@ -48,18 +46,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-    }
+    }*/
 
     // JavaScript pour le formulaire d'inscription
     if (signupForm) {
         signupForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
+        
             const confirmPassword = signupForm['confirm-password'].value;
             const password = signupForm.password.value;
 
             if (password !== confirmPassword) {
                 alert('Les mots de passe ne correspondent pas.');
+				event.preventDefault();
                 return;
             }
 

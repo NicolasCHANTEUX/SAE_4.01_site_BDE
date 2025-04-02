@@ -6,7 +6,9 @@ require_once 'app/views/template/header.php';
 
     <div class="login-container">
         <h1>Connectez-vous</h1>
-        <form action="authentification.php" method="post">
+
+		<?php if($error !== '') echo $error; ?>
+        <form action="connexion.php" method="post">
             <label for="email">Adresse e-mail</label>
             <input type="email" id="email" name="email" placeholder="Votre adresse e-mail" required>
             
@@ -18,5 +20,5 @@ require_once 'app/views/template/header.php';
         <p>Vous n'avez pas de compte ? <a href="creerCompte.php">Créer mon compte</a></p>
     </div>
 </body>
-<script src="/assets/js/connexion.js"></script>
+<!--<script src="/assets/js/connexion.js"></script>-->
 <?php require_once 'app/views/template/footer.php'; ?>

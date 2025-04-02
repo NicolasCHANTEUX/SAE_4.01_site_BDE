@@ -6,7 +6,7 @@ require_once 'app/views/template/header.php';
         
     <div class="signup-container">
         <h1>Créer un compte</h1>
-        <form action="inscription.php" method="post">
+        <form action="creerCompte.php" method="post">
             
             <label for="email">Adresse e-mail</label>
             <input type="email" id="email" name="email" placeholder="Votre adresse e-mail" required>
