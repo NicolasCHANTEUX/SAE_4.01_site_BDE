@@ -7,19 +7,11 @@ DROP TABLE IF EXISTS evenement;
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS questionsFrequentes;
 
-<<<<<<< HEAD
-CREATE TABLE article (
-	id SERIAL PRIMARY KEY, 
-	titre VARCHAR(255) NOT NULL,
-	description TEXT NOT NULL, 
-	date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-=======
 CREATE TABLE articles (
     id SERIAL PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
->>>>>>> origin/accueil
 );
 
 CREATE TABLE utilisateur (
