@@ -8,6 +8,7 @@ AuthMiddleware::requireAuth();
 // Inclure les modals
 require_once 'app/views/components/modal-compte.php';
 require_once 'app/views/components/modal-password.php';
+require_once 'app/views/components/modal-delete-account.php';
 ?>
 
 <script src="/assets/js/compte.js"></script>

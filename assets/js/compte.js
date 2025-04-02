@@ -22,3 +22,32 @@ document.getElementById('passwordForm').addEventListener('submit', async functio
 		alert('Une erreur est survenue');
 	}
 });
+
+document.getElementById('deleteAccountForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) {
+        return;
+    }
+
+    try {
+        const formData = new FormData(this);
+        const response = await fetch('/compte/deleteAccount', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            if (result.redirect) {
+                window.location.href = result.redirect;
+            }
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        alert('Une erreur est survenue');
+    }
+});

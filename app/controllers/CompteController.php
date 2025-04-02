@@ -143,4 +143,58 @@ class CompteController extends Controller
             ];
         }
     }
+
+    public function deleteAccount()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return [
+                'success' => false,
+                'message' => 'Méthode non autorisée'
+            ];
+        }
+
+        try {
+            $password = $_POST['confirmPassword'] ?? '';
+
+            if (empty($password)) {
+                return [
+                    'success' => false,
+                    'message' => 'Le mot de passe est requis'
+                ];
+            }
+
+            // Vérifier le mot de passe
+            if (!$this->userRepository->verifyPassword($_SESSION['user_id'], $password)) {
+                return [
+                    'success' => false,
+                    'message' => 'Mot de passe incorrect'
+                ];
+            }
+
+            // Supprimer le compte
+            $success = $this->userRepository->deleteAccount($_SESSION['user_id']);
+
+            if ($success) {
+                // Déconnecter l'utilisateur
+                session_destroy();
+                return [
+                    'success' => true,
+                    'message' => 'Votre compte a été supprimé avec succès',
+                    'redirect' => '/index.php'
+                ];
+            }
+
+            return [
+                'success' => false,
+                'message' => 'Une erreur est survenue lors de la suppression du compte'
+            ];
+
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Une erreur est survenue'
+            ];
+        }
+    }
 }
