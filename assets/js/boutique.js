@@ -1,46 +1,18 @@
 const API_URL = 'http://localhost:8000';
 const DEFAULT_IMAGE = './images/product-default.jpg';
 
-// Données de test pour les produits
-const TEST_PRODUCTS = [
-    {
-        id: 1,
-        nom: "T-Shirt BDE Info",
-        prix: 15.99,
-        image: "./assets/images/product-default.jpg",
-        description: "T-Shirt officiel du BDE Informatique"
-    },
-    {
-        id: 2,
-        nom: "Sweat à capuche BDE",
-        prix: 29.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Sweat chaud et confortable avec logo du BDE"
-    },
-    {
-        id: 3,
-        nom: "Mug BDE",
-        prix: 8.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Mug en céramique avec logo du BDE"
-    },
-    {
-        id: 4,
-        nom: "Stickers Pack",
-        prix: 4.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Lot de 5 stickers BDE"
-    }
-];
-
 // Fonction pour charger les produits
 async function loadProducts() {
     try {
         // Simuler un délai de chargement
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        // Utiliser les données de test au lieu de l'API
-        displayProducts(TEST_PRODUCTS);
+        // Utiliser les données provenant de PHP
+        if (typeof BOUTIQUE_DATA !== 'undefined') {
+            displayProducts(BOUTIQUE_DATA);
+        } else {
+            throw new Error('Aucune donnée de produits disponible');
+        }
         
     } catch (error) {
         console.error('Erreur:', error);
@@ -70,7 +42,7 @@ function displayProducts(products) {
 
 function createProductCard(product) {
     const name = product.nom || 'Produit sans nom';
-    const price = product.prix || 0;
+    const price = parseFloat(product.prix) || 0;
     const image = product.image || DEFAULT_IMAGE;
     const id = product.id || null;
     const description = product.description || '';
@@ -95,7 +67,6 @@ function createProductCard(product) {
         </div>
     `;
 }
-
 function displayEmptyShop(container) {
     container.innerHTML = `
         <div class="boutique-empty">
