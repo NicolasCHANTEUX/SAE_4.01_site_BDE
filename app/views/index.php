@@ -13,24 +13,6 @@ require_once 'app/views/template/header.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav class="main-nav">
-            <div class="nav-brand">
-                <a href="/">
-                    <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
-                    <span>BDE Info</span>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="/" class="active">Accueil</a>
-                <a href="/evenement.php">Événements</a>
-                <a href="/boutique.php">Boutique</a>
-                <a href="/contact.php">Contact</a>
-            </div>
-            <div></div>
-        </nav>
-    </header>
-
     <main id="app">
         <div class="container">
             <section id="presentation" class="hero-section">
