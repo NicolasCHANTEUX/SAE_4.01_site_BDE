@@ -32,6 +32,7 @@ class AuthController extends Controller {
                     $_SESSION['user_prenom'] = $user['prenom'];  // Ajout du prénom
                     $_SESSION['user_nom'] = $user['nom'];        // Ajout du nom aussi
                     $_SESSION['user_role'] = $user['role'];      // Ajout du rôle
+                    $_SESSION['user_email'] = $user['email'];    // Ajout de l'email
 
                     return $this->redirectTo('index.php');
                 }
