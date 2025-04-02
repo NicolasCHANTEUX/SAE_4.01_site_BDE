@@ -2,14 +2,8 @@
 require_once 'app/views/template/header.php';
 ?>
     <main id="app">
+    <link rel="stylesheet" href="/assets/css/contact.css">
 
-        <div class="faq-text-container">
-            <p class="faq-text">Si vous avez des questions, nous pouvons peut-être déjà y répondre !</p>
-        </div>
-
-            <div class="faq-button-container">
-                    <a href="/questionsFrequentes.php" class="btn btn-secondary">Questions fréquentes</a>
-            </div>
 
         <div class="container">
             <h1>Contactez-nous</h1>
@@ -39,6 +33,15 @@ require_once 'app/views/template/header.php';
             </form>
 
             <section class="social-section">
+
+            <div class="faq-text-container">
+                <p class="faq-text">Si vous avez des questions, nous pouvons peut-être déjà y répondre !</p>
+            </div>
+
+            <div class="faq-button-container">
+                    <a href="/questionsFrequentes.php" class="btn-primary">Questions fréquentes</a>
+            </div>
+
                 <h2>Rejoignez-nous</h2>
                 <div class="social-grid">
                     <div class="social-card">
