@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS evenement;
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS questionsFrequentes;
 
-CREATE TABLE article (
+CREATE TABLE articles (
 	id SERIAL PRIMARY KEY, 
 	titre VARCHAR(255) NOT NULL,
 	description TEXT NOT NULL, 
