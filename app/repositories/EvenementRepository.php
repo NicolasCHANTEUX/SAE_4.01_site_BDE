@@ -31,28 +31,6 @@ class EvenementRepository {
         return $stmt->execute($data);
 	}
 
-    public function findAll(): array {
-        $query = 'SELECT * FROM evenement ORDER BY date_evenement ASC';
-        $stmt = $this->pdo->query($query);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function findById(int $id): ?array {
-        $query = 'SELECT * FROM evenement WHERE id = :id';
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['id' => $id]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ?: null;
-    }
-
-    public function create(array $data): bool {
-        $query = 'INSERT INTO evenement (titre, description, date_evenement, createur_id, prix, max_participants, chemin_image)
-                 VALUES (:titre, :description, :date_evenement, :createur_id, :prix, :max_participants, :chemin_image)';
-        
-        $stmt = $this->pdo->prepare($query);
-        return $stmt->execute($data);
-    }
-
     public function update(array $data): bool {
         $query = 'UPDATE evenement 
                  SET titre = :titre, 
