@@ -309,12 +309,26 @@ footer {
 // Menu mobile //
 ///////////////*/
 
-/* Menu déroulant mobile */
+/* Bouton hamburger pour ouvrir le menu mobile */
+.menu-toggle {
+    display: none; /* Masqué par défaut en version PC */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+    z-index: 1100; /* Au-dessus du menu */
+}
+
+/* Menu mobile */
 .mobile-menu {
     position: fixed;
     top: 0;
     left: -100%; /* Hors de l'écran par défaut */
-    width: 250px; /* Largeur du menu */
+    width: 250px;
     height: 100%;
     background-color: var(--primary-color);
     color: white;
@@ -352,22 +366,31 @@ footer {
     left: 0; /* Affiche le menu */
 }
 
-/* Bouton hamburger */
-.menu-toggle {
-    display: block; /* Affiché uniquement en mode mobile */
-    background-color: transparent;
-    border: none;
+/* Bandeau supérieur pour le titre de la page */
+.page-title {
+    display: none; /* Masqué par défaut en version PC */
+    background-color: var(--primary-color);
     color: white;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    cursor: pointer;
+    padding: 1rem 0.5rem; /* Ajuster le padding pour mobile */
 }
 
-/* Styles spécifiques au mobile */
+.page-title h1 {
+    font-size: 1.5rem; /* Taille du titre */
+}
+
+/* Afficher le titre de la page et le menu mobile en mode mobile */
 @media (max-width: 768px) {
+    .page-title {
+        display: flex; /* Afficher le titre de la page en mode mobile */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-toggle {
+        display: block; /* Afficher le bouton hamburger en mode mobile */
+    }
+
     .main-nav {
-        display: none; /* Masquer le menu PC en mode mobile */
+        display: none; /* Masquer les menus desktop en mode mobile */
     }
 }

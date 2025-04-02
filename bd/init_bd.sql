@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS inscription_evenement;
 DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS evenement;
 DROP TABLE IF EXISTS utilisateur;
-DROP TABLE IF EXISTS QuestionsFrequentes;
+DROP TABLE IF EXISTS questionsFrequentes;
 
 CREATE TABLE articles (
     id SERIAL PRIMARY KEY,
@@ -79,9 +79,8 @@ CREATE TABLE contacts (
     statut VARCHAR(20) DEFAULT 'non_lu'
 );
 
-CREATE TABLE QuestionsFrequentes (
-   idQuestion INT,
-   question   VARCHAR(50 ) NOT NULL,
-   reponse    VARCHAR(200) NOT NULL,
-   PRIMARY KEY(idQuestion)
+CREATE TABLE questionsFrequentes (
+   id SERIAL PRIMARY KEY,
+   question   VARCHAR(100) NOT NULL,
+   reponse    VARCHAR(800) NOT NULL
 );

@@ -3,6 +3,14 @@ require_once 'app/views/template/header.php';
 ?>
     <main id="app">
 
+        <div class="faq-text-container">
+            <p class="faq-text">Si vous avez des questions, nous pouvons peut-être déjà y répondre !</p>
+        </div>
+
+            <div class="faq-button-container">
+                    <a href="/questionsFrequentes.php" class="btn btn-secondary">Questions fréquentes</a>
+            </div>
+
         <div class="container">
             <h1>Contactez-nous</h1>
             
@@ -57,7 +65,9 @@ require_once 'app/views/template/header.php';
                         </a>
                     </div>
                 </div>
+
             </section>
+
         </div>
 
     </main>

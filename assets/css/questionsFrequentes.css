@@ -1,0 +1,72 @@
+/* Styles pour les questions fréquentes */
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les questions horizontalement */
+}
+
+.faq-item {
+    width: 1000px; /* Réduit la largeur des questions */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px; /* Ajoute un espacement entre les questions */
+    padding: 15px; /* Augmente l'espacement interne */
+    background-color: #f9f9f9;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajoute une légère ombre */
+    transition: transform 0.2s ease; /* Animation au survol */
+}
+
+.faq-item:hover {
+    transform: scale(1.02); /* Légère mise en avant au survol */
+}
+
+/* Agrandir la police des questions */
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.4rem; /* Augmente la taille de la police des questions */
+    padding: 15px; /* Zone cliquable */
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Agrandir la police des réponses */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-top: 10px;
+    color: #555;
+    font-size: 1.2rem; /* Augmente légèrement la taille de la police des réponses */
+}
+
+.faq-arrow {
+    transition: transform 0.3s ease;
+}
+
+.faq-arrow.rotated {
+    transform: rotate(90deg);
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: #0056b3;
+}
+
+.back-btn {
+    margin-right: 10px;
+}

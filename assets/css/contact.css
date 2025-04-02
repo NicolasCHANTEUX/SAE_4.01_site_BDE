@@ -1,0 +1,35 @@
+.faq-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.faq-button-container .btn {
+    font-size: 1.6rem; /* Augmente la taille du texte */
+    padding: 10px 20px; /* Augmente la taille du bouton */
+    background-color: #007bff; /* Même couleur que le bouton "Envoyer" */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprime les bordures */
+    border-radius: 5px; /* Ajoute des coins arrondis */
+    text-align: center;
+    text-decoration: none; /* Supprime le soulignement */
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animation pour le hover */
+}
+
+.faq-button-container .btn:hover {
+    background-color: #0056b3; /* Couleur plus foncée au survol */
+}
+
+.faq-text-container {
+    text-align: center; /* Centre le texte */
+    margin: 20px auto; /* Centre horizontalement et ajoute un espacement vertical */
+	margin-top: 40px; /* Ajoute un espacement supérieur */
+    font-size: 1.2rem; /* Augmente légèrement la taille du texte */
+    color: #333; /* Définit une couleur de texte */
+    background-color: #f9f9f9; /* Ajoute un fond clair */
+    padding: 15px; /* Ajoute un espacement interne */
+    border-radius: 8px; /* Ajoute des coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajoute une ombre légère */
+    max-width: 800px; /* Limite la largeur de la div */
+}
