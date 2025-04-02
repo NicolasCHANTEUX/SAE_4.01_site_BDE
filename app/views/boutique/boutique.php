@@ -9,10 +9,8 @@ require_once 'app/views/template/header.php';
 					<script>
 						const BOUTIQUE_DATA = <?php echo json_encode($produits); ?>;
 					</script>
-					<!-- Le contenu sera chargé dynamiquement ici -->
 				</div>
 
-				<!-- Formulaire de commande (initialement caché) -->
 				<div id="forms" style="display: none;">
 					<form id="orderForm" class="order-form">
 						<h3>Commander un produit</h3>
