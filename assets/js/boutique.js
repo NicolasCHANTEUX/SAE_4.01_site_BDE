@@ -64,9 +64,13 @@ function createProductCard(product) {
                     </div>
                 </div>
             </a>
+            <div class="btn btn-secondary">
+                Voir le produit
+            </div>
         </div>
     `;
 }
+
 function displayEmptyShop(container) {
     container.innerHTML = `
         <div class="boutique-empty">

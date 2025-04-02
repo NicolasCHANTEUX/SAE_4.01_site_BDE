@@ -1,25 +1,34 @@
 <?php
-
 require_once './app/core/Controller.php';
+require_once './app/repositories/ProduitRepository.php';
 
-class ProduitController extends Controller
-{
-	public function index($id = null)
-	{
-		if(session_status() == PHP_SESSION_NONE)
-			session_start();
-			
-		 // Données d'exemple avec chemin d'image absolu
-		$produit = [
-			'nom' => 'Exemple de Produit',
-			'description' => 'Description du produit...',
-			'prix' => 19.99,
-			'image' => 'assets/images/product-default.jpg' // Chemin relatif sans slash initial
-		];
+class ProduitController extends Controller {
+    private $produitRepository;
 
-		$this->view('/boutique/produit.php', [
-			'title' => 'Produit - BDE',
-			'produit' => $produit
-		]);
-	}
+    public function __construct() {
+        $this->produitRepository = new ProduitRepository();
+    }
+
+    public function index($id = null) {
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if ($id === null) {
+            header('Location: /boutique.php');
+            exit;
+        }
+
+        $produit = $this->produitRepository->findById($id);
+
+        if (!$produit) {
+            header('Location: /boutique.php');
+            exit;
+        }
+
+        $this->view('/boutique/produit.php', [
+            'title' => $produit['nom'] . ' - BDE',
+            'produit' => $produit
+        ]);
+    }
 }
