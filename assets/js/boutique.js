@@ -56,14 +56,11 @@ function createProductCard(product) {
                 </div>
                 <h3 class="product-title">${name}</h3>
                 <p class="product-description">${description}</p>
-                <div class="product-footer">
-                    <span class="product-price">${price.toFixed(2)}€</span>
-                    <div class="btn btn-secondary">
-                        <i class="fas fa-shopping-cart"></i>
-                        Voir produit
-                    </div>
-                </div>
+                <span class="product-price">${price.toFixed(2)}€</span>
             </a>
+            <div class="btn btn-secondary">
+                Voir le produit
+            </div>
         </div>
     `;
 }
