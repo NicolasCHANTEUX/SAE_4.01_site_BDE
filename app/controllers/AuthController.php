@@ -53,8 +53,8 @@ class AuthController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
-            /*$nom = $_POST['nom'] ?? '';
-            $prenom = $_POST['prenom'] ?? '';*/
+            $nom = $_POST['nom'] ?? '';
+            $prenom = $_POST['prenom'] ?? '';
 
             // Validation
             if (empty($email) || empty($password) || empty($nom) || empty($prenom)) {
