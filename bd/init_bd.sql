@@ -1,5 +1,5 @@
-DROP table IF EXISTS article;
-DROP TABLE IF EXISTS produit;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS commande;
 DROP TABLE IF EXISTS inscription_evenement;
 DROP TABLE IF EXISTS contacts;
@@ -37,7 +37,7 @@ CREATE TABLE evenement (
 	chemin_image VARCHAR(255)
 );
 
-CREATE TABLE produit (
+CREATE TABLE produits (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     description TEXT,
