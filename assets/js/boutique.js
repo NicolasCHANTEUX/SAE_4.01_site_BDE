@@ -58,9 +58,6 @@ function createProductCard(product) {
                 <p class="product-description">${description}</p>
                 <span class="product-price">${price.toFixed(2)}€</span>
             </a>
-            <div class="btn btn-secondary">
-                Voir le produit
-            </div>
         </div>
     `;
 }
