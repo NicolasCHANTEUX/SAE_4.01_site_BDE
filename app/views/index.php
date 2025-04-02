@@ -38,7 +38,6 @@ require_once 'app/views/template/header.php';
                 <p>Découvrez nos événements, nos produits et bien plus encore !</p>
             </section>
 
-            <!-- Section Carousel -->
             <section id="carousel" class="carousel-container">
                 <div class="carousel">
                     <?php if (isset($articles) && is_array($articles) && !empty($articles)): ?>
