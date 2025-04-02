@@ -13,39 +13,46 @@ class AuthController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
+			$error = '';
 
-            if (empty($email) || empty($password)) {
+            /*if (empty($email) || empty($password)) {
                 return json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
-            }
-
-            $user = $this->userRepository->findByEmail($email);
-            if (!$user || !password_verify($password, $user['mot_de_passe'])) {
-                return json_encode(['success' => false, 'message' => 'Email ou mot de passe incorrect']);
-            }
-
-            // Démarrer la session et stocker les infos utilisateur
+            }*/
+			if (empty($email) || empty($password)) {
+				$error = 'Tous les champs sont requis';
+			}
+			else {
+				$user = $this->userRepository->findByEmail($email);
+				
+				if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
+					$error  = 'Email ou mot de passe incorrect';
+				}
+				else
+					
+				{
+				if(session_status() == PHP_SESSION_NONE) {
             session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_email'] = $user['email'];
-            $_SESSION['user_role'] = $user['role'];
-            $_SESSION['user_nom'] = $user['nom'];
-            $_SESSION['user_prenom'] = $user['prenom'];
-
-            return json_encode(['success' => true, 'redirect' => '/compte.php']);
         }
+        $_SESSION['user_id'] = $user['id'];
+		
+		return $this->redirectTo('index.php');
+				}
+			}
+        }
+	
 
-        $this->view('connexion/connexion.php');
+        $this->view('connexion/connexion.php',['error'=>$error]);
     }
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
-            $nom = $_POST['nom'] ?? '';
-            $prenom = $_POST['prenom'] ?? '';
+            /*$nom = $_POST['nom'] ?? '';
+            $prenom = $_POST['prenom'] ?? '';*/
 
             // Validation
-            if (empty($email) || empty($password) || empty($nom) || empty($prenom)) {
+            if (empty($email) || empty($password) ) { //|| empty($nom) || empty($prenom)
                 return json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
             }
 
