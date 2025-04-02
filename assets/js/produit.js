@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const productImage = document.querySelector('.product-image img');
     if (productImage) {
         productImage.onerror = function() {
-			this.src = '/assets/images/product-default.jpg';
+            this.src = '/assets/images/product-default.jpg';
         };
     }
 
@@ -41,8 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ajouter ici la logique de commande
     });
 
-    // Gestion du bouton panier
-    cartButton?.addEventListener('click', () => {
+    cartButton?.addEventListener('click', async () => {
         const selectedSize = document.querySelector('.size-btn.selected')?.dataset.size;
         const selectedColor = document.querySelector('.color-btn.selected')?.dataset.color;
 
@@ -51,6 +50,45 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Ajouter ici la logique d'ajout au panier
+        // Get product data from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Get product details from the page
+        const productName = document.querySelector('.product-info h1').textContent;
+        const productPrice = parseFloat(document.querySelector('.product-price').textContent.replace('€', '').trim());
+        const productImage = document.querySelector('.product-image img').getAttribute('src');
+
+        try {
+            const response = await fetch('/panier.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    produitId: productId,
+                    nom: productName,
+                    prix: productPrice,
+                    image: productImage.replace(/^\//, ''),
+                    quantite: 1,
+                    taille: selectedSize,
+                    couleur: selectedColor
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            if (result.success) {
+                alert('Produit ajouté au panier');
+            } else {
+                alert(result.message || 'Erreur lors de l\'ajout au panier');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            alert('Erreur lors de l\'ajout au panier');
+        }
     });
 });
