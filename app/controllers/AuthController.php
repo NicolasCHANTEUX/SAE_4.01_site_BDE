@@ -15,20 +15,28 @@ class AuthController extends Controller {
             $password = $_POST['password'] ?? '';
 			$error = '';
 
-			if (empty($email) || empty($password)) {
-				$error = 'Tous les champs sont requis';
-			}
-			else {
-				$user = $this->userRepository->findByEmail($email);
-				
-				if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
-					$error  = 'Email ou mot de passe incorrect';
-				}
-				else
-					
-				{
-				if(session_status() == PHP_SESSION_NONE) {
-            session_start();
+            if (empty($email) || empty($password)) {
+                $error = 'Tous les champs sont requis';
+            }
+            else {
+                $user = $this->userRepository->findByEmail($email);
+                
+                if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
+                    $error = 'Email ou mot de passe incorrect';
+                }
+                else {
+                    if(session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_prenom'] = $user['prenom'];  // Ajout du prénom
+                    $_SESSION['user_nom'] = $user['nom'];        // Ajout du nom aussi
+                    $_SESSION['user_role'] = $user['role'];      // Ajout du rôle
+                    $_SESSION['user_email'] = $user['email'];    // Ajout de l'email
+
+                    return $this->redirectTo('index.php');
+                }
+            }
         }
         $_SESSION['user_id'] = $user['id'];
 		
