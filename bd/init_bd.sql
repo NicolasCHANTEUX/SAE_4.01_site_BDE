@@ -1,5 +1,5 @@
-DROP table IF EXISTS article;
-DROP TABLE IF EXISTS produit;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS commande;
 DROP TABLE IF EXISTS inscription_evenement;
 DROP TABLE IF EXISTS contacts;
@@ -7,11 +7,19 @@ DROP TABLE IF EXISTS evenement;
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS questionsFrequentes;
 
+<<<<<<< HEAD
 CREATE TABLE article (
 	id SERIAL PRIMARY KEY, 
 	titre VARCHAR(255) NOT NULL,
 	description TEXT NOT NULL, 
 	date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+=======
+CREATE TABLE articles (
+    id SERIAL PRIMARY KEY,
+    titre VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+>>>>>>> origin/accueil
 );
 
 CREATE TABLE utilisateur (
@@ -37,7 +45,7 @@ CREATE TABLE evenement (
 	chemin_image VARCHAR(255)
 );
 
-CREATE TABLE produit (
+CREATE TABLE produits (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     description TEXT,
