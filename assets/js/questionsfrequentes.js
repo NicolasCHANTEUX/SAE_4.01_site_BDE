@@ -1,29 +1,11 @@
 // Données des questions fréquentes
-const FAQ_DATA = [
-    {
-        question: "Quelle est la politique de retour ?",
-        reponse: "Vous pouvez retourner un produit dans les 30 jours suivant l'achat."
-    },
-    {
-        question: "Comment puis-je suivre ma commande ?",
-        reponse: "Vous pouvez suivre votre commande via le lien envoyé par email après l'achat."
-    },
-    {
-        question: "Quels sont les moyens de paiement acceptés ?",
-        reponse: "Nous acceptons les paiements par carte bancaire, PayPal et virement bancaire."
-    },
-    {
-        question: "Comment contacter le support client ?",
-        reponse: "Vous pouvez nous contacter via le formulaire de contact ou par email à support@bde.com."
-    }
-];
 
 // Fonction pour afficher les questions fréquentes
 function loadFAQ() {
     const faqContainer = document.querySelector('.faq-container');
 
-    if (!faqContainer) {
-        console.error("Impossible de trouver l'élément .faq-container");
+    if (!faqContainer || !FAQ_DATA) {
+        console.error("Impossible de charger les questions fréquentes");
         return;
     }
 

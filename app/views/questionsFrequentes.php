@@ -41,9 +41,11 @@
 
 
 	<main id="app">
-    <div class="faq-container">
-    	<!-- Les questions fréquentes seront insérées ici par le JavaScript -->
-	</div>
+    <div class="faq-container"></div>
+        <script>
+            // Conversion des données PHP en JSON pour JavaScript
+            const FAQ_DATA = <?php echo json_encode($questionsFrequentes); ?>;
+        </script>
     </main>
 
     <footer>
