@@ -15,7 +15,7 @@ INSERT INTO evenement (
     5.00,
     30,
     0,
-    'assets/images/events/bowling.jpg'
+    'assets/images/events/bowling.png'
 ),
 (
     'Tournoi CS:GO',
@@ -24,7 +24,7 @@ INSERT INTO evenement (
     0.00,
     40,
     0,
-    'assets/images/events/csgo.jpg'
+    'assets/images/events/csgo.png'
 ),
 (
     'Soirée Jeux de Société',
@@ -33,7 +33,7 @@ INSERT INTO evenement (
     2.00,
     25,
     0,
-    'assets/images/events/board-games.jpg'
+    'assets/images/events/board-games.png'
 ),
 (
     'LAN Party',
@@ -42,7 +42,7 @@ INSERT INTO evenement (
     8.00,
     50,
     0,
-    'assets/images/events/lan-party.jpg'
+    'assets/images/events/lan-party.png'
 ),
 (
     'Barbecue de fin d''année',
@@ -51,5 +51,5 @@ INSERT INTO evenement (
     10.00,
     100,
     0,
-    'assets/images/events/bbq.jpg'
+    'assets/images/events/bbq.png'
 );
