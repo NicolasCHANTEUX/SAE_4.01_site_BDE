@@ -3,7 +3,7 @@ require_once 'app/views/template/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/produit.css">
 
-    <div class="navigation-buttons">○
+    <div class="navigation-buttons">
         <a href="/boutique.php" class="nav-btn back-btn">
             <i class="fas fa-arrow-left"></i>
             <span>Retour</span>
@@ -19,8 +19,8 @@ require_once 'app/views/template/header.php';
             <div class="product-details">
                 <div class="product-image">
                     <img src="/<?= htmlspecialchars($produit['image'] ?? 'assets/images/product-default.jpg') ?>" 
-                         alt="<?= htmlspecialchars($produit['nom'] ?? 'Produit') ?>"
-                         onerror="this.src='/assets/images/product-default.jpg'">
+                        alt="<?= htmlspecialchars($produit['nom'] ?? 'Produit') ?>"
+                        onerror="this.src='/assets/images/product-default.jpg'">
                 </div>
                 
                 <div class="product-info">
@@ -52,7 +52,12 @@ require_once 'app/views/template/header.php';
                     </div>
 
                     <div class="product-actions">
-                        <button class="btn-primary btn-order">Commander</button>
+                        <form method="POST" action="/app/controllers/commander.php">
+                            <input type="hidden" name="produit_id" value="<?= $produit['id'] ?>">
+                            <input type="hidden" name="taille" id="taille_selected">
+                            <input type="hidden" name="couleur" id="couleur_selected">
+                            <button type="submit" class="btn-primary btn-order" name="commander">Commander</button>
+                        </form>
                         <button class="btn-secondary btn-cart">
                             <i class="fas fa-shopping-cart"></i>
                             Ajouter au panier

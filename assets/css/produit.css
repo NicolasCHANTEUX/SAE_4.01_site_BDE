@@ -124,9 +124,7 @@
     border: 2px solid var(--primary-color);
 }
 
-.btn-order:hover {
-    background: #2980b9;
-}
+
 
 .btn-cart:hover {
     background: var(--primary-color);
@@ -167,6 +165,14 @@
 
 .cart-btn i {
     font-size: 1.2rem;
+}
+
+.back-btn {
+    margin-right: auto; /* Force le bouton retour à gauche */
+}
+
+.cart-btn {
+    margin-left: auto; /* Force le bouton panier à droite */
 }
 
 @media (max-width: 768px) {
