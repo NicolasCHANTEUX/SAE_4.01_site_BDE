@@ -1,31 +1,54 @@
 <?php
 
 require_once './app/core/Controller.php';
-require_once './app/repositories/ArticleRepository.php';
+require_once './app/trait/FormTrait.php';
+require_once './app/services/ArticleService.php';
+require_once './app/services/AuthService.php';
 
 class AccueilAdminController extends Controller {
-   private $articleRepository;
-
-   public function __construct() {
-      $this->articleRepository = new ArticleRepository();
-   }
+   use FormTrait;
 
    public function index()
    {
-        if(session_status() == PHP_SESSION_NONE)
-           session_start();
+      //$this->checkAuth();
+      $service = new ArticleService();
+      $articles = $service->allArticles();
 
-        if(isset($_GET['action']) && $_GET['action'] === 'list') {
-            header('Content-Type: application/json');
-            echo json_encode($this->articleRepository->findAll());
-            exit;
-        }
-
-        $articles = $this->articleRepository->findAll();
         $this->view('accueil/accueilAdmin.php', [
-            'title' => 'Le site du BDE',
-            'articles' => $articles,
+            'title'    => 'Gestion Articles',
+            'articles' => $articles
         ]);
 
+   }
+
+   public function create() {
+      $this->checkAuth();
+      $categoryService = new CategoryService();
+      $categories = $categoryService->allCategory();
+
+      $data = $this->getAllPostParams();
+      $errors = [];
+
+      if (!empty($data)) {
+          try {
+              $articleService = new ArticleService();
+              $articleService->create($data);
+              $this->redirectTo('accueilAdmin.php');
+          } catch (Exception $e) {
+              $errors = explode(', ', $e->getMessage());
+          }
+      }
+
+      $this->view('/accueil/form', 'Création d\'un article', [
+          'data' => $data,
+          'errors' => $errors
+      ]);
+   }
+
+   private function checkAuth() {
+      $auth = new AuthService();
+      if (!$auth->isLoggedIn()) {
+          $this->redirectTo('connexion.php');
+      }
    }
 }

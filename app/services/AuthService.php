@@ -1,5 +1,5 @@
 <?php
-require_once './app/traits/AuthTrait.php';
+require_once './app/trait/AuthTrait.php';
 
 class AuthService {
     use AuthTrait;
