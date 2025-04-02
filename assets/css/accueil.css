@@ -1,4 +1,6 @@
-/* Styles du carousel */
+/*///////////////////
+// Style Caroussel //
+///////////////////*/
 .carousel-container {
 	position: relative;
 	width: 100%;
@@ -87,53 +89,44 @@
 	line-height: 1.6;
 }
 
-/* Section Événements */
+/*//////////////////////
+// Section Événements //
+//////////////////////*/
+
 .evenements-container {
     margin: 2rem auto;
     padding: 1rem;
-	
 }
 
 .evenements-container h2 {
     text-align: center;
     margin-bottom: 1rem;
-	
-
 }
 
 .evenements-grid {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-	
+    justify-content: space-around; /* Espacement horizontal uniforme */
+    align-items: stretch; /* Étire les cartes événements pour qu'elles aient la même hauteur */
+    gap: 1rem; /* Espacement entre les cartes */
 }
 
-.evenement-item{
-    width: 30%;
+.evenement-item {
+    width: 30%; /* Largeur des cartes événements */
     background-color: #fff;
     padding: 1rem;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     text-align: center;
-	background: rgb(231, 231, 231);
-	border: 3px solid var(--primary-color);
-	border-radius: var(--border-radius);
-}
-
-.voir-plus-item {
-    width: 20%;
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    text-align: center;
-	background: rgb(216, 216, 216);
-	border: 3px solid var(--primary-color);
-	border-radius: var(--border-radius);
+    background: rgb(231, 231, 231);
+    border: 3px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Espacer le contenu verticalement */
+    align-items: center; /* Centrer le contenu horizontalement */
 }
 
 .evenement-item img {
-    width: 60%;
+    width: 60%; /* Taille de l'image */
     border-radius: var(--border-radius);
 }
 
@@ -145,18 +138,31 @@
     color: var(--text-color);
 }
 
+/* Style pour le bouton "Voir plus d'événements" */
 .voir-plus-item {
+    width: 15%; /* Largeur réduite pour le bouton */
+    padding: 0.5rem; /* Réduction du padding */
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    background: rgb(216, 216, 216);
+    border: 3px solid var(--primary-color);
+
+    /* Centrage du contenu */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Centrer verticalement */
+    align-items: center; /* Centrer horizontalement */
+
+    /* Exclure le bouton de l'effet stretch */
+    align-self: center; 
 }
 
 .voir-plus-item span {
-    font-size: 2rem;
+    font-size: 1.5rem; /* Taille réduite pour le symbole "+" */
     font-weight: bold;
 }
 
 .voir-plus-item p {
-    margin-top: 0.5rem;
+    margin-top: 0.2rem; /* Réduction de l'espacement vertical */
 }

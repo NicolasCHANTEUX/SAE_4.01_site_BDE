@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS inscription_evenement;
 DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS evenement;
 DROP TABLE IF EXISTS utilisateur;
+DROP TABLE IF EXISTS QuestionsFrequentes;
 
 Create table article (
 	id serial primary key, 
@@ -32,7 +33,8 @@ CREATE TABLE evenement (
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     prix DECIMAL(10,2) DEFAULT 0,
     max_participants INTEGER,
-    nb_inscrits INTEGER DEFAULT 0
+    nb_inscrits INTEGER DEFAULT 0,
+	chemin_image VARCHAR(255)
 );
 
 CREATE TABLE produit (
@@ -75,4 +77,11 @@ CREATE TABLE contacts (
     message TEXT NOT NULL,
     date_envoi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     statut VARCHAR(20) DEFAULT 'non_lu'
+);
+
+CREATE TABLE QuestionsFrequentes (
+   idQuestion INT,
+   question   VARCHAR(50 ) NOT NULL,
+   reponse    VARCHAR(200) NOT NULL,
+   PRIMARY KEY(idQuestion)
 );

@@ -1,68 +1,23 @@
 const DEFAULT_IMAGE = './assets/images/product-default.jpg';
 
-// Données de test pour les événements
-const TEST_EVENTS = [
-    {
-        id: 1,
-        nom: "Bowling",
-        prix: 10.00,
-        image: "./assets/images/product-default.jpg",
-        description: "Partie de bowling avec le BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "2 heures",
-		date: "2023-09-01"
-    },
-    {
-        id: 2,
-        nom: "Poker",
-        prix: 0,
-		image: "./assets/images/product-default.jpg",
-        description: "Sweat chaud et confortable avec logo du BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "3 heures",
-		date: "2025-05-01"
-    },
-    {
-        id: 3,
-        nom: "Minigolf",
-        prix: 8.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Mug en céramique avec logo du BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "2 heures",
-		date: "2025-04-03"
-    },
-    {
-        id: 4,
-        nom: "Karting",
-        prix: 4.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Lot de 5 stickers BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "1 heure",
-		date: "2025-04-01"
-    },
-	{
-        id: 5,
-        nom: "Laser Game",
-        prix: 9.99,
-		image: "./assets/images/product-default.jpg",
-        description: "Lot de 5 stickers BDE",
-		addresse: "10 rue de la Paix, Paris",
-		duree: "1 heure 30 minutes",
-		date: "2025-09-01"
-    }
-];
-
 // Fonction pour charger les événements
 async function loadEvents() {
     try {
-        // Simuler un délai de chargement
-        await new Promise(resolve => setTimeout(resolve, 500));
+		const response = await fetch('/evenement.php?action=list');
         
-        // Utiliser les données de test au lieu de l'API
-        displayEvents(TEST_EVENTS);
-        
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des événements');
+        }
+
+        const events = await response.json();
+
+        if (!events || events.length === 0) {
+            displayEmptyEvents();
+            return;
+        }
+
+        displayEvents(events);
+
     } catch (error) {
         console.error('Erreur:', error);
         displayError("Impossible de charger les événements pour le moment.");
@@ -109,20 +64,20 @@ function displayEvents(events) {
 }
 
 function createEventCard(event) {
-    const name = event.nom || 'Produit sans nom';
-    const price = event.prix || 0;
-    const image = event.image || DEFAULT_IMAGE;
-    const eventDate = event.date ? new Date(event.date).toLocaleDateString('fr-FR') : 'Date non définie';
-    const priceDisplay = price === 0 ? 'Gratuit' : price + '€';
+    const titre = event.titre || 'Événement sans nom';
+    const prix = event.prix || 0;
+    const image = event.chemin_image || DEFAULT_IMAGE;
+    const date = new Date(event.date_evenement);
+    const priceDisplay = prix === 0 ? 'Gratuit' : prix + '€';
 
     return `
         <div class="evenement-card" data-event-id="${event.id}">
             <div class="evenement-image">
-                <img src="${image}" alt="${name}" 
+                <img src="/${image}" alt="${titre}" 
                      onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
             </div>
-            <h3 class="evenement-title">${name}</h3>
-            <p class="evenement-date">${eventDate}</p>
+            <h3 class="evenement-title">${titre}</h3>
+            <p class="evenement-date">${date.toLocaleDateString('fr-FR')}</p>
             <p class="evenement-price">${priceDisplay}</p>
         </div>
     `;
@@ -132,28 +87,26 @@ function showEventDetails(event) {
     const detailsContainer = document.getElementById('event-details');
     detailsContainer.classList.remove('hidden');
     
-    const eventDate = new Date(event.date);
-    const formattedDate = eventDate.toLocaleDateString('fr-FR', {
+    const date = new Date(event.date_evenement);
+    const formattedDate = date.toLocaleDateString('fr-FR', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
     });
     
     detailsContainer.innerHTML = `
-        <h2>${event.nom}</h2>
+        <h2>${event.titre}</h2>
         <div class="event-details-content">
             <div class="event-details-item">
                 <span class="event-details-label">Date:</span>
                 <span>${formattedDate}</span>
             </div>
             <div class="event-details-item">
-                <span class="event-details-label">Durée:</span>
-                <span>${event.duree}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Adresse:</span>
-                <span>${event.addresse}</span>
+                <span class="event-details-label">Places:</span>
+                <span>${event.nb_inscrits}/${event.max_participants || '∞'}</span>
             </div>
             <div class="event-details-item">
                 <span class="event-details-label">Prix:</span>
@@ -195,6 +148,20 @@ function displayError(message) {
             <button onclick="loadEvents()" class="btn-retry">
                 Réessayer
             </button>
+        </div>
+    `;
+}
+
+function displayEmptyEvents() {
+    const evenementApp = document.getElementById('evenement-app');
+    evenementApp.innerHTML = `
+        <div class="empty-events">
+            <img src="/assets/images/calendrier-empty.jpg" 
+                 alt="Aucun événement" 
+                 onerror="this.src='${DEFAULT_IMAGE}'">
+            <h2>Aucun événement prévu pour le moment</h2>
+            <p>Notre équipe travaille à l'organisation de nouveaux événements.</p>
+            <p class="subtitle">Revenez bientôt pour découvrir nos prochaines activités !</p>
         </div>
     `;
 }

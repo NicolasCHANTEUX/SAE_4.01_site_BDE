@@ -39,6 +39,7 @@ header {
 
 .main-nav {
 	display: flex;
+
 	justify-content: space-between;
 	align-items: center;
 	max-width: 1200px;
@@ -302,4 +303,71 @@ footer {
 		justify-content: center;
 		margin-top: 1rem;
 	}
+}
+
+/*///////////////
+// Menu mobile //
+///////////////*/
+
+/* Menu déroulant mobile */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Hors de l'écran par défaut */
+    width: 250px; /* Largeur du menu */
+    height: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding-top: 2rem;
+    transition: left 0.3s ease; /* Animation d'ouverture/fermeture */
+    z-index: 1000; /* Au-dessus du contenu principal */
+}
+
+/* Liste des liens dans le menu mobile */
+.mobile-menu ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.mobile-menu ul li {
+    margin-bottom: 1rem;
+}
+
+.mobile-menu ul li a {
+    display: block; /* Chaque lien occupe toute la largeur */
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem; /* Taille des titres */
+    padding: 0.8rem 1rem; /* Espacement interne pour un meilleur alignement */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Ligne séparatrice entre les liens */
+}
+
+.mobile-menu ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Effet hover */
+}
+
+/* Menu ouvert */
+.mobile-menu.open {
+    left: 0; /* Affiche le menu */
+}
+
+/* Bouton hamburger */
+.menu-toggle {
+    display: block; /* Affiché uniquement en mode mobile */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+}
+
+/* Styles spécifiques au mobile */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none; /* Masquer le menu PC en mode mobile */
+    }
 }

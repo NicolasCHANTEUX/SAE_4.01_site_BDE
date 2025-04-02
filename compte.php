@@ -1,3 +1,9 @@
 <?php
 require_once './app/controllers/CompteController.php';
-(new CompteController())->index();
+require_once './app/middlewares/AuthMiddleware.php';
+
+// Vérifier l'authentification
+AuthMiddleware::requireAuth();
+
+$controller = new CompteController();
+$controller->index();
