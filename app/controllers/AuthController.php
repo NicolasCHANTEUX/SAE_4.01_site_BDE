@@ -13,28 +13,32 @@ class AuthController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
+			$error = '';
 
-            if (empty($email) || empty($password)) {
-                return json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
-            }
-
-            $user = $this->userRepository->findByEmail($email);
-            if (!$user || !password_verify($password, $user['mot_de_passe'])) {
-                return json_encode(['success' => false, 'message' => 'Email ou mot de passe incorrect']);
-            }
-
-            // Démarrer la session et stocker les infos utilisateur
+			if (empty($email) || empty($password)) {
+				$error = 'Tous les champs sont requis';
+			}
+			else {
+				$user = $this->userRepository->findByEmail($email);
+				
+				if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
+					$error  = 'Email ou mot de passe incorrect';
+				}
+				else
+					
+				{
+				if(session_status() == PHP_SESSION_NONE) {
             session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_email'] = $user['email'];
-            $_SESSION['user_role'] = $user['role'];
-            $_SESSION['user_nom'] = $user['nom'];
-            $_SESSION['user_prenom'] = $user['prenom'];
-
-            return json_encode(['success' => true, 'redirect' => '/compte.php']);
         }
+        $_SESSION['user_id'] = $user['id'];
+		
+		return $this->redirectTo('index.php');
+				}
+			}
+        }
+	
 
-        $this->view('connexion/connexion.php');
+        $this->view('connexion/connexion.php',['error'=>$error]);
     }
 
     public function register() {
@@ -46,12 +50,14 @@ class AuthController extends Controller {
 
             // Validation
             if (empty($email) || empty($password) || empty($nom) || empty($prenom)) {
-                return json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
+                $_SESSION['error'] = 'Tous les champs sont requis';
+                return $this->view('creerCompte/creerCompte.php', ['error' => 'Tous les champs sont requis']);
             }
 
             // Vérifier si l'email existe déjà
             if ($this->userRepository->findByEmail($email)) {
-                return json_encode(['success' => false, 'message' => 'Cet email est déjà utilisé']);
+                $_SESSION['error'] = 'Cet email est déjà utilisé';
+                return $this->view('creerCompte/creerCompte.php', ['error' => 'Cet email est déjà utilisé']);
             }
 
             // Créer l'utilisateur
@@ -65,12 +71,15 @@ class AuthController extends Controller {
             ]);
 
             if ($success) {
-                return json_encode(['success' => true, 'redirect' => '/connexion.php']);
+                $_SESSION['success'] = 'Compte créé avec succès';
+                header('Location: /connexion.php');
+                exit();
+            } else {
+                $_SESSION['error'] = 'Erreur lors de la création du compte';
+                return $this->view('creerCompte/creerCompte.php', ['error' => 'Erreur lors de la création du compte']);
             }
-
-            return json_encode(['success' => false, 'message' => 'Erreur lors de la création du compte']);
         }
 
-        $this->view('creerCompte/creerCompte.php');
+        return $this->view('creerCompte/creerCompte.php');
     }
 }

@@ -6,7 +6,32 @@ require_once 'app/views/template/header.php';
         
     <div class="signup-container">
         <h1>Créer un compte</h1>
-        <form action="inscription.php" method="post">
+        
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger">
+                <?php 
+                    echo $_SESSION['error'];
+                    unset($_SESSION['error']);
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+                <?php 
+                    echo $_SESSION['success'];
+                    unset($_SESSION['success']);
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="creerCompte.php" method="post">
+            
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+            
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
             
             <label for="email">Adresse e-mail</label>
             <input type="email" id="email" name="email" placeholder="Votre adresse e-mail" required>
@@ -22,6 +47,6 @@ require_once 'app/views/template/header.php';
         
         <p>Vous avez un compte ? <a href="connexion.php">Connectez-vous</a></p>
     </div>
-</body>
+</main>
 <script src="/assets/js/connexion.js"></script>
 <?php require_once 'app/views/template/footer.php'; ?>
