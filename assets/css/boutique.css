@@ -97,7 +97,7 @@
 }
 
 .btn-secondary {
-    background-color: #95a5a6;
+    background-color: var(--secondary-color);
     color: white;
     border: none;
     padding: 8px 15px;
