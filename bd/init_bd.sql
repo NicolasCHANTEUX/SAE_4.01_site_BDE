@@ -1,6 +1,7 @@
-DROP table IF EXISTS articles;
+DROP TABLE IF EXISTS articles;
 DROP TABLE IF EXISTS produits;
 DROP TABLE IF EXISTS commande;
+DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS inscription_evenement;
 DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS evenement;
@@ -8,10 +9,10 @@ DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS questionsFrequentes;
 
 CREATE TABLE articles (
-	id SERIAL PRIMARY KEY, 
-	titre VARCHAR(255) NOT NULL,
-	description TEXT NOT NULL, 
-	date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id SERIAL PRIMARY KEY,
+    titre VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE utilisateur (
@@ -52,12 +53,17 @@ CREATE TABLE commande (
     id SERIAL PRIMARY KEY,
     utilisateur_id INTEGER REFERENCES utilisateur(id),
     date_commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    statut VARCHAR(20) DEFAULT 'en_attente',
+    statut VARCHAR(20) DEFAULT 'en_attente'
+);
+
+CREATE TABLE ligne_commande (
+    id SERIAL PRIMARY KEY,
+    commande_id INTEGER REFERENCES commande(id),
+    produit_id INTEGER REFERENCES produits(id),
+    quantite INTEGER NOT NULL,
     taille VARCHAR(5),
     couleur VARCHAR(20),
-    adresse TEXT,
-    ville VARCHAR(100),
-    code_postal VARCHAR(5)
+    prix_unitaire DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE inscription_evenement (

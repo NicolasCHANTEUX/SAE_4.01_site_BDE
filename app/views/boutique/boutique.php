@@ -9,7 +9,6 @@ require_once 'app/views/template/header.php';
 					<script>
 						const BOUTIQUE_DATA = <?php echo json_encode($produits); ?>;
 					</script>
-					<!-- Le contenu sera chargé dynamiquement ici -->
 				</div>
 			</div>
 	</main>
