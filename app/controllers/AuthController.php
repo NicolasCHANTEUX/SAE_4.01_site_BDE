@@ -15,9 +15,6 @@ class AuthController extends Controller {
             $password = $_POST['password'] ?? '';
 			$error = '';
 
-            /*if (empty($email) || empty($password)) {
-                return json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
-            }*/
 			if (empty($email) || empty($password)) {
 				$error = 'Tous les champs sont requis';
 			}
@@ -48,17 +45,19 @@ class AuthController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
-            /*$nom = $_POST['nom'] ?? '';
-            $prenom = $_POST['prenom'] ?? '';*/
+            $nom = $_POST['nom'] ?? '';
+            $prenom = $_POST['prenom'] ?? '';
 
             // Validation
-            if (empty($email) || empty($password) ) { //|| empty($nom) || empty($prenom)
-                return json_encode(['success' => false, 'message' => 'Tous les champs sont requis']);
+            if (empty($email) || empty($password) || empty($nom) || empty($prenom)) {
+                $_SESSION['error'] = 'Tous les champs sont requis';
+                return $this->view('creerCompte/creerCompte.php', ['error' => 'Tous les champs sont requis']);
             }
 
             // Vérifier si l'email existe déjà
             if ($this->userRepository->findByEmail($email)) {
-                return json_encode(['success' => false, 'message' => 'Cet email est déjà utilisé']);
+                $_SESSION['error'] = 'Cet email est déjà utilisé';
+                return $this->view('creerCompte/creerCompte.php', ['error' => 'Cet email est déjà utilisé']);
             }
 
             // Créer l'utilisateur
@@ -72,12 +71,15 @@ class AuthController extends Controller {
             ]);
 
             if ($success) {
-                return json_encode(['success' => true, 'redirect' => '/connexion.php']);
+                $_SESSION['success'] = 'Compte créé avec succès';
+                header('Location: /connexion.php');
+                exit();
+            } else {
+                $_SESSION['error'] = 'Erreur lors de la création du compte';
+                return $this->view('creerCompte/creerCompte.php', ['error' => 'Erreur lors de la création du compte']);
             }
-
-            return json_encode(['success' => false, 'message' => 'Erreur lors de la création du compte']);
         }
 
-        $this->view('creerCompte/creerCompte.php');
+        return $this->view('creerCompte/creerCompte.php');
     }
 }
