@@ -71,7 +71,7 @@ class ContactRepository {
             return $stmt->execute(['id' => $id]);
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            return false;
+            return null;
         }
     }
 }

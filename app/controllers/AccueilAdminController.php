@@ -6,7 +6,7 @@ require_once './app/services/ArticleService.php';
 require_once './app/services/AuthService.php';
 
 class AccueilAdminController extends Controller {
-   use FormTrait;
+    use FormTrait;
 
    public function index()
    {
@@ -14,36 +14,83 @@ class AccueilAdminController extends Controller {
       $service = new ArticleService();
       $articles = $service->allArticles();
 
-        $this->view('accueil/accueilAdmin.php', [
+        $this->view('accueil/form.php', [
             'title'    => 'Gestion Articles',
             'articles' => $articles
         ]);
 
-   }
+    }
 
-   public function create() {
-      //$this->checkAuth();
-      $categoryService = new CategoryService();
-      $categories = $categoryService->allCategory();
+    public function create() {
+        $this->checkAuth();
 
-      $data = $this->getAllPostParams();
-      $errors = [];
+        $data = $this->getAllPostParams();
+        $errors = [];
 
-      if (!empty($data)) {
-          try {
-              $articleService = new ArticleService();
-              $articleService->create($data);
-              $this->redirectTo('accueilAdmin.php');
-          } catch (Exception $e) {
-              $errors = explode(', ', $e->getMessage());
-          }
-      }
+        if (!empty($data)) {
+            try {
+                $articleService = new ArticleService();
+                $articleService->create($data);
+                $this->redirectTo('accueilAdmin.php');
+            } catch (Exception $e) {
+                $errors = explode(', ', $e->getMessage());
+            }
+        }
 
-      $this->view('/accueil/form', 'Création d\'un article', [
-          'data' => $data,
-          'errors' => $errors
-      ]);
-   }
+        $this->view('/accueil/form.php', [
+            'title' => 'Création Article',
+            'data' => $data,
+            'errors' => $errors
+        ]);
+    }
+
+
+    public function update() {
+        $this->checkAuth();
+
+        $data = $this->getAllPostParams();
+        $errors = [];
+
+        if (!empty($data)) {
+            try {
+                $articleService = new ArticleService();
+                $articleService->update($data);
+                $this->redirectTo('accueilAdmin.php');
+            } catch (Exception $e) {
+                $errors = explode(', ', $e->getMessage());
+            }
+        }
+
+        $this->view('/accueil/form.php', [
+            'title' => 'Modification Article',
+            'data' => $data,
+            'errors' => $errors
+        ]);
+    }
+
+
+    public function delete() {
+        $this->checkAuth();
+
+        $data = $this->getAllPostParams();
+        $errors = [];
+
+        if (!empty($data)) {
+            try {
+                $articleService = new ArticleService();
+                $articleService->delete($data);
+                $this->redirectTo('accueilAdmin.php');
+            } catch (Exception $e) {
+                $errors = explode(', ', $e->getMessage());
+            }
+        }
+
+        $this->view('/accueil/form.php', [
+            'title' => 'Suppression Article',
+            'data' => $data,
+            'errors' => $errors
+        ]);
+    }
 
    private function checkAuth() {
       $auth = new AuthService();

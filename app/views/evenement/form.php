@@ -1,7 +1,7 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
-<link rel="stylesheet" href="/assets/css/evenement.css">
+<link rel="stylesheet" href="/assets/css/form.css">
 <main id="app">
     <div class="container">
         <!-- Formulaire pour ajouter un événement -->

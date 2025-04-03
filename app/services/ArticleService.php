@@ -18,22 +18,18 @@ class ArticleService {
             $errors[] = 'Le titre est requis.';
         }
         if (empty($data['description'])) {
-            $errors[] = 'L\'article doit contenir une description.';
+            $errors[] = 'La description est requise.';
         }
         if (empty($data['date_creation'])) {
-            $errors[] = 'Date invalide.';
+            $errors[] = 'La date est incorrecte.';
         }
+
 
         if (!empty($errors)) {
             throw new Exception(implode(', ', $errors));
         }
 
-        $article = new Article(
-            null,
-            $data['titre'],
-            $data['description'],
-            $data['date_creation']
-        );
+        $article = new Article(null, $data['titre'], $data['description'], $data['date_creation']);
 
         $repository = new ArticleRepository();
         if (!$repository->create($article)) {
@@ -43,8 +39,53 @@ class ArticleService {
         return $article;
     }
 
-    public function supprimerArticle(int $id): bool {
+
+    public function update() {
+
+        if (empty($data['id'])) {
+            $errors[] = 'Le id est requis.';
+        }
+        if (empty($data['titre'])) {
+            $errors[] = 'Le titre est requis.';
+        }
+        if (empty($data['description'])) {
+            $errors[] = 'La description est requise.';
+        }
+        if (empty($data['date_creation'])) {
+            $errors[] = 'La date est incorrecte.';
+        }
+
+        if (!empty($errors)) {
+            throw new Exception(implode(', ', $errors));
+        }
+
         $repository = new ArticleRepository();
+        if (!$repository->update($article)) {
+            throw new Exception('Erreur lors de la modification de l\'article.');
+        }
+    }
+
+
+    public function delete(array $data): bool {
+        $errors = [];
+
+        // Validation des données
+        if (empty($data['id'])) {
+            $errors[] = 'L\'id est invalide.';
+            return false;
+        }
+
+        if (!empty($errors)) {
+            throw new Exception(implode(', ', $errors));
+            return false;
+        }
+
+        $repository = new ArticleRepository();
+        if (!$repository->delete($data['id'])) {
+            throw new Exception('Erreur lors de la création de l\'article.');
+        }
+
+        return true;
     }
 
     public function find(int $id): ?Article

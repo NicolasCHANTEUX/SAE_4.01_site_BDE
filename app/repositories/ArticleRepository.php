@@ -29,29 +29,34 @@ class ArticleRepository {
         return null;
     }
 
-    public function create(array $data): bool {
+    public function create(Article $article): bool {
         $query = 'INSERT INTO articles (titre, description, date_creation)
                  VALUES (:titre, :description, :date_creation)';
         
         $stmt = $this->pdo->prepare($query);
-        return $stmt->execute($data);
+        return $stmt->execute([
+            'titre' => $article->getTitre(),
+            'description' => $article->getDescription(),
+            'date_creation' => $article->getDateCreation()
+        ]);
     }
 
     public function update(array $data): bool {
-        $query = 'UPDATE articles 
-                 SET titre = :titre, 
-                     description = :description, 
-                     date_creation = :date_creation
-                 WHERE id = :id';
-        
-        $stmt = $this->pdo->prepare($query);
-        return $stmt->execute($data);
+        $article = new Article(null, $data['titre'], $data['description'], $data['date_creation']);
+
+        $this->delete($data['id']);
+        $this->create($article);
     }
 
     public function delete(int $id): bool {
-        $query = 'DELETE FROM articles WHERE id = :id';
-        $stmt = $this->pdo->prepare($query);
-        return $stmt->execute(['id' => $id]);
+        try {
+            $query = 'DELETE FROM articles WHERE id = :id';
+            $stmt = $this->pdo->prepare($query);
+            return $stmt->execute(['id' => $id]);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
     private function createArticleFromRow(array $row): Article

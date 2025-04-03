@@ -2,7 +2,7 @@
 
 class Article {
     public function __construct(
-        private int    $id,
+        private ?int    $id,
         private string $titre,
         private string $description,
         private ?string $date_creation,
