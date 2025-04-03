@@ -1,41 +1,36 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
-    <h1>ADMIN</h1>
-    <link rel="stylesheet" href="/assets/css/accueil.css">
-    <main id="app">
-        <div class="container">
-            <section id="presentation" class="hero-section">
-                <h1>Bienvenue sur le site du BDE</h1>
-                <p>Découvrez nos événements, nos produits et bien plus encore !</p>
-            </section>
 
-            <!-- Section Carousel -->
-            <section id="carousel" class="carousel-container">
-                <div class="carousel">
-                    <?php if (isset($articles) && is_array($articles) && !empty($articles)): ?>
-                        <?php foreach ($articles as $key => $article): ?>
-                            <div class="carousel-item <?= $key === 0 ? 'active' : '' ?>">
-                                <h2><?= htmlspecialchars($article['titre']) ?></h2>
-                                <p><?= htmlspecialchars($article['description']) ?></p>
-                                <small>Créé le : <?= htmlspecialchars($article['date_creation']) ?></small>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>Aucun article à afficher pour le moment.</p>
-                    <?php endif; ?>
-                    </div>
-                    <div class="carousel-controls">
-                        <button class="prev-btn" aria-label="Article précédent">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="next-btn" aria-label="Article suivant">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-            </section>
-
-        </div>
-    </main>
-    <script src="/assets/js/accueil.js"></script>
+<link rel="stylesheet" href="/assets/css/accueilAdmin.css">
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date_Creation</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($articles as $article): ?>
+        <tr>
+            <td><?= $article->getId() ?></td>
+            <td><?= $article->getTitre() ?></td>
+            <td><?= $article->getDescription() ?></td>
+            <td><?= $article->getDateCreation() ?></td>
+            <td>
+                <a href="article_update.php?id=<?= $article->getId() ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                <a href="article_delete.php?id=<?= $article->getId() ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<div class="d-flex flex-row-reverse">
+    <a href="article_create.php" class="btn btn-success">
+        <i class="fa fa-plus"></i> Ajouter un article
+    </a>
+</div>
 <?php require_once 'app/views/template/footer.php'; ?>
+

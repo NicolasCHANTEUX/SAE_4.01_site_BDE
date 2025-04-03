@@ -1,6 +1,7 @@
 <?php
 
 require_once './app/core/Repository.php';
+require_once './app/entities/Article.php';
 
 class ArticleRepository {
     private $pdo;
@@ -10,17 +11,22 @@ class ArticleRepository {
     }
 
     public function findAll(): array {
-        $query = 'SELECT * FROM articles ORDER BY date_creation ASC';
-        $stmt = $this->pdo->query($query);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->query('SELECT * FROM article');
+        $articles = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $articles[] = $this->createArticleFromRow($row);
+        }
+        return $articles;
     }
 
-    public function findById(int $id): ?array {
-        $query = 'SELECT * FROM articles WHERE id = :id';
-        $stmt = $this->pdo->prepare($query);
+    public function findById(int $id): ?Article
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM article WHERE id = :id');
         $stmt->execute(['id' => $id]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ?: null;
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($article)
+            return $this->createArticleFromRow($article);
+        return null;
     }
 
     public function create(array $data): bool {
@@ -46,6 +52,11 @@ class ArticleRepository {
         $query = 'DELETE FROM articles WHERE id = :id';
         $stmt = $this->pdo->prepare($query);
         return $stmt->execute(['id' => $id]);
+    }
+
+    private function createArticleFromRow(array $row): Article
+    {
+        return new Article($row['id'], 'titre', $row['description'], '10');
     }
 
 }
