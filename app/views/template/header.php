@@ -33,31 +33,6 @@ $adminPages = [
 $adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redirige vers admin.php
 ?>
 
-<?php
-$isAdmin = false;
-if (isset($_SESSION['user'])) {
-    $user = unserialize($_SESSION['user']);
-    if ($user instanceof User) {
-        $isAdmin = $user->getRole() === 'admin';
-    }
-}
-
- // Détermine la page actuelle
- $currentPage = basename($_SERVER['REQUEST_URI']);
-
- // Associe chaque page à son équivalent admin
-$adminPages = [
-    'index.php' => 'accueilAdmin.php',
-    'evenement.php' => 'evenementAdmin.php',
-    'boutique.php' => 'boutiqueAdmin.php',
-    'contact.php' => 'contactAdmin.php',
-    'connexion.php' => 'adminConnexion.php'
-];
-
-// Définit le lien de redirection pour le bouton Mode Édition
-$adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redirige vers admin.php
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
