@@ -20,37 +20,35 @@ class ContactController extends Controller {
 
     public function envoyerMessage() {
         header('Content-Type: application/json');
-
-        $data = json_decode(file_get_contents('php://input'), true);
         
-        if (empty($data['nom']) || empty($data['prenom']) || empty($data['email']) || empty($data['demande'])) {
+        try {
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (!$data) {
+                throw new Exception('Données invalides');
+            }
+
+            if (empty($data['nom']) || empty($data['prenom']) || empty($data['email']) || empty($data['demande'])) {
+                throw new Exception('Tous les champs sont obligatoires');
+            }
+
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                throw new Exception('Adresse email invalide');
+            }
+
+            if ($this->contactRepository->creerContact($data)) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Votre message a été envoyé avec succès'
+                ]);
+            } else {
+                throw new Exception('Erreur lors de l\'enregistrement du message');
+            }
+        } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
                 'success' => false,
-                'message' => 'Tous les champs sont obligatoires'
-            ]);
-            exit;
-        }
-
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            http_response_code(400);
-            echo json_encode([
-                'success' => false,
-                'message' => 'Adresse email invalide'
-            ]);
-            exit;
-        }
-
-        if ($this->contactRepository->creerContact($data)) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Votre message a été envoyé avec succès'
-            ]);
-        } else {
-            http_response_code(500);
-            echo json_encode([
-                'success' => false,
-                'message' => 'Une erreur est survenue lors de l\'envoi du message'
+                'message' => $e->getMessage()
             ]);
         }
         exit;
