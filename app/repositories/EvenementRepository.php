@@ -23,6 +23,47 @@ class EvenementRepository {
         return $result ?: null;
     }
 
+
+    public function addParticipant(int $evenementId, int $userId): bool {
+        try {
+            $this->pdo->beginTransaction();
+    
+            // Vérifier si l'utilisateur est déjà inscrit
+            $checkQuery = 'SELECT COUNT(*) FROM inscription_evenement 
+                          WHERE evenement_id = :evenement_id 
+                          AND utilisateur_id = :utilisateur_id';
+            $checkStmt = $this->pdo->prepare($checkQuery);
+            $checkStmt->execute([
+                'evenement_id' => $evenementId,
+                'utilisateur_id' => $userId
+            ]);
+            
+            if ($checkStmt->fetchColumn() > 0) {
+                throw new Exception('Vous êtes déjà inscrit à cet événement');
+            }
+    
+            $query = 'INSERT INTO inscription_evenement (evenement_id, utilisateur_id, nb_participants) 
+                     VALUES (:evenement_id, :utilisateur_id, 1)';
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([
+                'evenement_id' => $evenementId,
+                'utilisateur_id' => $userId
+            ]);
+
+            $updateQuery = 'UPDATE evenement 
+                           SET nb_inscrits = nb_inscrits + 1 
+                           WHERE id = :id';
+            $updateStmt = $this->pdo->prepare($updateQuery);
+            $updateStmt->execute(['id' => $evenementId]);
+    
+            $this->pdo->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+
     public function create(array $data): bool {
         $query = 'INSERT INTO evenement (titre, description, date_evenement, createur_id, prix, max_participants, chemin_image)
                  VALUES (:titre, :description, :date_evenement, :createur_id, :prix, :max_participants, :chemin_image)';

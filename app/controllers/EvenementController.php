@@ -36,38 +36,36 @@ class EvenementController extends Controller {
             session_start();
         }
 
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+    
         $userId = $_SESSION['user_id'] ?? null;
-        $evenementId = $_POST['evenement_id'] ?? null;
-
+        $evenementId = $data['evenement_id'] ?? null;
+    
         if (!$userId || !$evenementId) {
             return [
                 'status' => 'error',
                 'message' => 'Données invalides ou utilisateur non connecté'
             ];
         }
-
-        $evenement = $this->evenementRepository->findById($evenementId);
-        
-        if (!$evenement) {
+    
+        try {
+            $success = $this->evenementRepository->addParticipant($evenementId, $userId);
+            if ($success) {
+                return [
+                    'status' => 'success',
+                    'message' => 'Inscription réussie'
+                ];
+            }
             return [
                 'status' => 'error',
-                'message' => 'Événement non trouvé'
+                'message' => 'Erreur lors de l\'inscription'
             ];
-        }
-
-        if ($evenement['nb_inscrits'] >= $evenement['max_participants']) {
+        } catch (Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'L\'événement est complet'
+                'message' => $e->getMessage()
             ];
         }
-
-        // Logique d'inscription à implémenter
-        // ...
-
-        return [
-            'status' => 'success',
-            'message' => 'Inscription réussie'
-        ];
     }
 }
