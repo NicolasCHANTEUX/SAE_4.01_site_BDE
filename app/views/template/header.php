@@ -7,17 +7,13 @@ require_once 'app/entities/User.php';
 ?>
 
 <?php
-$user = isset($_SESSION['user']) ? unserialize($_SESSION['user']) : null;
-if($user instanceof User) {
-    echo $user->getId();
-    echo $user->getEmail();
-    echo $user->getNom();
-    echo $user->getPrenom();
-    echo $user->getRole();
-    echo $user->getDateCreation();
-    echo $user->getPassword();
 
-
+$isAdmin = false;
+if (isset($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+    if ($user instanceof User) {
+        $isAdmin = $user->getRole() === 'admin';
+    }
 }
 
  // Détermine la page actuelle
