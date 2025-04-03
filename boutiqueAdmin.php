@@ -5,32 +5,40 @@ require_once './app/middlewares/AuthMiddleware.php';
 
 // Vérifier l'authentification
 
-
 $controller = new BoutiqueAdminController();
 
 // Router les actions
 $action = $_GET['action'] ?? 'index';
 
 switch ($action) {
-	case 'create':
-		$controller->create();
-		break;
-	case 'update':
-		$controller->update();
-		break;
-	case 'delete':
-		error_log("Delete action requested");
-		error_log("POST data: " . print_r($_POST, true));
-		$controller->delete();
-		break;
-	case 'get':
-		if (isset($_GET['id'])) {
-			header('Content-Type: application/json');
-			echo json_encode($controller->get((int)$_GET['id']));
-			exit;
-		}
-		break;
-	default:
-		$controller->index();
-		break;
+    case 'create':
+        $controller->create();
+        break;
+    case 'update':
+        $controller->update();
+        break;
+    case 'delete':
+        error_log("Delete action requested");
+        error_log("POST data: " . print_r($_POST, true));
+        $controller->delete();
+        break;
+    case 'getCommande':
+        $controller->getCommande();
+        break;
+    case 'reglerCommande':
+        $controller->reglerCommande();
+        break;
+    case 'supprimerCommande':
+        $controller->supprimerCommande();
+        break;
+    case 'get':
+        if (isset($_GET['id'])) {
+            header('Content-Type: application/json');
+            echo json_encode($controller->get((int)$_GET['id']));
+            exit;
+        }
+        break;
+    default:
+        $controller->index();
+        break;
 }

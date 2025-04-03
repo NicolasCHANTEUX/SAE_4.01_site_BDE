@@ -51,3 +51,21 @@ document.getElementById('deleteAccountForm').addEventListener('submit', async fu
         alert('Une erreur est survenue');
     }
 });
+
+// Gestion de l'accordéon pour l'historique des commandes
+document.querySelectorAll('#historique .commande-header').forEach(header => {
+    header.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        const isActive = content.classList.contains('active');
+        
+        // Fermer tous les autres contenus actifs
+        document.querySelectorAll('#historique .commande-content.active').forEach(item => {
+            if (item !== content) {
+                item.classList.remove('active');
+            }
+        });
+        
+        // Basculer l'état du contenu cliqué
+        content.classList.toggle('active');
+    });
+});

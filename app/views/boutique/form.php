@@ -1,8 +1,8 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
-<link rel="stylesheet" href="/assets/css/boutique.css">
-<link rel="stylesheet" href="/assets/css/boutiqueAdmin.css">
+<link rel="stylesheet" href="/assets/css/form.css">
+<link rel="stylesheet" href="/assets/css/commandes.css">
 <main id="app">
 	<div class="container">
 
@@ -157,26 +157,45 @@ require_once 'app/views/template/header.php';
 			<?php else: ?>
 				<div class="commandes-list">
 					<?php foreach ($commandes as $commande): ?>
-						<div class="commande-item">
+						<div class="commande-item" data-commande-id="<?= $commande['id'] ?>">
 							<div class="commande-header">
 								<span>Commande #<?= $commande['id'] ?></span>
-								<span class="date"><?= date('d/m/Y H:i', strtotime($commande['date_commande'])) ?></span>
+								<span class="date">
+									<?= date('d/m/Y H:i', strtotime($commande['date_commande'])) ?>
+								</span>
 								<span class="status <?= $commande['statut'] ?>">
 									<?= ucfirst($commande['statut']) ?>
 								</span>
 							</div>
-							<div class="commande-client">
-								Client: <?= htmlspecialchars($commande['prenom'] . ' ' . $commande['nom']) ?>
-							</div>
-							<div class="commande-actions">
-								<button class="btn btn-info view-commande" data-commande-id="<?= $commande['id'] ?>">
-									<i class="fas fa-eye"></i> Voir détails
-								</button>
-								<?php if ($commande['statut'] === 'envoyee'): ?>
-									<button class="btn btn-success validate-commande" data-commande-id="<?= $commande['id'] ?>">
-										<i class="fas fa-check"></i> Valider
+							<div class="commande-content">
+								<div class="commande-details">
+									<p><strong>Client:</strong> <?= htmlspecialchars($commande['prenom'] . ' ' . $commande['nom']) ?></p>
+									<div class="produits-list">
+										<h4>Produits commandés</h4>
+										<?php foreach ($commande['produits'] as $produit): ?>
+											<div class="produit-item">
+												<p><?= htmlspecialchars($produit['nom']) ?> - 
+												   Taille: <?= $produit['taille'] ?>, 
+												   Couleur: <?= $produit['couleur'] ?>, 
+												   Quantité: <?= $produit['quantite'] ?>, 
+												   Prix: <?= number_format($produit['prix_unitaire'], 2) ?>€</p>
+											</div>
+										<?php endforeach; ?>
+										<div class="commande-total">
+											<strong>Total de la commande: <?= number_format($commande['total_commande'], 2) ?>€</strong>
+										</div>
+									</div>
+								</div>
+								<div class="commande-actions">
+									<?php if ($commande['statut'] !== 'reglee'): ?>
+										<button class="btn btn-success regler-commande">
+											<i class="fas fa-check"></i> Marquer comme réglée
+										</button>
+									<?php endif; ?>
+									<button class="btn btn-danger supprimer-commande">
+										<i class="fas fa-trash"></i> Supprimer
 									</button>
-								<?php endif; ?>
+								</div>
 							</div>
 						</div>
 					<?php endforeach; ?>
