@@ -48,46 +48,28 @@ if (isset($_SESSION['user'])) {
                         <?php if (empty($historique)): ?>
                             <p class="text-muted">Aucun historique de commande disponible.</p>
                         <?php else: ?>
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Produit</th>
-                                            <th>Taille</th>
-                                            <th>Couleur</th>
-                                            <th>Quantité</th>
-                                            <th>Prix unitaire</th>
-                                            <th>Total</th>
-                                            <th>Statut</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($historique as $commande): ?>
-                                            <tr>
-                                                <td><?php echo date('d/m/Y H:i', strtotime($commande['date_commande'])); ?></td>
-                                                <td><?php echo htmlspecialchars($commande['produit_nom']); ?></td>
-                                                <td><?php echo htmlspecialchars($commande['taille'] ?? '-'); ?></td>
-                                                <td><?php echo htmlspecialchars($commande['couleur'] ?? '-'); ?></td>
-                                                <td><?php echo $commande['quantite']; ?></td>
-                                                <td><?php echo number_format($commande['prix_unitaire'], 2); ?> €</td>
-                                                <td><?php echo number_format($commande['prix_total'], 2); ?> €</td>
-                                                <td>
-                                                    <span class="badge bg-<?php 
-                                                        echo match($commande['statut']) {
-                                                            'en_attente' => 'warning',
-                                                            'validée' => 'success',
-                                                            'annulée' => 'danger',
-                                                            default => 'secondary'
-                                                        };
-                                                    ?>">
-                                                        <?php echo htmlspecialchars($commande['statut']); ?>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                            <div class="commandes-list">
+                                <?php foreach ($historique as $commande): ?>
+                                    <div class="commande-item">
+                                        <div class="commande-header">
+                                            <span>Commande du <?= date('d/m/Y H:i', strtotime($commande['date_commande'])) ?></span>
+                                            <span class="status <?= $commande['statut'] ?>"><?= ucfirst($commande['statut']) ?></span>
+                                        </div>
+                                        <div class="commande-content">
+                                            <div class="commande-details">
+                                                <div class="produit-details">
+                                                    <h4>Détails de la commande</h4>
+                                                    <p><strong>Produit:</strong> <?= htmlspecialchars($commande['produit_nom']) ?></p>
+                                                    <p><strong>Taille:</strong> <?= $commande['taille'] ?></p>
+                                                    <p><strong>Couleur:</strong> <?= $commande['couleur'] ?></p>
+                                                    <p><strong>Quantité:</strong> <?= $commande['quantite'] ?></p>
+                                                    <p><strong>Prix unitaire:</strong> <?= number_format($commande['prix_unitaire'], 2) ?> €</p>
+                                                    <p><strong>Total:</strong> <?= number_format($commande['prix_total'], 2) ?> €</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
                     </div>

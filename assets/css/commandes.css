@@ -79,6 +79,15 @@
     padding-top: 1rem;
 }
 
+.commande-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    text-align: right;
+}
+
 .btn {
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -102,4 +111,38 @@
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Styles spécifiques pour l'historique des commandes dans le modal compte */
+.modal-dialog .commandes-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.modal-dialog .commande-item {
+    margin-bottom: 0.5rem;
+}
+
+.modal-dialog .commande-header {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.modal-dialog .produit-details {
+    padding: 0.75rem;
+}
+
+.modal-dialog .produit-details h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-dialog .produit-details p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.modal-dialog .status {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
 }

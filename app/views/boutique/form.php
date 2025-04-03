@@ -182,6 +182,9 @@ require_once 'app/views/template/header.php';
 												   Prix: <?= number_format($produit['prix_unitaire'], 2) ?>€</p>
 											</div>
 										<?php endforeach; ?>
+										<div class="commande-total">
+											<strong>Total de la commande: <?= number_format($commande['total_commande'], 2) ?>€</strong>
+										</div>
 									</div>
 								</div>
 								<div class="commande-actions">
