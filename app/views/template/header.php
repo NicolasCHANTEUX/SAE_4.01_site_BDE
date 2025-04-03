@@ -5,6 +5,26 @@ if(session_status() == PHP_SESSION_NONE) {
 require_once 'app/middlewares/AuthMiddleware.php';
 ?>
 
+<?php
+
+$isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+
+ // Détermine la page actuelle
+ $currentPage = basename($_SERVER['REQUEST_URI']);
+
+ // Associe chaque page à son équivalent admin
+$adminPages = [
+    'index.php' => 'accueilAdmin.php',
+    'evenement.php' => 'evenementAdmin.php',
+    'boutique.php' => 'boutiqueAdmin.php',
+    'contact.php' => 'contactAdmin.php',
+    'connexion.php' => 'adminConnexion.php'
+];
+
+// Définit le lien de redirection pour le bouton Mode Édition
+$adminPageLink = $adminPages[$currentPage] ?? 'accueilAdmin.php'; // Par défaut, redirige vers admin.php
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -49,6 +69,12 @@ require_once 'app/middlewares/AuthMiddleware.php';
         <!-- Menu PC -->
         <nav class="main-nav">
             <div class="nav-brand">
+                
+                
+                <?php if ($isAdmin): ?>
+                    <button onclick="window.location.href='<?= htmlspecialchars($adminPageLink) ?>'" class="mode-edition-btn">Mode Édition</button>
+                <?php endif; ?>
+
                 <a href="/">
                     <img src="/assets/images/logo.png" alt="Logo BDE" class="logo">
                     <span>BDE Info</span>
