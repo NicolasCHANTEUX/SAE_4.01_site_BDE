@@ -51,7 +51,66 @@ class ContactAdminController extends Controller {
 
         return [
             'success' => true,
-            'data' => $contact
+            'data' => [
+                'id' => $contact['id'],
+                'nom' => $contact['nom'],
+                'prenom' => $contact['prenom'],
+                'email' => $contact['email'],
+                'message' => $contact['message'],
+                'date_envoi' => $contact['date_envoi'],
+                'statut' => $contact['statut']
+            ]
         ];
+    }
+
+    public function envoyerReponse() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (!isset($data['contactId'], $data['reponse'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Données manquantes'
+                ];
+            }
+
+            $contact = $this->contactRepository->findById($data['contactId']);
+            if (!$contact) {
+                return [
+                    'success' => false,
+                    'message' => 'Contact non trouvé'
+                ];
+            }
+
+            // Envoyer l'email de réponse
+            $success = $this->envoyerEmail($contact['email'], $data['reponse']);
+            
+            if ($success) {
+                // Mettre à jour le statut du contact
+                $this->contactRepository->updateStatut($data['contactId'], 'repondu');
+                return [
+                    'success' => true,
+                    'message' => 'Réponse envoyée avec succès'
+                ];
+            }
+
+            return [
+                'success' => false,
+                'message' => 'Erreur lors de l\'envoi de la réponse'
+            ];
+        }
+    }
+
+    private function envoyerEmail($to, $message) {
+        $headers = [
+            'From' => 'bde@example.com',
+            'Reply-To' => 'bde@example.com',
+            'X-Mailer' => 'PHP/' . phpversion(),
+            'Content-Type' => 'text/html; charset=UTF-8'
+        ];
+
+        $subject = 'Réponse à votre message - BDE IUT Informatique';
+        
+        return mail($to, $subject, $message, $headers);
     }
 }

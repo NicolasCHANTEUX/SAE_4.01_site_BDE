@@ -39,18 +39,18 @@ class ContactRepository {
     }
 
     public function updateStatut($contactId, $statut): bool {
-        try {
-            $sql = "UPDATE contacts SET statut = :statut WHERE id = :id";
-            $stmt = $this->repository->getPDO()->prepare($sql);
-            return $stmt->execute([
-                'id' => $contactId,
-                'statut' => $statut
-            ]);
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            return false;
-        }
-    }
+		try {
+			$sql = "UPDATE contacts SET statut = :statut WHERE id = :id";
+			$stmt = $this->repository->getPDO()->prepare($sql);
+			return $stmt->execute([
+				'id' => $contactId,
+				'statut' => $statut
+			]);
+		} catch (PDOException $e) {
+			error_log($e->getMessage());
+			return false;
+		}
+	}
 
     public function findById($id) {
         try {
