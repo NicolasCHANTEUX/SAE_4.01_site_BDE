@@ -45,6 +45,12 @@ if($user instanceof User) {
     echo $user->getPassword();
 
 
+$isAdmin = false;
+if (isset($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+    if ($user instanceof User) {
+        $isAdmin = $user->getRole() === 'admin';
+    }
 }
 
  // Détermine la page actuelle
