@@ -42,21 +42,10 @@ class ArticleRepository {
     }
 
     public function update(array $data): bool {
-        $query = 'UPDATE articles 
-                 SET titre = :titre, 
-                     description = :description, 
-                     date_creation = :date_creation
-                 WHERE id = :id';
+        $article = new Article(null, $data['titre'], $data['description'], $data['date_creation']);
 
-        $params = [
-            'id' => $data['id'],
-            'titre' => $data['titre'],
-            'description' => $data['description'],
-            'date_creation' => $data['date_creation']
-        ];
-        
-        $stmt = $this->pdo->prepare($query);
-        return $stmt->execute($data);
+        $this->delete($data['id']);
+        $this->create($article);
     }
 
     public function delete(int $id): bool {
