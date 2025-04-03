@@ -49,13 +49,40 @@ class CommandeRepository {
 
     public function findAll(): array {
         try {
-            $sql = "SELECT c.*, u.nom as user_nom, u.prenom as user_prenom
+            $sql = "SELECT c.*, u.nom, u.prenom,
+                           p.nom as produit_nom, 
+                           lc.quantite, lc.prix_unitaire, lc.taille, lc.couleur
                     FROM commande c
                     JOIN utilisateur u ON c.utilisateur_id = u.id
+                    JOIN ligne_commande lc ON c.id = lc.commande_id
+                    JOIN produits p ON lc.produit_id = p.id
                     ORDER BY c.date_commande DESC";
             
             $stmt = $this->pdo->query($sql);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Regrouper les résultats par commande
+            $commandes = [];
+            foreach ($results as $row) {
+                if (!isset($commandes[$row['id']])) {
+                    $commandes[$row['id']] = [
+                        'id' => $row['id'],
+                        'date_commande' => $row['date_commande'],
+                        'statut' => $row['statut'],
+                        'nom' => $row['nom'],
+                        'prenom' => $row['prenom'],
+                        'produits' => []
+                    ];
+                }
+                $commandes[$row['id']]['produits'][] = [
+                    'nom' => $row['produit_nom'],
+                    'quantite' => $row['quantite'],
+                    'prix_unitaire' => $row['prix_unitaire'],
+                    'taille' => $row['taille'],
+                    'couleur' => $row['couleur']
+                ];
+            }
+            return array_values($commandes);
         } catch (PDOException $e) {
             error_log($e->getMessage());
             return [];

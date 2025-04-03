@@ -24,15 +24,7 @@
 }
 
 /* Styles des boutons */
-.btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-}
+
 
 .btn-success {
     background-color: #28a745;

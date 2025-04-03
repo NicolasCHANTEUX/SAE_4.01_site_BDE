@@ -2,6 +2,7 @@
 
 require_once './app/core/Controller.php';
 require_once './app/repositories/BoutiqueRepository.php';
+require_once './app/repositories/CommandeRepository.php';
 
 class BoutiqueController extends Controller
 {
@@ -15,7 +16,7 @@ class BoutiqueController extends Controller
 	}
 	public function index() {
 		$produits = $this->BoutiqueRepository->getAllProduits();
-		$commandes = $this->CommandeRepository->getAllCommandes();
+		$commandes = $this->CommandeRepository->findAll();
 		
 		$this->view('boutique/form.php', [
 			'title' => 'Gestion des produits',
