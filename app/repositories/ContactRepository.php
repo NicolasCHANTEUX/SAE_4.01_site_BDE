@@ -19,7 +19,7 @@ class ContactRepository {
                 'nom' => $data['nom'],
                 'prenom' => $data['prenom'],
                 'email' => $data['email'],
-                'message' => $data['demande']  // changé ici
+                'message' => $data['message']
             ]);
         } catch (PDOException $e) {
             error_log($e->getMessage());
