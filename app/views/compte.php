@@ -1,6 +1,4 @@
-<?php
-require_once 'app/views/template/header.php';
-require_once 'app/middlewares/AuthMiddleware.php';
+<?php require_once 'app/views/template/header.php'; ?>
 
 // Redirection si non connecté
 AuthMiddleware::requireAuth();
