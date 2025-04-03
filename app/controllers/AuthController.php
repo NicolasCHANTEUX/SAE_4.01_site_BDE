@@ -38,16 +38,9 @@ class AuthController extends Controller {
                 }
             }
         }
-        $_SESSION['user_id'] = $user['id'];
-		
-		return $this->redirectTo('index.php');
-				}
-			}
-        }
-	
-
         $this->view('connexion/connexion.php', ['error' => $error]);
-    }
+	}
+
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
