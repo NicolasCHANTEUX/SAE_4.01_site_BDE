@@ -11,7 +11,7 @@ require_once 'app/middlewares/AuthMiddleware.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDE IUT Informatique</title>
-    <!-- CSS -->
+    <!-- Ajouter Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -64,7 +64,11 @@ require_once 'app/middlewares/AuthMiddleware.php';
                 <?php if (AuthMiddleware::isAuthenticated()): ?>
                     <div class="user-menu">
                         <span>Bonjour, <?= htmlspecialchars($_SESSION['user_prenom']) ?></span>
+<<<<<<< HEAD
                         <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#compteModal">
+=======
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#compteModal">
+>>>>>>> contact
                             Mon compte
                         </button>
                         <a href="/deconnexion.php" class="btn btn-danger">Déconnexion</a>
@@ -78,5 +82,14 @@ require_once 'app/middlewares/AuthMiddleware.php';
             </div>
         </nav>
     </header>
+
+    <!-- Inclure la modal de compte si l'utilisateur est connecté -->
+    <?php if (AuthMiddleware::isAuthenticated()): ?>
+        <?php require_once 'app/views/components/modal-compte.php'; ?>
+    <?php endif; ?>
+
+    <!-- Ajouter Bootstrap JS et Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
