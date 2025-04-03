@@ -88,4 +88,49 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	});
+
+    // Ajouter le gestionnaire pour le bouton Commander
+    const btnCommander = document.querySelector('.btn-primary');
+    if (btnCommander && !btnCommander.closest('a')) {
+        btnCommander.addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        });
+    }
+
+    // Gestionnaire pour le bouton Confirmer
+    document.getElementById('confirmOrder').addEventListener('click', async function() {
+        try {
+            const response = await fetch('/panier/envoyerCommande', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                window.location.reload();
+            } else {
+                alert(result.message || 'Erreur lors de l\'envoi de la commande');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            alert('Erreur lors de l\'envoi de la commande');
+        }
+        document.getElementById('confirmationModal').style.display = 'none';
+    });
+
+    // Gestionnaire pour le bouton Annuler
+    document.getElementById('cancelOrder').addEventListener('click', function() {
+        document.getElementById('confirmationModal').style.display = 'none';
+    });
+
+    // Fermer la modal si on clique en dehors
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('confirmationModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 });

@@ -1,5 +1,5 @@
 const API_URL = 'http://localhost:8000';
-const DEFAULT_IMAGE = './images/product-default.jpg';
+const DEFAULT_IMAGE = './assets/images/product-default.jpg';
 
 // Fonction pour charger les produits
 async function loadProducts() {
