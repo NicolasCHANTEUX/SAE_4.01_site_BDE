@@ -21,10 +21,17 @@
 /* Ajuster la taille des cartes pour qu'elles s'adaptent mieux */
 .evenement-card {
     aspect-ratio: 2 / 3;
-    min-height: 400px; /* Réduire légèrement la hauteur minimale */
-    max-width: 350px; /* Ajouter une largeur maximale */
+    min-height: 400px;
+    min-width: 250px;
+    max-width: 300px; /* Limiter la largeur maximale */
     width: 100%;
-    margin: 0 auto; /* Centrer les cartes individuellement */
+    margin: 0 auto;
+    background-color: white; /* Ajout du fond blanc */
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Ajout d'une ombre légère */
+    box-sizing: border-box;
+    overflow: hidden;
+
 }
 
 /* Assurer que les détails restent bien positionnés */
