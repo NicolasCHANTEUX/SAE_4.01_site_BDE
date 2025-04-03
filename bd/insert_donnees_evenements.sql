@@ -27,6 +27,15 @@ INSERT INTO evenement (
     'assets/images/events/poker.png'
 ),
 (
+    'Tournoi paf',
+    'super paf',
+    '2024-04-20 14:00:00',
+    0.00,
+    2,
+    1,
+    'assets/images/events/poker.png'
+),
+(
     'Patie de mini-golf',
     'Une soirée complète de mini-golf !',
     '2024-05-03 20:00:00',
