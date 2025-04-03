@@ -51,22 +51,22 @@ require_once 'app/views/template/header.php';
 					}, $_SESSION['panier'])), 2) ?> €
 				</div>
 				<div class="cart-actions">
-					<a href="/boutique.php" class="btn-secondary">
-						<i class="fas fa-arrow-left"></i>
-						Continuer mes achats
+				<a href="/boutique.php" class="btn-secondary">
+					<i class="fas fa-arrow-left"></i>
+					Continuer mes achats
+				</a>
+				<?php if (AuthMiddleware::isAuthenticated()): ?>
+					<button class="btn-primary">
+						<i class="fas fa-shopping-cart"></i>
+						Commander
+					</button>
+				<?php else: ?>
+					<a href="/connexion.php" class="btn-primary">
+						<i class="fas fa-sign-in-alt"></i>
+						Se connecter pour commander
 					</a>
-					<?php if (isset($_SESSION['user_id'])): ?>
-						<button class="btn-primary">
-							<i class="fas fa-shopping-cart"></i>
-							Commander
-						</button>
-					<?php else: ?>
-						<a href="/connexion.php" class="btn-primary">
-							<i class="fas fa-sign-in-alt"></i>
-							Se connecter pour commander
-						</a>
-					<?php endif; ?>
-				</div>
+				<?php endif; ?>
+			</div>
 			</div>
 		<?php endif; ?>
 	</div>
@@ -74,14 +74,14 @@ require_once 'app/views/template/header.php';
 
 <!-- Modal de confirmation -->
 <div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <h2>Confirmation de commande</h2>
-        <p>Êtes-vous sûr de vouloir passer cette commande ?</p>
-        <div class="modal-actions">
-            <button id="confirmOrder" class="btn-primary">Confirmer</button>
-            <button id="cancelOrder" class="btn-secondary">Annuler</button>
-        </div>
-    </div>
+	<div class="modal-content">
+		<h2>Confirmation de commande</h2>
+		<p>Êtes-vous sûr de vouloir passer cette commande ?</p>
+		<div class="modal-actions">
+			<button id="confirmOrder" class="btn-primary">Confirmer</button>
+			<button id="cancelOrder" class="btn-secondary">Annuler</button>
+		</div>
+	</div>
 </div>
 
 <script src="/assets/js/panier.js"></script>

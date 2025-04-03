@@ -1,6 +1,7 @@
 <?php
 require_once './app/core/Controller.php';
 require_once './app/repositories/PanierRepository.php';
+require_once './app/middlewares/AuthMiddleware.php';
 
 class PanierController extends Controller {
 	public function index() {
@@ -124,10 +125,11 @@ class PanierController extends Controller {
 		if(session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
-
+	
 		header('Content-Type: application/json');
-
-		if (!isset($_SESSION['user_id'])) {
+		
+		// Utiliser AuthMiddleware au lieu de vérifier directement la session
+		if (!AuthMiddleware::isAuthenticated()) {
 			echo json_encode([
 				'success' => false,
 				'message' => 'Vous devez être connecté pour commander'
