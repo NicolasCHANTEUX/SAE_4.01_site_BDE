@@ -22,8 +22,28 @@ class AccueilAdminController extends Controller {
     }
 
     public function create() {
-        $service->create();
+        $this->checkAuth();
+
+        $data = $this->getAllPostParams();
+        $errors = [];
+
+        if (!empty($data)) {
+            try {
+                $articleService = new ArticleService();
+                $articleService->create($data);
+                $this->redirectTo('accueilAdmin.php');
+            } catch (Exception $e) {
+                $errors = explode(', ', $e->getMessage());
+            }
+        }
+
+        $this->view('/article/form', 'Création d\'un article', [
+            'title' => 'Création Article',
+            'data' => $data,
+            'errors' => $errors
+        ]);
     }
+
 
     public function update() {
         $service->update();

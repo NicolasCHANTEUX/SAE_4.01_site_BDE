@@ -10,34 +10,54 @@ class ArticleService {
         return $articles;
     }
 
-    public function create() {
-        //$this->checkAuth();
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $eventData = [
-                'titre' => $_POST['titre'] ?? '',
-                'description' => $_POST['description'] ?? '',
-                'date_creation' => $_POST['date_creation'] ?? ''
-            ];
-            
-            $this->articleRepository->create($eventData);
-            $this->redirectTo('accueilAdmin.php');
+    public function create(array $data): Article {
+        $errors = [];
+
+        // Validation des données
+        if (empty($data['titre'])) {
+            $errors[] = 'Le titre est requis.';
         }
+        if (empty($data['description'])) {
+            $errors[] = 'La description est requise.';
+        }
+        if (empty($data['date_creation'])) {
+            $errors[] = 'La date est incorrecte.';
+        }
+
+
+        if (!empty($errors)) {
+            throw new Exception(implode(', ', $errors));
+        }
+
+        $article = new Article(
+            null,
+            $data['titre'],
+            $data['description'] ?? '',
+            $data['date']
+        );
+
+        $repository = new ArticleRepository();
+        if (!$repository->create($article)) {
+            throw new Exception('Erreur lors de la création de l\'article.');
+        }
+
+        return $article;
     }
+
 
     public function update() {
         //$this->checkAuth();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $eventData = [
-                'event_id' => $_POST['event_id'] ?? null,
+            $articleData = [
+                'article_id' => $_POST['article_id'] ?? null,
                 'titre' => $_POST['titre'] ?? '',
                 'description' => $_POST['description'] ?? '',
                 'date_creation' => $_POST['date_creation'] ?? ''
             ];
             
-            $this->evenementRepository->update($eventData);
-            $this->redirectTo('evenementAdmin.php');
+            $this->evenementRepository->update($articleData);
+            $this->redirectTo('accueilAdmin.php');
         }
     }
 

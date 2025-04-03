@@ -1,7 +1,7 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
-<link rel="stylesheet" href="/assets/css/evenement.css">
+<link rel="stylesheet" href="/assets/css/form.css">
 <main id="app">
     <div class="container">
 
@@ -9,7 +9,7 @@ require_once 'app/views/template/header.php';
         <!-- Formulaire pour ajouter un article -->
         <section class="form-section">
             <h2>Ajouter un article</h2>
-            <form action="/articleAdmin.php?action=create" method="POST" class="event-form" enctype="multipart/form-data">
+            <form action="/accueilAdmin.php?action=create" method="POST" class="article-form" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="titre">Titre</label>
                     <input type="text" id="titre" name="titre" class="form-control" required>
@@ -32,15 +32,15 @@ require_once 'app/views/template/header.php';
         <!-- Formulaire pour modifier un article -->
         <section class="form-section">
             <h2>Modifier un article</h2>
-            <form action="/articleAdmin.php?action=update" method="POST" class="event-form" enctype="multipart/form-data">
+            <form action="/accueilAdmin.php?action=update" method="POST" class="article-form" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="article_id_update">Sélectionner l'article</label>
                     <select id="article_id_update" name="article_id" class="form-control" required>
                         <option value="">Choisir un article</option>
                         <?php foreach ($articles as $article): ?>
-                            <option value="<?= $article['id'] ?>">
-                                <?= htmlspecialchars($article['titre']) ?> 
-                                (<?= date('d/m/Y H:i', strtotime($article['date_creation'])) ?>)
+                            <option value="<?= $article->getId() ?>">
+                                <?= htmlspecialchars($article->getTitre()) ?> 
+                                (<?= date('d/m/Y H:i', strtotime($article->getDateCreation())) ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -65,18 +65,18 @@ require_once 'app/views/template/header.php';
             </form>
         </section>
 
-        <!-- Formulaire pour supprimer un événement -->
+        <!-- Formulaire pour supprimer un article -->
         <section class="form-section">
-            <h2>Supprimer un événement</h2>
-            <form action="/evenementAdmin.php?action=delete" method="POST" class="event-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">
+            <h2>Supprimer un article</h2>
+            <form action="/evenementAdmin.php?action=delete" method="POST" class="article-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                 <div class="form-group">
-                    <label for="article_id_delete">Sélectionner l'événement à supprimer</label>
-                    <select id="article_id_delete" name="event_id" class="form-control" required>
-                        <option value="">Choisir un événement</option>
-                        <?php foreach ($evenements as $event): ?>
-                            <option value="<?= $event['id'] ?>">
-                                <?= htmlspecialchars($event['titre']) ?> 
-                                (<?= date('d/m/Y H:i', strtotime($event['date_evenement'])) ?>)
+                    <label for="article_id_delete">Sélectionner l'article à supprimer</label>
+                    <select id="article_id_delete" name="article_id" class="form-control" required>
+                        <option value="">Choisir un article</option>
+                        <?php foreach ($articles as $article): ?>
+                            <option value="<?= $article->getId() ?>">
+                                <?= htmlspecialchars($article->getTitre()) ?> 
+                                (<?= date('d/m/Y H:i', strtotime($article->getDateCreation())) ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -91,14 +91,14 @@ require_once 'app/views/template/header.php';
 <script>
 // Script pour charger les données de l'événement sélectionné dans le formulaire de modification
 document.getElementById('article_id_update').addEventListener('change', function() {
-    const selectedEvent = this.options[this.selectedIndex].value;
-    if (selectedEvent) {
-        fetch(`/articleAdmin.php?action=get&id=${selectedEvent}`)
+    const selectedArticle = this.options[this.selectedIndex].value;
+    if (selectedArticle) {
+        fetch(`/accueilAdmin.php?action=get&id=${selectedArticle}`)
             .then(response => response.json())
-            .then(event => {
-                document.getElementById('titre_update').value = event.titre;
-                document.getElementById('description_update').value = event.description;
-                document.getElementById('date_creation_update').value = event.date_evenement.slice(0, 16);
+            .then(article => {
+                document.getElementById('titre_update').value = article.titre;
+                document.getElementById('description_update').value = article.description;
+                document.getElementById('date_creation_update').value = article.date_creation.slice(0, 16);
             })
             .catch(error => console.error('Erreur:', error));
     }

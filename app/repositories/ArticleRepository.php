@@ -29,15 +29,15 @@ class ArticleRepository {
         return null;
     }
 
-    public function create(array $data): bool {
+    public function create(Article $article): bool {
         $query = 'INSERT INTO articles (titre, description, date_creation)
                  VALUES (:titre, :description, :date_creation)';
         
         $stmt = $this->pdo->prepare($query);
         return $stmt->execute([
-            'titre' => $data['titre'],
-            'description' => $data['description'],
-            'date_creation' => $data['date_creation'],
+            'titre' => $article->getTitre(),
+            'description' => $article->getDescription(),
+            'date_creation' => $article->getDateCreation()
         ]);
     }
 
