@@ -1,5 +1,7 @@
 <?php
 
+require_once './app/entities/User.php';
+
 class AuthMiddleware {
     public static function isAuthenticated() {
         if(session_status() == PHP_SESSION_NONE) {
@@ -17,7 +19,11 @@ class AuthMiddleware {
 
     public static function requireRole($role) {
         self::requireAuth();
-        if ($_SESSION['user_role'] !== $role) {
+        
+        // Récupérer l'utilisateur depuis la session
+        $user = unserialize($_SESSION['user']);
+        
+        if ($user->getRole() !== $role) {
             header('Location: /acces-refuse.php');
             exit();
         }

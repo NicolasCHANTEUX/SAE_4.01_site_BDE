@@ -2,6 +2,8 @@
 require_once './app/controllers/ContactAdminController.php';
 require_once './app/middlewares/AuthMiddleware.php';
 
+// Vérifier que l'utilisateur est admin
+AuthMiddleware::requireRole('admin');
 
 $controller = new ContactAdminController();
 

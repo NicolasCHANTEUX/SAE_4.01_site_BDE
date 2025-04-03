@@ -15,6 +15,8 @@ class AuthService {
             if(session_status() == PHP_SESSION_NONE)
                 session_start();
                 $_SESSION['user'] = serialize($user);
+                $_SESSION['user_id'] = $user->getId();
+                $_SESSION['user_role'] = $user->getRole(); // Ajouter le rôle dans la session
             return true;
         }
         return false;
