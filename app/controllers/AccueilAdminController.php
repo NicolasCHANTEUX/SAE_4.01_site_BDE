@@ -50,5 +50,8 @@ class AccueilAdminController extends Controller {
       if (!$auth->isLoggedIn()) {
           $this->redirectTo('connexion.php');
       }
+    if ($auth->getUser()->getRole() !== 'admin') {
+            $this->redirectTo('index.php');
+    }
    }
 }
