@@ -66,7 +66,7 @@ $adminPages = [
 ];
 
 // Définit le lien de redirection pour le bouton Mode Édition
-$adminPageLink = $adminPages[$currentPage] ?? 'accueilAdmin.php'; // Par défaut, redirige vers admin.php
+$adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redirige vers admin.php
 ?>
 
 <!DOCTYPE html>
@@ -113,7 +113,7 @@ $adminPageLink = $adminPages[$currentPage] ?? 'accueilAdmin.php'; // Par défaut
         <!-- Menu PC -->
         <nav class="main-nav">
             <div class="nav-brand">
-                
+                <?php $isAdmin = true; ?>
                 <?php if ($isAdmin): ?>
                     <button onclick="window.location.href='<?= htmlspecialchars($adminPageLink) ?>'" class="mode-edition-btn">Mode Édition</button>
                 <?php endif; ?>
