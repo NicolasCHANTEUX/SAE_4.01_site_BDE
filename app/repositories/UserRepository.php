@@ -1,6 +1,7 @@
 <?php
 
 require_once './app/core/Repository.php';
+require_once './app/entities/User.php';
 
 class UserRepository {
     private $pdo;
@@ -9,18 +10,42 @@ class UserRepository {
         $this->pdo = Repository::getInstance()->getPDO();
     }
 
-    public function findByEmail(string $email): ?array {
-        $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE email = :email');
-        $stmt->execute(['email' => $email]);
-        return $stmt->fetch() ?: null;
+    public function findAll(): array {
+        $stmt = $this->pdo->query('SELECT * FROM "utilisateur"');
+        $users = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $users[] = $this->createUserFromRow($row);
+        }
+        return $users;
     }
 
-    public function create(array $data): bool {
+    private function createUserFromRow(array $row): User
+    {
+        return new User($row['id'], $row['email'], $row['mot_de_passe'], $row['nom'], $row['prenom'], $row['role'], $row['date_creation']);
+    }
+
+    public function findByEmail(string $email): ?User {
+        $stmt = $this->pdo->prepare('SELECT * FROM "utilisateur" WHERE email = :email');
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($user)
+            return $this->createUserFromRow($user);
+        return null;
+    }
+
+    public function create(User $user): bool {
         $stmt = $this->pdo->prepare('
-            INSERT INTO utilisateur (email, mot_de_passe, nom, prenom, role)
-            VALUES (:email, :mot_de_passe, :nom, :prenom, :role)
+            INSERT INTO utilisateur (email, mot_de_passe, nom, prenom, role, date_creation)
+            VALUES (:email, :mot_de_passe, :nom, :prenom, :role, :date_creation)
         ');
-        return $stmt->execute($data);
+        return $stmt->execute([
+            'email' => $user->getEmail(),
+            'mot_de_passe' => $user->getPassword(),
+            'nom' => $user->getNom(),
+            'prenom' => $user->getPrenom(),
+            'role' => $user->getRole(),
+            'date_creation' => $user->getDateCreation()
+        ]);
     }
 
     public function verifyPassword(int $userId, string $password): bool {

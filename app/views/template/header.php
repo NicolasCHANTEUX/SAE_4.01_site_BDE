@@ -3,11 +3,18 @@ if(session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require_once 'app/middlewares/AuthMiddleware.php';
+require_once 'app/entities/User.php';
 ?>
 
 <?php
 
-$isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+$isAdmin = false;
+if (isset($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+    if ($user instanceof User) {
+        $isAdmin = $user->getRole() === 'admin';
+    }
+}
 
  // Détermine la page actuelle
  $currentPage = basename($_SERVER['REQUEST_URI']);
