@@ -120,7 +120,6 @@ $adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redir
             <div class="nav-actions">
                 <?php if (AuthMiddleware::isAuthenticated()): ?>
                     <div class="user-menu">
-                        <span>Bonjour, <?= htmlspecialchars($_SESSION['user_prenom']) ?></span>
                         <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#compteModal">
                             Mon compte
                         </button>
