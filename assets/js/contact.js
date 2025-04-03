@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             
             try {
-                const formData = new FormData(contactForm);
                 const response = await fetch('/contact/envoyer', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
-                    body: JSON.stringify(Object.fromEntries(formData))
+                    body: JSON.stringify(data)
                 });
 
                 if (!response.ok) {
