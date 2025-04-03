@@ -10,38 +10,37 @@ class ArticleService {
         return $articles;
     }
 
-    public function create(array $data): Article {
-        $errors = [];
-
-        // Validation des données
-        if (empty($data['titre'])) {
-            $errors[] = 'Le titre est requis.';
+    public function create() {
+        //$this->checkAuth();
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $eventData = [
+                'titre' => $_POST['titre'] ?? '',
+                'description' => $_POST['description'] ?? '',
+                'date_creation' => $_POST['date_creation'] ?? ''
+            ];
+            
+            $this->articleRepository->create($eventData);
+            $this->redirectTo('accueilAdmin.php');
         }
-        if (empty($data['description'])) {
-            $errors[] = 'L\'article doit contenir une description.';
-        }
-        if (empty($data['date_creation'])) {
-            $errors[] = 'Date invalide.';
-        }
-
-        if (!empty($errors)) {
-            throw new Exception(implode(', ', $errors));
-        }
-
-        $article = new Article(
-            null,
-            $data['titre'],
-            $data['description'],
-            $data['date_creation']
-        );
-
-        $repository = new ArticleRepository();
-        if (!$repository->create($article)) {
-            throw new Exception('Erreur lors de la création de l\'article.');
-        }
-
-        return $article;
     }
+
+    public function update() {
+        //$this->checkAuth();
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $eventData = [
+                'event_id' => $_POST['event_id'] ?? null,
+                'titre' => $_POST['titre'] ?? '',
+                'description' => $_POST['description'] ?? '',
+                'date_creation' => $_POST['date_creation'] ?? ''
+            ];
+            
+            $this->evenementRepository->update($eventData);
+            $this->redirectTo('evenementAdmin.php');
+        }
+    }
+
 
     public function supprimerArticle(int $id): bool {
         $repository = new ArticleRepository();

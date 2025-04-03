@@ -34,7 +34,11 @@ class ArticleRepository {
                  VALUES (:titre, :description, :date_creation)';
         
         $stmt = $this->pdo->prepare($query);
-        return $stmt->execute($data);
+        return $stmt->execute([
+            'titre' => $data['titre'],
+            'description' => $data['description'],
+            'date_creation' => $data['date_creation'],
+        ]);
     }
 
     public function update(array $data): bool {
@@ -43,6 +47,13 @@ class ArticleRepository {
                      description = :description, 
                      date_creation = :date_creation
                  WHERE id = :id';
+
+        $params = [
+            'id' => $data['article_id'],
+            'titre' => $data['titre'],
+            'description' => $data['description'],
+            'date_creation' => $data['date_creation']
+        ];
         
         $stmt = $this->pdo->prepare($query);
         return $stmt->execute($data);
