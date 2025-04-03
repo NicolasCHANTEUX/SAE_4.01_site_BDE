@@ -29,7 +29,7 @@ class EvenementRepository {
         
         $stmt = $this->pdo->prepare($query);
         return $stmt->execute($data);
-    }
+	}
 
     public function update(array $data): bool {
         $query = 'UPDATE evenement 

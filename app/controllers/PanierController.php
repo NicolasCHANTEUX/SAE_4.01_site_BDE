@@ -1,5 +1,6 @@
 <?php
 require_once './app/core/Controller.php';
+require_once './app/repositories/PanierRepository.php';
 
 class PanierController extends Controller {
 	public function index() {
@@ -117,5 +118,44 @@ class PanierController extends Controller {
 			]);
 		}
 		exit();
+	}
+
+	public function envoyerCommande() {
+		if(session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+
+		header('Content-Type: application/json');
+
+		if (!isset($_SESSION['user_id'])) {
+			echo json_encode([
+				'success' => false,
+				'message' => 'Vous devez être connecté pour commander'
+			]);
+			exit;
+		}
+
+		if (empty($_SESSION['panier'])) {
+			echo json_encode([
+				'success' => false,
+				'message' => 'Votre panier est vide'
+			]);
+			exit;
+		}
+
+		$panierRepo = new PanierRepository();
+		if ($panierRepo->envoyerCommande($_SESSION['user_id'])) {
+			$_SESSION['panier'] = [];
+			echo json_encode([
+				'success' => true,
+				'message' => 'Commande envoyée avec succès'
+			]);
+		} else {
+			echo json_encode([
+				'success' => false,
+				'message' => 'Erreur lors de l\'envoi de la commande'
+			]);
+		}
+		exit;
 	}
 }

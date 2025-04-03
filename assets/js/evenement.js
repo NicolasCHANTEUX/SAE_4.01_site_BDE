@@ -110,7 +110,7 @@ function showEventDetails(event) {
             </div>
             <div class="event-details-item">
                 <span class="event-details-label">Prix:</span>
-                <span>${event.prix > 0 ? event.prix + '€' : 'Gratuit'}</span>
+                <span>${event.prix == 0 ? 'Gratuit' : event.prix + '€'}</span>
             </div>
             <div class="event-details-item">
                 <span class="event-details-label">Description:</span>

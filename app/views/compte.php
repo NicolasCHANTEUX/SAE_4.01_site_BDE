@@ -1,21 +1,17 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: connexion.php');
-    exit();
-}
+require_once 'app/views/template/header.php';
+require_once 'app/middlewares/AuthMiddleware.php';
+
+// Redirection si non connecté
+AuthMiddleware::requireAuth();
+
+// Inclure les modals
+require_once 'app/views/components/modal-compte.php';
+require_once 'app/views/components/modal-password.php';
+require_once 'app/views/components/modal-delete-account.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon Compte</title>
-</head>
-<body>
-    <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</h1>
-    <p>Email : <?php echo htmlspecialchars($_SESSION['user']['email']); ?></p>
+<script src="/assets/js/compte.js"></script>
 
-    <a href="deconnexion.php">Se déconnecter</a>
-</body>
-</html>
+<?php
+require_once 'app/views/template/footer.php';
