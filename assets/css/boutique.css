@@ -157,8 +157,52 @@
     transition: background-color 0.3s;
 }
 
+.navigation-buttons {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
 .btn-retry:hover {
     background: #2980b9;
+}
+
+.back-btn i {
+    font-size: 1.2rem;
+}
+
+.cart-btn i {
+    font-size: 1.2rem;
+}
+
+.back-btn {
+    margin-right: auto; /* Force le bouton retour à gauche */
+}
+
+.cart-btn {
+    margin-left: auto; /* Force le bouton panier à droite */
 }
 
 @media (max-width: 768px) {

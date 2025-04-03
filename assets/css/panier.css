@@ -155,11 +155,7 @@
 }
 
 .btn-primary {
-<<<<<<< HEAD
     background-color: var(--secondary-color);
-=======
-    background-color: var(--primary-color);
->>>>>>> 85dc8af77f5fefc4130202b5e10ee6dc51fe2d0b
     border: none;
     color: white;
     cursor: pointer;
