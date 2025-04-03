@@ -6,15 +6,28 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Récupérer les données du formulaire
+            const formData = new FormData(contactForm);
+            const data = {
+                nom: formData.get('nom'),
+                prenom: formData.get('prenom'),
+                email: formData.get('email'),
+                demande: formData.get('demande')  // Maintenant ça correspond au name="demande" du HTML
+            };
+            
             try {
-                const formData = new FormData(contactForm);
                 const response = await fetch('/contact/envoyer', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
-                    body: JSON.stringify(Object.fromEntries(formData))
+                    body: JSON.stringify(data)
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const result = await response.json();
 
