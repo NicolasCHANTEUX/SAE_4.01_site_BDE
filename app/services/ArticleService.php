@@ -43,6 +43,10 @@ class ArticleService {
         return $article;
     }
 
+    public function supprimerArticle(int $id): bool {
+        $repository = new ArticleRepository();
+    }
+
     public function find(int $id): ?Article
     {
         $articleRepo = new ArticleRepository();

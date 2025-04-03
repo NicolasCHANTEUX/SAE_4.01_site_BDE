@@ -2,7 +2,7 @@
 require_once 'app/views/template/header.php';
 ?>
 
-<form method="POST" action="article_create.php" class="container mt-5">
+<form method="POST" action="ajouterArticle.php" class="container mt-5">
     <h1 class="mb-4">Création d'un article</h1>
 
     <!-- Erreurs -->

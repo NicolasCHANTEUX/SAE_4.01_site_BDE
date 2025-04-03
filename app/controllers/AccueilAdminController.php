@@ -22,7 +22,7 @@ class AccueilAdminController extends Controller {
    }
 
    public function create() {
-      $this->checkAuth();
+      //$this->checkAuth();
       $categoryService = new CategoryService();
       $categories = $categoryService->allCategory();
 

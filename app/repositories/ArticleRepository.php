@@ -11,7 +11,7 @@ class ArticleRepository {
     }
 
     public function findAll(): array {
-        $stmt = $this->pdo->query('SELECT * FROM article');
+        $stmt = $this->pdo->query('SELECT * FROM articles');
         $articles = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $articles[] = $this->createArticleFromRow($row);
@@ -21,7 +21,7 @@ class ArticleRepository {
 
     public function findById(int $id): ?Article
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM article WHERE id = :id');
+        $stmt = $this->pdo->prepare('SELECT * FROM articles WHERE id = :id');
         $stmt->execute(['id' => $id]);
         $article = $stmt->fetch(PDO::FETCH_ASSOC);
         if($article)
@@ -56,7 +56,7 @@ class ArticleRepository {
 
     private function createArticleFromRow(array $row): Article
     {
-        return new Article($row['id'], 'titre', $row['description'], '10');
+        return new Article($row['id'], $row['titre'], $row['description'], $row['date_creation']);
     }
 
 }
