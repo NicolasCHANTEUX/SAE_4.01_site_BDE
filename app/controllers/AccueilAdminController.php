@@ -10,7 +10,7 @@ class AccueilAdminController extends Controller {
 
    public function index()
    {
-      //$this->checkAuth();
+      $this->checkAuth();
       $service = new ArticleService();
       $articles = $service->allArticles();
 
