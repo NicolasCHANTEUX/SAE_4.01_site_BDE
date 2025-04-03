@@ -18,6 +18,11 @@
 	box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
 	font-family: 'Poppins', sans-serif;
 	line-height: var(--line-height-base);
