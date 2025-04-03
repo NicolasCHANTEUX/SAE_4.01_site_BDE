@@ -65,48 +65,56 @@ class EvenementRepository {
 
     public function addParticipant(int $evenementId, int $userId): bool {
         try {
-            // Gestion de l'upload de l'image
-            $cheminImage = null;
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-                $nomFichier = uniqid() . '.' . $extension;
-                $cheminImage = 'assets/images/events/' . $nomFichier;
-                
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $cheminImage)) {
-                    throw new Exception('Erreur lors du téléchargement de l\'image');
-                }
-            }
-
-            $query = 'INSERT INTO evenement (
-                titre, 
-                description, 
-                date_evenement, 
-                prix, 
-                max_participants,
-                nb_inscrits,
-                chemin_image
-            ) VALUES (
-                :titre, 
-                :description, 
-                :date_evenement, 
-                :prix, 
-                :max_participants,
-                0,
-                :chemin_image
-            )';
-            
-            $stmt = $this->pdo->prepare($query);
-            return $stmt->execute([
-                'titre' => $data['titre'],
-                'description' => $data['description'],
-                'date_evenement' => $data['date_evenement'],
-                'prix' => $data['prix'],
-                'max_participants' => empty($data['max_participants']) ? null : $data['max_participants'],
-                'chemin_image' => $cheminImage
+            // Vérifier si l'utilisateur est déjà inscrit
+            $checkQuery = 'SELECT COUNT(*) FROM inscription_evenement 
+                          WHERE evenement_id = :evenement_id 
+                          AND utilisateur_id = :utilisateur_id';
+            $checkStmt = $this->pdo->prepare($checkQuery);
+            $checkStmt->execute([
+                'evenement_id' => $evenementId,
+                'utilisateur_id' => $userId
             ]);
+            
+            if ($checkStmt->fetchColumn() > 0) {
+                throw new Exception('Vous êtes déjà inscrit à cet événement');
+            }
+    
+            // Vérifier le nombre de places disponibles
+            $eventQuery = 'SELECT max_participants, nb_inscrits FROM evenement WHERE id = :id';
+            $eventStmt = $this->pdo->prepare($eventQuery);
+            $eventStmt->execute(['id' => $evenementId]);
+            $event = $eventStmt->fetch(PDO::FETCH_ASSOC);
+    
+            if ($event['max_participants'] !== null && $event['nb_inscrits'] >= $event['max_participants']) {
+                throw new Exception('L\'événement est complet');
+            }
+    
+            // Insérer l'inscription
+            $this->pdo->beginTransaction();
+    
+            // Créer l'inscription
+            $insertQuery = 'INSERT INTO inscription_evenement (evenement_id, utilisateur_id, nb_participants) 
+                           VALUES (:evenement_id, :utilisateur_id, 1)';
+            $insertStmt = $this->pdo->prepare($insertQuery);
+            $insertStmt->execute([
+                'evenement_id' => $evenementId,
+                'utilisateur_id' => $userId
+            ]);
+    
+            // Mettre à jour le nombre d'inscrits
+            $updateQuery = 'UPDATE evenement SET nb_inscrits = nb_inscrits + 1 WHERE id = :id';
+            $updateStmt = $this->pdo->prepare($updateQuery);
+            $updateStmt->execute(['id' => $evenementId]);
+    
+            $this->pdo->commit();
+            return true;
+    
         } catch (Exception $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
             error_log($e->getMessage());
-            return false;
+            throw $e;
         }
     }
 
