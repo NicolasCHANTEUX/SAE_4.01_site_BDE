@@ -3,7 +3,7 @@ require_once './app/controllers/AccueilController.php';
 require_once './app/controllers/PanierController.php';
 require_once './app/controllers/ContactController.php';
 
-$url = $_SERVER['REQUEST_URI'];
+$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if (strpos($url, '/panier/modifierQuantite') === 0) {
     (new PanierController())->modifierQuantite();

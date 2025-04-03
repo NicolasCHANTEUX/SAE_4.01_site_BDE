@@ -23,13 +23,18 @@ class ContactController extends Controller {
         
         try {
             $data = json_decode(file_get_contents('php://input'), true);
+            error_log('Données reçues: ' . print_r($data, true)); // Debug log
             
             if (!$data) {
                 throw new Exception('Données invalides');
             }
 
-            if (empty($data['nom']) || empty($data['prenom']) || empty($data['email']) || empty($data['demande'])) {
-                throw new Exception('Tous les champs sont obligatoires');
+            // Validation des données
+            $requiredFields = ['nom', 'prenom', 'email', 'demande'];
+            foreach ($requiredFields as $field) {
+                if (empty($data[$field])) {
+                    throw new Exception("Le champ '$field' est requis");
+                }
             }
 
             if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
