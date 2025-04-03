@@ -43,7 +43,7 @@ function displayProducts(products) {
 function createProductCard(product) {
     const name = product.nom || 'Produit sans nom';
     const price = parseFloat(product.prix) || 0;
-    const image = product.image || DEFAULT_IMAGE;
+    const image = product.chemin_image || DEFAULT_IMAGE;
     const id = product.id || null;
     const description = product.description || '';
 

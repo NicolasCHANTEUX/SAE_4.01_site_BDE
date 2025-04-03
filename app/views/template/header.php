@@ -103,7 +103,12 @@ $adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redir
         <nav class="main-nav">
             <div class="nav-brand">
                 <?php if ($isAdmin): ?>
-                    <button onclick="window.location.href='<?= htmlspecialchars($adminPageLink) ?>'" class="mode-edition-btn">Mode Édition</button>
+                    <div class="mode-edition-button">
+                        <a href="<?= htmlspecialchars($adminPageLink) ?>" class="btn-edition">
+                            <i class="fas fa-edit"></i>
+                            Mode Édition
+                        </a>
+                    </div>
                 <?php endif; ?>
 
                 <a href="/">
