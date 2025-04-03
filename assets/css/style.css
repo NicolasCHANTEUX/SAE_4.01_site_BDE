@@ -284,6 +284,32 @@ main {
 	color: #2ecc71;
 }
 
+.mode-edition-button {
+    margin-right: 20px;
+}
+
+.btn-edition {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-edition:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-edition i {
+    font-size: 16px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
 	.main-nav {
