@@ -148,9 +148,44 @@ require_once 'app/views/template/header.php';
 				<button type="submit" class="btn btn-danger">Supprimer</button>
 			</form>
 		</section>
+
+		<!-- Nouvelle section pour les commandes -->
+		<section class="form-section commandes-section">
+			<h2>Gestion des commandes</h2>
+			<?php if (empty($commandes)): ?>
+				<p class="text-muted">Aucune commande en attente.</p>
+			<?php else: ?>
+				<div class="commandes-list">
+					<?php foreach ($commandes as $commande): ?>
+						<div class="commande-item">
+							<div class="commande-header">
+								<span>Commande #<?= $commande['id'] ?></span>
+								<span class="date"><?= date('d/m/Y H:i', strtotime($commande['date_commande'])) ?></span>
+								<span class="status <?= $commande['statut'] ?>">
+									<?= ucfirst($commande['statut']) ?>
+								</span>
+							</div>
+							<div class="commande-client">
+								Client: <?= htmlspecialchars($commande['prenom'] . ' ' . $commande['nom']) ?>
+							</div>
+							<div class="commande-actions">
+								<button class="btn btn-info view-commande" data-commande-id="<?= $commande['id'] ?>">
+									<i class="fas fa-eye"></i> Voir détails
+								</button>
+								<?php if ($commande['statut'] === 'envoyee'): ?>
+									<button class="btn btn-success validate-commande" data-commande-id="<?= $commande['id'] ?>">
+										<i class="fas fa-check"></i> Valider
+									</button>
+								<?php endif; ?>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
+		</section>
 	</div>
 </main>
-
+<script src="/assets/js/boutiqueAdmin.js"></script>
 <script>
 // Script pour charger les données du produit sélectionné dans le formulaire de modification
 document.getElementById('product_id_update').addEventListener('change', function() {
