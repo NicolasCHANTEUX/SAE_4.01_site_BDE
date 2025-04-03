@@ -1,8 +1,7 @@
 <?php
 require_once 'app/views/template/header.php';
 ?>
-<link rel="stylesheet" href="/assets/css/boutique.css">
-<link rel="stylesheet" href="/assets/css/boutiqueAdmin.css">
+<link rel="stylesheet" href="/assets/css/form.css">
 <link rel="stylesheet" href="/assets/css/commandes.css">
 <main id="app">
 	<div class="container">

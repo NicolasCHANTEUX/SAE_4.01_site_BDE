@@ -56,7 +56,6 @@ require_once 'app/views/template/header.php';
                             <input type="hidden" name="produit_id" value="<?= $produit['id'] ?>">
                             <input type="hidden" name="taille" id="taille_selected">
                             <input type="hidden" name="couleur" id="couleur_selected">
-                            <button type="submit" class="btn-primary btn-order" name="commander">Commander</button>
                         </form>
                         <button class="btn-secondary btn-cart">
                             <i class="fas fa-shopping-cart"></i>
