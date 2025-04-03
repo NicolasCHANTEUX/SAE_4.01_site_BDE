@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Gestionnaire pour l'effet accordéon
+    document.querySelectorAll('.commande-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const isActive = content.classList.contains('active');
+            
+            // Fermer tous les autres contenus actifs
+            document.querySelectorAll('.commande-content.active').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Basculer l'état du contenu cliqué
+            content.classList.toggle('active');
+        });
+    });
+
 	// Gestionnaire pour voir les détails d'une commande
 	document.querySelectorAll('.view-commande').forEach(button => {
 		button.addEventListener('click', async function() {
