@@ -24,6 +24,8 @@ body {
 	background-color: var(--background-color);
 	color: var(--text-color);
 	font-size: var(--font-size-base);
+	display: flex;
+    flex-direction: column;
 
 }
 
