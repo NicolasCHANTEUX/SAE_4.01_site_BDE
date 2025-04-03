@@ -2,23 +2,28 @@
 
 require_once './app/core/Controller.php';
 require_once './app/trait/FormTrait.php';
+require_once './app/repositories/ArticleRepository.php';
 require_once './app/services/ArticleService.php';
 require_once './app/services/AuthService.php';
 
 class AccueilAdminController extends Controller {
     use FormTrait;
 
-   public function index()
-   {
-      $this->checkAuth();
-      $service = new ArticleService();
-      $articles = $service->allArticles();
+    private $articleRepository;
+
+    public function __construct() {
+        $this->articleRepository = new ArticleRepository();
+    }
+
+    public function index() {
+        $this->checkAuth();
+        // Récupérer tous les articles pour le formulaire
+        $articles = $this->articleRepository->findAll();
 
         $this->view('accueil/form.php', [
-            'title'    => 'Gestion Articles',
+            'title' => 'Administration - Accueil',
             'articles' => $articles
         ]);
-
     }
 
     public function create() {
@@ -44,7 +49,6 @@ class AccueilAdminController extends Controller {
         ]);
     }
 
-
     public function update() {
         $this->checkAuth();
 
@@ -67,7 +71,6 @@ class AccueilAdminController extends Controller {
             'errors' => $errors
         ]);
     }
-
 
     public function delete() {
         $this->checkAuth();
@@ -92,13 +95,13 @@ class AccueilAdminController extends Controller {
         ]);
     }
 
-   private function checkAuth() {
-      $auth = new AuthService();
-      if (!$auth->isLoggedIn()) {
-          $this->redirectTo('connexion.php');
-      }
-    if ($auth->getUser()->getRole() !== 'admin') {
+    private function checkAuth() {
+        $auth = new AuthService();
+        if (!$auth->isLoggedIn()) {
+            $this->redirectTo('connexion.php');
+        }
+        if ($auth->getUser()->getRole() !== 'admin') {
             $this->redirectTo('index.php');
+        }
     }
-   }
 }

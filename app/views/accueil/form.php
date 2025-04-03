@@ -89,16 +89,16 @@ require_once 'app/views/template/header.php';
 </main>
 
 <script>
-// Script pour charger les données de l'événement sélectionné dans le formulaire de modification
-document.getElementById('article_id').addEventListener('change', function() {
+// Script pour charger les données de l'article sélectionné dans le formulaire de modification
+document.getElementById('article_id_update').addEventListener('change', function() {
     const selectedArticle = this.options[this.selectedIndex].value;
     if (selectedArticle) {
         fetch(`/accueilAdmin.php?action=get&id=${selectedArticle}`)
             .then(response => response.json())
             .then(article => {
-                document.getElementById('titre').value = article.titre;
-                document.getElementById('description').value = article.description;
-                document.getElementById('date_creation').value = article.date_creation.slice(0, 16);
+                document.getElementById('titre_update').value = article.titre;
+                document.getElementById('description_update').value = article.description;
+                document.getElementById('date_creation_update').value = article.date_creation.slice(0, 16);
             })
             .catch(error => console.error('Erreur:', error));
     }

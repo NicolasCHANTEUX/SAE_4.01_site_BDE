@@ -1,97 +1,30 @@
 <?php
 require_once './app/repositories/ArticleRepository.php';
+require_once './app/entities/Article.php';
 
 class ArticleService {
-    public function allArticles() {
-        $articleRepo = new ArticleRepository();
+    private $articleRepository;
 
-        $articles = $articleRepo->findAll();
-
-        return $articles;
+    public function __construct() {
+        $this->articleRepository = new ArticleRepository();
     }
 
-    public function create(array $data): Article {
-        $errors = [];
+    public function create(array $data): bool {
+        $article = new Article(
+            null,
+            $data['titre'],
+            $data['description'],
+            $data['date_creation']
+        );
 
-        // Validation des données
-        if (empty($data['titre'])) {
-            $errors[] = 'Le titre est requis.';
-        }
-        if (empty($data['description'])) {
-            $errors[] = 'La description est requise.';
-        }
-        if (empty($data['date_creation'])) {
-            $errors[] = 'La date est incorrecte.';
-        }
-
-
-        if (!empty($errors)) {
-            throw new Exception(implode(', ', $errors));
-        }
-
-        $article = new Article(null, $data['titre'], $data['description'], $data['date_creation']);
-
-        $repository = new ArticleRepository();
-        if (!$repository->create($article)) {
-            throw new Exception('Erreur lors de la création de l\'article.');
-        }
-
-        return $article;
+        return $this->articleRepository->create($article);
     }
 
-
-    public function update() {
-
-        if (empty($data['id'])) {
-            $errors[] = 'Le id est requis.';
-        }
-        if (empty($data['titre'])) {
-            $errors[] = 'Le titre est requis.';
-        }
-        if (empty($data['description'])) {
-            $errors[] = 'La description est requise.';
-        }
-        if (empty($data['date_creation'])) {
-            $errors[] = 'La date est incorrecte.';
-        }
-
-        if (!empty($errors)) {
-            throw new Exception(implode(', ', $errors));
-        }
-
-        $repository = new ArticleRepository();
-        if (!$repository->update($article)) {
-            throw new Exception('Erreur lors de la modification de l\'article.');
-        }
+    public function update(array $data): bool {
+        return $this->articleRepository->update($data);
     }
-
 
     public function delete(array $data): bool {
-        $errors = [];
-
-        // Validation des données
-        if (empty($data['id'])) {
-            $errors[] = 'L\'id est invalide.';
-            return false;
-        }
-
-        if (!empty($errors)) {
-            throw new Exception(implode(', ', $errors));
-            return false;
-        }
-
-        $repository = new ArticleRepository();
-        if (!$repository->delete($data['id'])) {
-            throw new Exception('Erreur lors de la création de l\'article.');
-        }
-
-        return true;
+        return $this->articleRepository->delete($data['id']);
     }
-
-    public function find(int $id): ?Article
-    {
-        $articleRepo = new ArticleRepository();
-        return $articleRepo->findById($id);
-    }
-
 }
