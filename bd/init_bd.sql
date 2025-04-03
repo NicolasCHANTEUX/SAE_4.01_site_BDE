@@ -46,8 +46,7 @@ CREATE TABLE produits (
     stock INTEGER NOT NULL DEFAULT 0,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     taille VARCHAR(5)[],
-    couleurs VARCHAR(20)[],
-    chemin_image VARCHAR(255)
+    couleurs VARCHAR(20)[]
 );
 
 CREATE TABLE commande (

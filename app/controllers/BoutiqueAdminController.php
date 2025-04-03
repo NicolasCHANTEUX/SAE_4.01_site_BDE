@@ -125,6 +125,10 @@ class BoutiqueAdminController extends Controller {
         exit;
     }
 
+    public function get($id) {
+        return $this->boutiqueRepository->findById($id);
+    }
+
     private function checkAuth() {
         $auth = new AuthService();
         if (!$auth->isLoggedIn()) {
