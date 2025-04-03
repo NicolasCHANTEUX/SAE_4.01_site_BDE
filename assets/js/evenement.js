@@ -156,53 +156,6 @@ function showEventDetails(event) {
     `;
 }
 
-async function handleParticipation(button, evenementId) {
-    try {
-        const response = await fetch('/evenement.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                evenement_id: evenementId,
-                action: 'participer'
-            })
-        });
-
-        const result = await response.json();
-        
-        if (result.success) {
-            showNotification(
-                'Super !',
-                'Votre participation a bien été enregistrée',
-                'success'
-            );
-            
-            // Mettre à jour le bouton et le compteur
-            button.disabled = true;
-            button.textContent = 'Inscrit';
-            const counter = button.closest('.event-card').querySelector('.participants-count');
-            if (counter) {
-                const currentCount = parseInt(counter.textContent);
-                counter.textContent = currentCount + 1;
-            }
-        } else {
-            showNotification(
-                'Attention',
-                result.message || 'Une erreur est survenue',
-                'warning'
-            );
-        }
-    } catch (error) {
-        console.error('Erreur:', error);
-        showNotification(
-            'Erreur',
-            'Une erreur est survenue lors de l\'inscription',
-            'error'
-        );
-    }
-}
-
 function showNotification(title, message, type = 'success') {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
@@ -277,4 +230,51 @@ function displayEmptyEvents() {
     `;
 }
 
-document.addEventListener('DOMContentLoaded', loadEvents);
+document.addEventListener('DOMContentLoaded', function() {
+    // Délégation d'événements pour les boutons "Participer"
+    document.querySelectorAll('.btn-participer').forEach(button => {
+        button.addEventListener('click', async function() {
+            if (this.disabled) return;
+            
+            const evenementId = this.dataset.id;
+            try {
+                const response = await fetch('/evenement.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        evenement_id: evenementId,
+                        action: 'participer'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(
+                        'Super !',
+                        'Votre participation a bien été enregistrée',
+                        'success'
+                    );
+                    this.disabled = true;
+                    this.textContent = 'Inscrit';
+                } else {
+                    showNotification(
+                        'Attention',
+                        result.message || 'Une erreur est survenue',
+                        'warning'
+                    );
+                }
+            } catch (error) {
+                showNotification(
+                    'Erreur',
+                    'Une erreur est survenue lors de l\'inscription',
+                    'error'
+                );
+            }
+        });
+    });
+
+    loadEvents(); // Garder l'appel existant à loadEvents
+});

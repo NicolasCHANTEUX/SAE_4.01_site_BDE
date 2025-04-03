@@ -24,7 +24,10 @@ require_once 'app/views/template/header.php';
                         <span class="prix">Prix: <?= $evenement['prix'] == 0 ? 'Gratuit' : number_format($evenement['prix'], 2) . ' €' ?></span>
                         <span class="places">Places: <?= $evenement['nb_inscrits'] ?>/<?= $evenement['max_participants'] ?: '∞' ?></span>
                     </div>
-                    <button class="btn-participer" data-id="<?= $evenement['id'] ?>">Participer</button>
+                    <button class="btn-participer" data-id="<?= $evenement['id'] ?>" 
+                            <?= $evenement['nb_inscrits'] >= $evenement['max_participants'] ? 'disabled' : '' ?>>
+                        <?= $evenement['nb_inscrits'] >= $evenement['max_participants'] ? 'Complet' : 'Je participe' ?>
+                    </button>
                 </div>
             <?php endforeach; ?>
         </div>
