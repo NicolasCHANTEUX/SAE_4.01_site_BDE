@@ -34,4 +34,24 @@ class ContactAdminController extends Controller {
         http_response_code(400);
         exit;
     }
+
+    public function getContact($id) {
+        $contact = $this->contactRepository->findById($id);
+        if (!$contact) {
+            return [
+                'success' => false,
+                'message' => 'Contact non trouvé'
+            ];
+        }
+
+        // Si on trouve le contact, on le marque comme lu
+        if ($contact['statut'] === 'non_lu') {
+            $this->contactRepository->updateStatut($id, 'lu');
+        }
+
+        return [
+            'success' => true,
+            'data' => $contact
+        ];
+    }
 }

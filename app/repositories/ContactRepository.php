@@ -51,4 +51,16 @@ class ContactRepository {
             return false;
         }
     }
+
+    public function findById($id) {
+        try {
+            $sql = "SELECT * FROM contacts WHERE id = :id";
+            $stmt = $this->repository->getPDO()->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return null;
+        }
+    }
 }
