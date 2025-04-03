@@ -24,6 +24,7 @@ body {
 	background-color: var(--background-color);
 	color: var(--text-color);
 	font-size: var(--font-size-base);
+
 }
 
 /* Header et Navigation */
@@ -149,6 +150,7 @@ footer {
 	text-align: center;
 	padding: 1.5rem;
 	font-size: 0.8rem;
+	margin-top: 5%; /* Pousse le footer vers le bas */
 }
 
 /* Styles pour la page Contact */
@@ -156,6 +158,10 @@ footer {
 	max-width: 1200px;
 	margin: 2rem auto;
 	padding: 0 1rem;
+}
+
+main {
+	flex: 1; /* Fait en sorte que le main prenne tout l'espace disponible */
 }
 
 .form-group {
