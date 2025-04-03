@@ -34,17 +34,6 @@ $adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redir
 ?>
 
 <?php
-$user = isset($_SESSION['user']) ? unserialize($_SESSION['user']) : null;
-if($user instanceof User) {
-    echo $user->getId();
-    echo $user->getEmail();
-    echo $user->getNom();
-    echo $user->getPrenom();
-    echo $user->getRole();
-    echo $user->getDateCreation();
-    echo $user->getPassword();
-
-
 $isAdmin = false;
 if (isset($_SESSION['user'])) {
     $user = unserialize($_SESSION['user']);
@@ -113,7 +102,6 @@ $adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redir
         <!-- Menu PC -->
         <nav class="main-nav">
             <div class="nav-brand">
-                <?php $isAdmin = true; ?>
                 <?php if ($isAdmin): ?>
                     <button onclick="window.location.href='<?= htmlspecialchars($adminPageLink) ?>'" class="mode-edition-btn">Mode Édition</button>
                 <?php endif; ?>
