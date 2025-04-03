@@ -18,10 +18,9 @@ class BoutiqueController extends Controller
 		$produits = $this->BoutiqueRepository->getAllProduits();
 		$commandes = $this->CommandeRepository->findAll();
 		
-		$this->view('boutique/form.php', [
+		$this->view('boutique/boutique.php', [
 			'title' => 'Gestion des produits',
 			'produits' => $produits,
-			'commandes' => $commandes
 		]);
 	}
 	

@@ -102,4 +102,32 @@ class CommandeRepository {
             return false;
         }
     }
+
+    public function deleteCommande(int $id): bool {
+        try {
+            $this->pdo->beginTransaction();
+            
+            // Supprimer d'abord les lignes de commande
+            $stmt = $this->pdo->prepare('DELETE FROM ligne_commande WHERE commande_id = :id');
+            $stmt->execute(['id' => $id]);
+            
+            // Puis supprimer la commande
+            $stmt = $this->pdo->prepare('DELETE FROM commande WHERE id = :id');
+            $success = $stmt->execute(['id' => $id]);
+            
+            if ($success) {
+                $this->pdo->commit();
+                return true;
+            }
+            
+            $this->pdo->rollBack();
+            return false;
+        } catch (PDOException $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 }
