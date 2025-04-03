@@ -92,11 +92,11 @@ function displayError(message) {
     `;
 }
 
-function showNotification(title, message) {
+function showNotification(title, message, type = 'success') {
     const notification = document.createElement('div');
-    notification.className = 'notification';
+    notification.className = `notification ${type}`;
     notification.innerHTML = `
-        <i class="fas fa-shopping-cart notification-icon"></i>
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} notification-icon"></i>
         <div class="notification-content">
             <p class="notification-title">${title}</p>
             <p class="notification-message">${message}</p>
@@ -142,7 +142,8 @@ async function addToCart(productData) {
         if (result.success) {
             showNotification(
                 'Panier mis à jour',
-                'Le produit a été ajouté à votre panier'
+                'Le produit a été ajouté à votre panier',
+                'success'
             );
         } else {
             showNotification(

@@ -63,7 +63,7 @@ class ContactController extends Controller {
         return [
             'email' => 'contact@bde-iut.fr',
             'discord' => 'https://discord.gg/FzYyWzb6',
-            'instagram' => 'https://instagram.com'
+            'instagram' => 'https://www.instagram.com/bde_ic_lh/'
         ];
     }
 }
