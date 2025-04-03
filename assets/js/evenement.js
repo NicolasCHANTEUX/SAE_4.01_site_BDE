@@ -68,7 +68,7 @@ function createEventCard(event) {
     const prix = event.prix || 0;
     const image = event.chemin_image || DEFAULT_IMAGE;
     const date = new Date(event.date_evenement);
-    const priceDisplay = prix === 0 ? 'Gratuit' : prix + '€';
+    const priceDisplay = event.prix == 0 ? 'Gratuit' : event.prix + '€';
 
     return `
         <div class="evenement-card" data-event-id="${event.id}">
