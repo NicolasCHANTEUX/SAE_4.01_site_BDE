@@ -62,6 +62,54 @@ class EvenementRepository {
         }
     }
 
+
+    public function addParticipant(int $evenementId, int $userId): bool {
+        try {
+            // Gestion de l'upload de l'image
+            $cheminImage = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+                $nomFichier = uniqid() . '.' . $extension;
+                $cheminImage = 'assets/images/events/' . $nomFichier;
+                
+                if (!move_uploaded_file($_FILES['image']['tmp_name'], $cheminImage)) {
+                    throw new Exception('Erreur lors du téléchargement de l\'image');
+                }
+            }
+
+            $query = 'INSERT INTO evenement (
+                titre, 
+                description, 
+                date_evenement, 
+                prix, 
+                max_participants,
+                nb_inscrits,
+                chemin_image
+            ) VALUES (
+                :titre, 
+                :description, 
+                :date_evenement, 
+                :prix, 
+                :max_participants,
+                0,
+                :chemin_image
+            )';
+            
+            $stmt = $this->pdo->prepare($query);
+            return $stmt->execute([
+                'titre' => $data['titre'],
+                'description' => $data['description'],
+                'date_evenement' => $data['date_evenement'],
+                'prix' => $data['prix'],
+                'max_participants' => empty($data['max_participants']) ? null : $data['max_participants'],
+                'chemin_image' => $cheminImage
+            ]);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
     public function update(array $data): bool {
         try {
             // Gestion de l'upload de la nouvelle image

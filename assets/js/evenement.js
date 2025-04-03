@@ -205,7 +205,7 @@ function showEventDetails(event) {
 function displayEmptyShop(container) {
     container.innerHTML = `
         <div class="boutique-empty">
-            <img src="./images/empty-shop.svg" alt="Boutique vide" 
+            <img src="./assets/images/calendrier-empty.jpg" alt="Boutique vide"
                  onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
             <p>Aucun événement n'est prévu pour l'instant.</p>
             <p class="subtitle">Revenez bientôt, nous faisons en sorte de réaliser des activités régulièrement !</p>

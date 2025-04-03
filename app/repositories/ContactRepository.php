@@ -19,7 +19,32 @@ class ContactRepository {
                 'nom' => $data['nom'],
                 'prenom' => $data['prenom'],
                 'email' => $data['email'],
-                'message' => $data['demande']  // changé ici
+                'message' => $data['demande']
+            ]);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function findAll(): array {
+        try {
+            $sql = "SELECT * FROM contacts ORDER BY date_envoi DESC";
+            $stmt = $this->repository->getPDO()->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return [];
+        }
+    }
+
+    public function updateStatut($contactId, $statut): bool {
+        try {
+            $sql = "UPDATE contacts SET statut = :statut WHERE id = :id";
+            $stmt = $this->repository->getPDO()->prepare($sql);
+            return $stmt->execute([
+                'id' => $contactId,
+                'statut' => $statut
             ]);
         } catch (PDOException $e) {
             error_log($e->getMessage());

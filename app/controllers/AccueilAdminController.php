@@ -8,15 +8,10 @@ require_once './app/services/AuthService.php';
 class AccueilAdminController extends Controller {
     use FormTrait;
 
-    private $service;
-
-    public function __construct() {
-        $this->service = new ArticleService();
-    }
-
-    public function index()
-    {
-      //$this->checkAuth();
+   public function index()
+   {
+      $this->checkAuth();
+      $service = new ArticleService();
       $articles = $service->allArticles();
 
         $this->view('accueil/form.php', [
@@ -43,5 +38,8 @@ class AccueilAdminController extends Controller {
       if (!$auth->isLoggedIn()) {
           $this->redirectTo('connexion.php');
       }
+    if ($auth->getUser()->getRole() !== 'admin') {
+            $this->redirectTo('index.php');
+    }
    }
 }

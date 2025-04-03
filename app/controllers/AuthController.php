@@ -1,11 +1,16 @@
 <?php
 require_once './app/core/Controller.php';
 require_once './app/services/AuthService.php';
+require_once './app/repositories/UserRepository.php';
 require_once './app/trait/FormTrait.php';
-
 
 class AuthController extends Controller {
     use FormTrait;
+    private $userRepository;
+
+    public function __construct() {
+        $this->userRepository = new UserRepository();
+    }
 
     public function login() {
         $authService = new AuthService();
@@ -25,7 +30,6 @@ class AuthController extends Controller {
         }
     }
 
-   
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';

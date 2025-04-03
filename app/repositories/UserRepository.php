@@ -33,19 +33,23 @@ class UserRepository {
         return null;
     }
 
-    public function create(User $user): bool {
-        $stmt = $this->pdo->prepare('
-            INSERT INTO utilisateur (email, mot_de_passe, nom, prenom, role, date_creation)
-            VALUES (:email, :mot_de_passe, :nom, :prenom, :role, :date_creation)
-        ');
-        return $stmt->execute([
-            'email' => $user->getEmail(),
-            'mot_de_passe' => $user->getPassword(),
-            'nom' => $user->getNom(),
-            'prenom' => $user->getPrenom(),
-            'role' => $user->getRole(),
-            'date_creation' => $user->getDateCreation()
-        ]);
+    public function create(array $data): bool {
+        try {
+            $sql = "INSERT INTO utilisateur (email, mot_de_passe, nom, prenom, role) 
+                    VALUES (:email, :mot_de_passe, :nom, :prenom, :role)";
+            
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([
+                'email' => $data['email'],
+                'mot_de_passe' => $data['mot_de_passe'],
+                'nom' => $data['nom'],
+                'prenom' => $data['prenom'],
+                'role' => $data['role']
+            ]);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
     public function verifyPassword(int $userId, string $password): bool {
