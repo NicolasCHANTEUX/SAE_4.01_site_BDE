@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS articles;
-DROP TABLE IF EXISTS produits;
-DROP TABLE IF EXISTS commande;
-DROP TABLE IF EXISTS ligne_commande;
-DROP TABLE IF EXISTS inscription_evenement;
-DROP TABLE IF EXISTS contacts;
-DROP TABLE IF EXISTS evenement;
-DROP TABLE IF EXISTS utilisateur;
-DROP TABLE IF EXISTS questionsFrequentes;
+DROP TABLE IF EXISTS articles CASCADE;
+DROP TABLE IF EXISTS produits CASCADE;
+DROP TABLE IF EXISTS commande CASCADE;
+DROP TABLE IF EXISTS ligne_commande CASCADE;
+DROP TABLE IF EXISTS inscription_evenement CASCADE;
+DROP TABLE IF EXISTS contacts CASCADE;
+DROP TABLE IF EXISTS evenement CASCADE;
+DROP TABLE IF EXISTS utilisateur CASCADE;
+DROP TABLE IF EXISTS questionsFrequentes CASCADE;
 
 CREATE TABLE articles (
 	id SERIAL PRIMARY KEY, 
@@ -46,7 +46,8 @@ CREATE TABLE produits (
     stock INTEGER NOT NULL DEFAULT 0,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     taille VARCHAR(5)[],
-    couleurs VARCHAR(20)[]
+    couleurs VARCHAR(20)[],
+    chemin_image VARCHAR(255)
 );
 
 CREATE TABLE commande (
