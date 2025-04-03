@@ -34,8 +34,18 @@ $adminPageLink = $adminPages[$currentPage] ?? 'index.php'; // Par défaut, redir
 ?>
 
 <?php
+$user = isset($_SESSION['user']) ? unserialize($_SESSION['user']) : null;
+if($user instanceof User) {
+    echo $user->getId();
+    echo $user->getEmail();
+    echo $user->getNom();
+    echo $user->getPrenom();
+    echo $user->getRole();
+    echo $user->getDateCreation();
+    echo $user->getPassword();
 
-$isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+
+}
 
  // Détermine la page actuelle
  $currentPage = basename($_SERVER['REQUEST_URI']);
