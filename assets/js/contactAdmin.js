@@ -32,12 +32,13 @@ async function getContactDetails(contactId) {
     }
 }
 
-function displayContactDetails(contact) {
-    if (!contact) {
+function displayContactDetails(result) {
+    if (!result.success || !result.data) {
         contactDetails.innerHTML = '<div class="error">Erreur lors du chargement des détails</div>';
         return;
     }
 
+    const contact = result.data;
     const date = new Date(contact.date_envoi).toLocaleString('fr-FR');
 
     contactDetails.innerHTML = `
@@ -51,7 +52,7 @@ function displayContactDetails(contact) {
                 ${contact.message}
             </div>
         </div>
-        <form class="reply-form">
+        <form class="reply-form" data-contact-id="${contact.id}">
             <div class="form-group">
                 <label for="reponse">Réponse</label>
                 <textarea class="form-control" id="reponse" rows="5" required></textarea>
@@ -60,3 +61,43 @@ function displayContactDetails(contact) {
         </form>
     `;
 }
+
+// Gérer la soumission du formulaire de réponse
+document.addEventListener('submit', async function(e) {
+    if (!e.target.matches('.reply-form')) return;
+    
+    e.preventDefault();
+    const form = e.target;
+    const contactId = form.dataset.contactId;
+    const reponse = form.querySelector('#reponse').value;
+    
+    try {
+        const response = await fetch('/contactAdmin.php?action=repondre', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contactId: contactId,
+                reponse: reponse
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Réponse envoyée avec succès');
+            form.reset();
+            // Mettre à jour le statut dans la liste
+            const contactItem = document.querySelector(`[data-contact-id="${contactId}"]`);
+            const statusBadge = contactItem.querySelector('.badge');
+            statusBadge.className = 'badge bg-success';
+            statusBadge.textContent = 'Répondu';
+        } else {
+            alert(result.message || 'Erreur lors de l\'envoi de la réponse');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors de l\'envoi de la réponse');
+    }
+});

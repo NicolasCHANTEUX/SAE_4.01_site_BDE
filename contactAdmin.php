@@ -19,5 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
+    header('Content-Type: application/json');
+    switch ($_GET['action']) {
+        case 'repondre':
+            echo json_encode($controller->envoyerReponse());
+            exit;
+            break;
+    }
+}
+
 // Par défaut, afficher la page principale
 $controller->index();
