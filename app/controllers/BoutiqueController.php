@@ -7,21 +7,42 @@ class BoutiqueController extends Controller
 {
 
 	private $BoutiqueRepository;
+	private $CommandeRepository;
 	public function __construct()
 	{
 		$this->BoutiqueRepository = new BoutiqueRepository();
+		$this->CommandeRepository = new CommandeRepository();
 	}
-	public function index()
-	{
-		if(session_status() == PHP_SESSION_NONE)
-			session_start();
-
+	public function index() {
 		$produits = $this->BoutiqueRepository->getAllProduits();
-
-		$this->view('boutique/boutique.php', [
-			'title' => 'Boutique - BDE',
+		$commandes = $this->CommandeRepository->getAllCommandes();
+		
+		$this->view('boutique/form.php', [
+			'title' => 'Gestion des produits',
 			'produits' => $produits,
+			'commandes' => $commandes
 		]);
+	}
+	
+	public function getCommande() {
+		header('Content-Type: application/json');
+		if (isset($_GET['id'])) {
+			$details = $this->CommandeRepository->getCommandeDetails($_GET['id']);
+			echo json_encode($details);
+		}
+		exit;
+	}
+	
+	public function validateCommande() {
+		header('Content-Type: application/json');
+		$data = json_decode(file_get_contents('php://input'), true);
+		
+		if ($this->CommandeRepository->updateStatus($data['id'], 'validee')) {
+			echo json_encode(['success' => true]);
+		} else {
+			echo json_encode(['success' => false, 'message' => 'Erreur lors de la validation']);
+		}
+		exit;
 	}
 
 	public function ajouterAuPanier() {
