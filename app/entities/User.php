@@ -3,7 +3,7 @@
 class User {
     public function __construct(
         private ?int $id,
-        private string $email,
+        private ?string $email,
         private string $password,
         private string $nom,
         private string $prenom,
@@ -21,8 +21,8 @@ class User {
     public function getDateCreation(): ?string { return $this->date_creation; }
 
     // Setters avec validation
-    public function setEmail(string $email): void {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    public function setEmail(?string $email): void {
+        if ($email !== null && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('Email invalide');
         }
         $this->email = $email;
@@ -41,5 +41,29 @@ class User {
             throw new InvalidArgumentException('Rôle invalide');
         }
         $this->role = $role;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'password' => $this->password,
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'role' => $this->role,
+            'date_creation' => $this->date_creation
+        ];
+    }
+
+    //unserialize
+    public function __unserialize(array $data): void {
+        $this->id = $data['id'] ?? null;
+        $this->email = $data['email'] ?? ''; // Valeur par défaut si null
+        $this->password = $data['password'] ?? '';
+        $this->nom = $data['nom'] ?? '';
+        $this->prenom = $data['prenom'] ?? '';
+        $this->role = $data['role'] ?? 'membre';
+        $this->date_creation = $data['date_creation'] ?? null;
     }
 }
