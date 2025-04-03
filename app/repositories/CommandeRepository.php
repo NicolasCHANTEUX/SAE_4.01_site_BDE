@@ -51,7 +51,8 @@ class CommandeRepository {
         try {
             $sql = "SELECT c.*, u.nom, u.prenom,
                            p.nom as produit_nom, 
-                           lc.quantite, lc.prix_unitaire, lc.taille, lc.couleur
+                           lc.quantite, lc.prix_unitaire, lc.taille, lc.couleur,
+                           (lc.quantite * lc.prix_unitaire) as ligne_total
                     FROM commande c
                     JOIN utilisateur u ON c.utilisateur_id = u.id
                     JOIN ligne_commande lc ON c.id = lc.commande_id
@@ -71,7 +72,8 @@ class CommandeRepository {
                         'statut' => $row['statut'],
                         'nom' => $row['nom'],
                         'prenom' => $row['prenom'],
-                        'produits' => []
+                        'produits' => [],
+                        'total_commande' => 0
                     ];
                 }
                 $commandes[$row['id']]['produits'][] = [
@@ -79,8 +81,11 @@ class CommandeRepository {
                     'quantite' => $row['quantite'],
                     'prix_unitaire' => $row['prix_unitaire'],
                     'taille' => $row['taille'],
-                    'couleur' => $row['couleur']
+                    'couleur' => $row['couleur'],
+                    'ligne_total' => $row['ligne_total']
                 ];
+                // Ajouter le total de la ligne au total de la commande
+                $commandes[$row['id']]['total_commande'] += $row['ligne_total'];
             }
             return array_values($commandes);
         } catch (PDOException $e) {
