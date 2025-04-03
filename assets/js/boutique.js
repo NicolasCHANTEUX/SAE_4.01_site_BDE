@@ -64,9 +64,6 @@ function createProductCard(product) {
                     </div>
                 </div>
             </a>
-            <div class="btn btn-secondary">
-                Voir le produit
-            </div>
         </div>
     `;
 }
