@@ -1,45 +1,31 @@
 <?php
 require_once './app/core/Controller.php';
-require_once './app/repositories/UserRepository.php';
+require_once './app/services/AuthService.php';
+require_once './app/trait/FormTrait.php';
+
 
 class AuthController extends Controller {
-    private $userRepository;
-
-    public function __construct() {
-        $this->userRepository = new UserRepository();
-    }
+    use FormTrait;
 
     public function login() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
-            $error = '';
+        $authService = new AuthService();
 
-            if (empty($email) || empty($password)) {
-                $error = 'Tous les champs sont requis';
-            } else {
-                $user = $this->userRepository->findByEmail($email);
-                
-                if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
-                    $error = 'Email ou mot de passe incorrect';
-                } else {
-                    if(session_status() == PHP_SESSION_NONE) {
-                        session_start();
-                    }
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_prenom'] = $user['prenom'];
-                    $_SESSION['user_nom'] = $user['nom'];
-                    $_SESSION['user_role'] = $user['role'];
-                    $_SESSION['user_email'] = $user['email'];
+        // Récupérer les données POST nettoyées
+        $postData = $this->getAllPostParams();
 
-                    return $this->redirectTo('index.php');
-                }
-            }
+        // Si aucune donnée n'est envoyée en POST ou si la connexion échoue, afficher le formulaire
+        if (empty($postData) || !$authService->login($this->getPostParam('email'), $this->getPostParam('password'))) {
+
+            $data= empty($postData) ? []:['error'=>'Email ou mot de passe invalide'];// si des données existent, elles ne sont pas valide
+
+            $this->view('connexion/connexion.php',['Authentification',$data]); // Affiche la vue login.php
+        } else {
+            // Rediriger vers la page d'accueil après connexion réussie
+            $this->redirectTo('index.php');
         }
-
-        return $this->view('connexion/connexion.php', ['error' => $error ?? '']);
     }
 
+   
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';

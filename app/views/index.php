@@ -25,9 +25,9 @@ require_once 'app/views/template/header.php';
                     <?php if (isset($articles) && is_array($articles) && !empty($articles)): ?>
                         <?php foreach ($articles as $key => $article): ?>
                             <div class="carousel-item <?= $key === 0 ? 'active' : '' ?>">
-                                <h2><?= htmlspecialchars($article['titre']) ?></h2>
-                                <p><?= htmlspecialchars($article['description']) ?></p>
-                                <small>Créé le : <?= htmlspecialchars($article['date_creation']) ?></small>
+                                <h2><?= $article->getTitre() ?></h2>
+                                <p><?= $article->getDescription() ?></p>
+                                <small>Créé le : <?= $article->getDateCreation() ?></small>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>

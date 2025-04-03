@@ -68,7 +68,7 @@ function createEventCard(event) {
     const prix = event.prix || 0;
     const image = event.chemin_image || DEFAULT_IMAGE;
     const date = new Date(event.date_evenement);
-    const priceDisplay = prix === 0 ? 'Gratuit' : prix + '€';
+    const priceDisplay = event.prix == 0 ? 'Gratuit' : event.prix + '€';
 
     return `
         <div class="evenement-card" data-event-id="${event.id}">
@@ -83,6 +83,34 @@ function createEventCard(event) {
     `;
 }
 
+async function registerForEvent(eventId) {
+    try {
+        const response = await fetch('/evenement.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                evenement_id: eventId 
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // Recharger les événements pour mettre à jour l'affichage
+            await loadEvents();
+            alert('Inscription réussie !');
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Erreur lors de l\'inscription à l\'événement');
+    }
+}
+
+// Modifier la fonction showEventDetails pour gérer le bouton désactivé
 function showEventDetails(event) {
     const detailsContainer = document.getElementById('event-details');
     detailsContainer.classList.remove('hidden');
@@ -96,6 +124,9 @@ function showEventDetails(event) {
         hour: '2-digit',
         minute: '2-digit'
     });
+    
+    // Vérifier si l'événement est complet
+    const isEventFull = event.max_participants && event.nb_inscrits >= event.max_participants;
     
     detailsContainer.innerHTML = `
         <h2>${event.titre}</h2>
@@ -116,16 +147,59 @@ function showEventDetails(event) {
                 <span class="event-details-label">Description:</span>
                 <p>${event.description}</p>
             </div>
-            <button class="btn-secondary" onclick="registerForEvent(${event.id})">
-                Je participe
+            <button class="btn-secondary ${isEventFull ? 'disabled' : ''}" 
+                    onclick="registerForEvent(${event.id})"
+                    ${isEventFull ? 'disabled' : ''}>
+                ${isEventFull ? 'Complet' : 'Je participe'}
             </button>
         </div>
     `;
 }
 
-function registerForEvent(eventId) {
-    // TODO: Implement event registration
-    alert('Inscription à l\'événement en cours de développement');
+// Modifier la fonction showEventDetails pour gérer le bouton désactivé
+function showEventDetails(event) {
+    const detailsContainer = document.getElementById('event-details');
+    detailsContainer.classList.remove('hidden');
+    
+    const date = new Date(event.date_evenement);
+    const formattedDate = date.toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    // Vérifier si l'événement est complet
+    const isEventFull = event.max_participants && event.nb_inscrits >= event.max_participants;
+    
+    detailsContainer.innerHTML = `
+        <h2>${event.titre}</h2>
+        <div class="event-details-content">
+            <div class="event-details-item">
+                <span class="event-details-label">Date:</span>
+                <span>${formattedDate}</span>
+            </div>
+            <div class="event-details-item">
+                <span class="event-details-label">Places:</span>
+                <span>${event.nb_inscrits}/${event.max_participants || '∞'}</span>
+            </div>
+            <div class="event-details-item">
+                <span class="event-details-label">Prix:</span>
+                <span>${event.prix == 0 ? 'Gratuit' : event.prix + '€'}</span>
+            </div>
+            <div class="event-details-item">
+                <span class="event-details-label">Description:</span>
+                <p>${event.description}</p>
+            </div>
+            <button class="btn-secondary ${isEventFull ? 'disabled' : ''}" 
+                    onclick="registerForEvent(${event.id})"
+                    ${isEventFull ? 'disabled' : ''}>
+                ${isEventFull ? 'Complet' : 'Je participe'}
+            </button>
+        </div>
+    `;
 }
 
 function displayEmptyShop(container) {

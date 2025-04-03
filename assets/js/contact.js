@@ -1,30 +1,57 @@
-const API_URL = 'http://localhost:8000';
-
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
+    const messageResult = document.getElementById('messageResult');
     
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Récupérer les données du formulaire
+            const formData = new FormData(contactForm);
+            const data = {
+                nom: formData.get('nom'),
+                prenom: formData.get('prenom'),
+                email: formData.get('email'),
+                demande: formData.get('demande')  // Maintenant ça correspond au name="demande" du HTML
+            };
+            
             try {
-                const formData = new FormData(contactForm);
-                const response = await fetch(`${API_URL}/contact`, {
+                const response = await fetch('/contact/envoyer', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify(data)
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const result = await response.json();
 
                 if (result.success) {
-                    alert('Message envoyé avec succès !');
+                    messageResult.innerHTML = `
+                        <div class="alert alert-success">
+                            ${result.message}
+                        </div>
+                    `;
                     contactForm.reset();
                 } else {
-                    alert(result.message || 'Une erreur est survenue');
+                    messageResult.innerHTML = `
+                        <div class="alert alert-danger">
+                            ${result.message}
+                        </div>
+                    `;
                 }
             } catch (error) {
                 console.error('Erreur:', error);
-                alert('Une erreur est survenue lors de l\'envoi du message');
+                messageResult.innerHTML = `
+                    <div class="alert alert-danger">
+                        Une erreur est survenue lors de l'envoi du message
+                    </div>
+                `;
             }
         });
     }

@@ -78,8 +78,8 @@ CREATE TABLE inscription_evenement (
 CREATE TABLE contacts (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
+	prenom VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    sujet VARCHAR(50) NOT NULL,
     message TEXT NOT NULL,
     date_envoi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     statut VARCHAR(20) DEFAULT 'non_lu'

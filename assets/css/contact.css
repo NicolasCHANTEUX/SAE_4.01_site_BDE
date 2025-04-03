@@ -1,7 +1,7 @@
 .faq-text-container {
     text-align: center;
     max-width: 800px;
-    margin: 2rem auto;
+    margin: auto;
     padding: 1.5rem;
     background-color: #f8f9fa;
     border-radius: 8px;
@@ -23,4 +23,86 @@
 
 .faq-button-container a {
     text-decoration: none;
+}
+
+.contact-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+}
+
+.contact-form-section {
+    flex: 1;
+}
+
+.social-section {
+    flex: 1;
+    position: sticky;
+    top: 100px;
+}
+
+.social-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-card {
+    flex: 1;
+    padding: 1rem;
+    min-width: 0; /* Permet aux cartes de rétrécir si nécessaire */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.social-card h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.social-icon {
+    font-size: 1.5rem;
+}
+
+.social-link {
+    font-size: 0.9rem;
+    word-break: break-all; /* Permet au texte de l'email de se couper si nécessaire */
+    display: inline-block;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-link:not(.btn-discord):not(.btn-instagram) {
+    background: var(--secondary-color);
+}
+
+.social-link:not(.btn-discord):not(.btn-instagram):hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    
+    .social-section {
+        position: static;
+    }
+
+    .social-grid {
+        flex-direction: column;
+    }
 }

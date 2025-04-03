@@ -2,7 +2,6 @@
 require_once 'app/views/template/header.php';
 ?>
 	<link rel="stylesheet" href="/assets/css/boutique.css">
-	<link rel="stylesheet" href="/assets/css/produit.css">
 
 	<div class="navigation-buttons">
 		<a href="/" class="nav-btn back-btn">

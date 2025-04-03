@@ -1,85 +1,57 @@
 <?php
 
 require_once __DIR__ . '/../core/Controller.php';
-require_once __DIR__ . '/../core/Repository.php';
+require_once __DIR__ . '/../repositories/ContactRepository.php';
 
 class ContactController extends Controller {
-    private $repository;
+    private $contactRepository;
 
     public function __construct() {
-        try {
-            $this->repository = Repository::getInstance();
-        } catch (Exception $e) {
-            // Si la connexion échoue, on affiche quand même la page sans fonctionnalités DB
-            error_log($e->getMessage());
-        }
+        $this->contactRepository = new ContactRepository();
     }
 
     public function index() {
         $socialLinks = $this->getSocialLinks();
-        $errorMessage = '';
-        
-        try {
-            // Vérification de la connexion
-            if (!$this->repository) {
-                throw new Exception("La connexion à la base de données n'est pas disponible");
-            }
-            
-            $this->view('contact.php', [
-                'title' => 'Contact - BDE',
-                'socialLinks' => $socialLinks,
-                'error' => $errorMessage
-            ]);
-        } catch (Exception $e) {
-            // Afficher la page avec un message d'erreur
-            $this->view('contact.php', [
-                'title' => 'Contact - BDE',
-                'socialLinks' => $socialLinks,
-                'error' => "Le service est temporairement indisponible"
-            ]);
-        }
+        $this->view('contact.php', [
+            'title' => 'Contact - BDE',
+            'socialLinks' => $socialLinks
+        ]);
     }
 
-    public function handleContact($data) {
-        // Validation des données
-        if (empty($data['nom']) || empty($data['prenom']) || empty($data['email']) || empty($data['demande'])) {
-            return [
-                'success' => false,
-                'message' => 'Tous les champs sont obligatoires'
-            ];
-        }
-
-        // Validation de l'email
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            return [
-                'success' => false,
-                'message' => 'Adresse email invalide'
-            ];
-        }
-
+    public function envoyerMessage() {
+        header('Content-Type: application/json');
+        
         try {
-            $sql = "INSERT INTO contacts (nom, prenom, email, demande, date_creation) 
-                    VALUES (:nom, :prenom, :email, :demande, NOW())";
+            $data = json_decode(file_get_contents('php://input'), true);
             
-            $stmt = $this->repository->getPDO()->prepare($sql);
-            $stmt->execute([
-                'nom' => htmlspecialchars($data['nom']),
-                'prenom' => htmlspecialchars($data['prenom']),
-                'email' => $data['email'],
-                'demande' => htmlspecialchars($data['demande'])
-            ]);
+            if (!$data) {
+                throw new Exception('Données invalides');
+            }
 
-            return [
-                'success' => true,
-                'message' => 'Votre message a bien été envoyé'
-            ];
+            if (empty($data['nom']) || empty($data['prenom']) || empty($data['email']) || empty($data['demande'])) {
+                throw new Exception('Tous les champs sont obligatoires');
+            }
 
-        } catch (\PDOException $e) {
-            return [
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                throw new Exception('Adresse email invalide');
+            }
+
+            if ($this->contactRepository->creerContact($data)) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Votre message a été envoyé avec succès'
+                ]);
+            } else {
+                throw new Exception('Erreur lors de l\'enregistrement du message');
+            }
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo json_encode([
                 'success' => false,
-                'message' => 'Une erreur est survenue lors de l\'envoi du message'
-            ];
+                'message' => $e->getMessage()
+            ]);
         }
+        exit;
     }
 
     private function getSocialLinks() {

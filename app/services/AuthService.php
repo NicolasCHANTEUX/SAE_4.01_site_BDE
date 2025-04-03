@@ -1,8 +1,24 @@
 <?php
-require_once './app/traits/AuthTrait.php';
+require_once './app/trait/AuthTrait.php';
+require_once './app/repositories/UserRepository.php';
 
 class AuthService {
     use AuthTrait;
+
+    public function login(string $email, string $password): bool {
+        $userRepository = new UserRepository();
+
+        $user = $userRepository->findByEmail($email);
+
+        if($user !== null && $this->verify($password,$user->getPassword()))
+        {
+            if(session_status() == PHP_SESSION_NONE)
+                session_start();
+                $_SESSION['user'] = serialize($user);
+            return true;
+        }
+        return false;
+    }
     
     public function getUser(): ?User {
         if(session_status() == PHP_SESSION_NONE) {
