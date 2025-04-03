@@ -98,7 +98,6 @@ $adminPageLink = $adminPages[$currentPage] ?? 'accueilAdmin.php'; // Par défaut
         <nav class="main-nav">
             <div class="nav-brand">
                 
-                
                 <?php if ($isAdmin): ?>
                     <button onclick="window.location.href='<?= htmlspecialchars($adminPageLink) ?>'" class="mode-edition-btn">Mode Édition</button>
                 <?php endif; ?>
