@@ -64,11 +64,7 @@ require_once 'app/middlewares/AuthMiddleware.php';
                 <?php if (AuthMiddleware::isAuthenticated()): ?>
                     <div class="user-menu">
                         <span>Bonjour, <?= htmlspecialchars($_SESSION['user_prenom']) ?></span>
-<<<<<<< HEAD
                         <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#compteModal">
-=======
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#compteModal">
->>>>>>> contact
                             Mon compte
                         </button>
                         <a href="/deconnexion.php" class="btn btn-danger">Déconnexion</a>

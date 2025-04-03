@@ -1,90 +1,53 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation des modals
-    const compteModalEl = document.getElementById('compteModal');
-    const passwordModalEl = document.getElementById('passwordModal');
-    const deleteModalEl = document.getElementById('deleteAccountModal');
+document.getElementById('passwordForm').addEventListener('submit', async function (e) {
+	e.preventDefault();
 
-    if (typeof bootstrap !== 'undefined') {
-        const compteModal = new bootstrap.Modal(compteModalEl);
-        const passwordModal = new bootstrap.Modal(passwordModalEl);
-        const deleteModal = new bootstrap.Modal(deleteModalEl);
+	try {
+		const formData = new FormData(this);
+		const response = await fetch('/compte/updatePassword', {
+			method: 'POST',
+			body: formData
+		});
 
-        // Gestionnaire pour le bouton "Mon compte"
-        document.querySelector('[data-bs-target="#compteModal"]')?.addEventListener('click', function() {
-            compteModal.show();
-        });
+		const result = await response.json();
 
-        // Gestionnaires pour les transitions entre modals
-        document.querySelector('[data-bs-target="#passwordModal"]')?.addEventListener('click', function() {
-            compteModal.hide();
-            setTimeout(() => passwordModal.show(), 150);
-        });
+		if (result.success) {
+			// Fermer le modal
+			bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+			// Afficher un message de succès
+			alert(result.message);
+		} else {
+			alert(result.message);
+		}
+	} catch (error) {
+		alert('Une erreur est survenue');
+	}
+});
 
-        document.querySelector('[data-bs-target="#deleteAccountModal"]')?.addEventListener('click', function() {
-            compteModal.hide();
-            setTimeout(() => deleteModal.show(), 150);
-        });
+document.getElementById('deleteAccountForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (!confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) {
+        return;
     }
 
-    // Gestion du formulaire de modification de mot de passe
-    const passwordForm = document.getElementById('passwordForm');
-    if (passwordForm) {
-        passwordForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            try {
-                const formData = new FormData(this);
-                const response = await fetch('/compte/updatePassword', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    // Fermer le modal
-                    bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
-                    // Afficher un message de succès
-                    alert(result.message);
-                } else {
-                    alert(result.message);
-                }
-            } catch (error) {
-                alert('Une erreur est survenue');
-            }
+    try {
+        const formData = new FormData(this);
+        const response = await fetch('/compte/deleteAccount', {
+            method: 'POST',
+            body: formData
         });
-    }
-
-    // Gestion du formulaire de suppression de compte
-    const deleteForm = document.getElementById('deleteAccountForm');
-    if (deleteForm) {
-        deleteForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            if (!confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) {
-                return;
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            if (result.redirect) {
+                window.location.href = result.redirect;
             }
-
-            try {
-                const formData = new FormData(this);
-                const response = await fetch('/compte/deleteAccount', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    alert(result.message);
-                    if (result.redirect) {
-                        window.location.href = result.redirect;
-                    }
-                } else {
-                    alert(result.message);
-                }
-            } catch (error) {
-                alert('Une erreur est survenue');
-            }
-        });
+        } else {
+            alert(result.message);
+        }
+    } catch (error) {
+        alert('Une erreur est survenue');
     }
 });
