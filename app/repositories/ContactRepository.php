@@ -63,4 +63,15 @@ class ContactRepository {
             return null;
         }
     }
+
+    public function deleteContact($id) {
+        try {
+            $sql = "DELETE FROM contacts WHERE id = :id";
+            $stmt = $this->repository->getPDO()->prepare($sql);
+            return $stmt->execute(['id' => $id]);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 }

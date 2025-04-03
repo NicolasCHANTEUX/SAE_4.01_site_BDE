@@ -111,6 +111,30 @@ class ContactAdminController extends Controller {
         ];
     }
 
+    public function deleteMessage() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (!isset($data['contactId'])) {
+                return [
+                    'success' => false,
+                    'message' => 'ID du message manquant'
+                ];
+            }
+
+            $success = $this->contactRepository->deleteContact($data['contactId']);
+            return [
+                'success' => $success,
+                'message' => $success ? 'Message supprimé avec succès' : 'Erreur lors de la suppression'
+            ];
+        }
+        
+        return [
+            'success' => false,
+            'message' => 'Méthode non autorisée'
+        ];
+    }
+
     private function envoyerEmail($to, $message) {
         try {
             $subject = "Réponse demande Site BDE IUT le Havre";

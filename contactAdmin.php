@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
         case 'repondre':
             echo json_encode($controller->envoyerReponse());
             exit;
-            break;
+        case 'delete':
+            echo json_encode($controller->deleteMessage());
+            exit;
     }
 }
 

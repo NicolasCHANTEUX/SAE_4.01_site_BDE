@@ -101,3 +101,41 @@ document.addEventListener('submit', async function(e) {
         alert('Une erreur est survenue lors de l\'envoi de la réponse');
     }
 });
+
+// Ajouter la gestion des boutons de suppression
+document.addEventListener('click', async function(e) {
+    if (e.target.closest('.delete-btn')) {
+        const button = e.target.closest('.delete-btn');
+        const contactId = button.dataset.contactId;
+        
+        if (confirm('Voulez-vous vraiment supprimer ce message ?')) {
+            try {
+                const response = await fetch('/contactAdmin.php?action=delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ contactId: contactId })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    const item = button.closest('.list-group-item');
+                    item.remove();
+                    
+                    // Si c'était le dernier message, afficher le message "aucune demande"
+                    if (document.querySelectorAll('.list-group-item').length === 0) {
+                        document.querySelector('.contacts-list').innerHTML = 
+                            '<p class="text-muted">Aucune demande de contact.</p>';
+                    }
+                } else {
+                    alert(result.message || 'Erreur lors de la suppression');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la suppression du message');
+            }
+        }
+    }
+});

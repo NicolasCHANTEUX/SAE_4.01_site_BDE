@@ -12,18 +12,23 @@
                 <?php else: ?>
                     <div class="list-group">
                         <?php foreach ($contacts as $contact): ?>
-                            <button class="list-group-item <?= $contact['statut'] === 'non_lu' ? 'unread' : '' ?>" 
+                            <div class="list-group-item <?= $contact['statut'] === 'non_lu' ? 'unread' : '' ?>" 
                                     data-contact-id="<?= $contact['id'] ?>">
                                 <div class="contact-preview">
                                     <strong><?= htmlspecialchars($contact['nom']) ?> <?= htmlspecialchars($contact['prenom']) ?></strong>
                                     <span class="date"><?= date('d/m/Y H:i', strtotime($contact['date_envoi'])) ?></span>
                                 </div>
-                                <div class="contact-status">
-                                    <span class="badge <?= $contact['statut'] === 'non_lu' ? 'bg-primary' : 'bg-success' ?>">
-                                        <?= $contact['statut'] === 'non_lu' ? 'Non lu' : 'Lu' ?>
-                                    </span>
+                                <div class="contact-actions">
+                                    <div class="contact-status">
+                                        <span class="badge <?= $contact['statut'] === 'non_lu' ? 'bg-primary' : 'bg-success' ?>">
+                                            <?= $contact['statut'] === 'non_lu' ? 'Non lu' : 'Lu' ?>
+                                        </span>
+                                    </div>
+                                    <button class="delete-btn" data-contact-id="<?= $contact['id'] ?>">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </div>
-                            </button>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
