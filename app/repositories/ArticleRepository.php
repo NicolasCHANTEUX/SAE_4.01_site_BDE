@@ -49,7 +49,7 @@ class ArticleRepository {
                  WHERE id = :id';
 
         $params = [
-            'id' => $data['article_id'],
+            'id' => $data['id'],
             'titre' => $data['titre'],
             'description' => $data['description'],
             'date_creation' => $data['date_creation']
@@ -60,9 +60,14 @@ class ArticleRepository {
     }
 
     public function delete(int $id): bool {
-        $query = 'DELETE FROM articles WHERE id = :id';
-        $stmt = $this->pdo->prepare($query);
-        return $stmt->execute(['id' => $id]);
+        try {
+            $query = 'DELETE FROM articles WHERE id = :id';
+            $stmt = $this->pdo->prepare($query);
+            return $stmt->execute(['id' => $id]);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
     private function createArticleFromRow(array $row): Article

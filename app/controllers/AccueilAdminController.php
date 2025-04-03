@@ -37,7 +37,7 @@ class AccueilAdminController extends Controller {
             }
         }
 
-        $this->view('/article/form', 'Création d\'un article', [
+        $this->view('/accueil/form.php', [
             'title' => 'Création Article',
             'data' => $data,
             'errors' => $errors
@@ -46,11 +46,50 @@ class AccueilAdminController extends Controller {
 
 
     public function update() {
-        $service->update();
+        $this->checkAuth();
+
+        $data = $this->getAllPostParams();
+        $errors = [];
+
+        if (!empty($data)) {
+            try {
+                $articleService = new ArticleService();
+                $articleService->update($data);
+                $this->redirectTo('accueilAdmin.php');
+            } catch (Exception $e) {
+                $errors = explode(', ', $e->getMessage());
+            }
+        }
+
+        $this->view('/accueil/form.php', [
+            'title' => 'Modification Article',
+            'data' => $data,
+            'errors' => $errors
+        ]);
     }
 
+
     public function delete() {
-        $service->delete();
+        $this->checkAuth();
+
+        $data = $this->getAllPostParams();
+        $errors = [];
+
+        if (!empty($data)) {
+            try {
+                $articleService = new ArticleService();
+                $articleService->delete($data);
+                $this->redirectTo('accueilAdmin.php');
+            } catch (Exception $e) {
+                $errors = explode(', ', $e->getMessage());
+            }
+        }
+
+        $this->view('/accueil/form.php', [
+            'title' => 'Suppression Article',
+            'data' => $data,
+            'errors' => $errors
+        ]);
     }
 
    private function checkAuth() {

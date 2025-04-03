@@ -35,7 +35,7 @@ require_once 'app/views/template/header.php';
             <form action="/accueilAdmin.php?action=update" method="POST" class="article-form" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="article_id_update">Sélectionner l'article</label>
-                    <select id="article_id_update" name="article_id" class="form-control" required>
+                    <select id="article_id_update" name="id" class="form-control" required>
                         <option value="">Choisir un article</option>
                         <?php foreach ($articles as $article): ?>
                             <option value="<?= $article->getId() ?>">
@@ -68,10 +68,10 @@ require_once 'app/views/template/header.php';
         <!-- Formulaire pour supprimer un article -->
         <section class="form-section">
             <h2>Supprimer un article</h2>
-            <form action="/evenementAdmin.php?action=delete" method="POST" class="article-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+            <form action="/accueilAdmin.php?action=delete" method="POST" class="article-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                 <div class="form-group">
                     <label for="article_id_delete">Sélectionner l'article à supprimer</label>
-                    <select id="article_id_delete" name="article_id" class="form-control" required>
+                    <select id="article_id_delete" name="id" class="form-control" required>
                         <option value="">Choisir un article</option>
                         <?php foreach ($articles as $article): ?>
                             <option value="<?= $article->getId() ?>">
