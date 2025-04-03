@@ -2,6 +2,7 @@
 require_once 'app/views/template/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/evenement.css">
+<link rel="stylesheet" href="/assets/css/notifications.css">
     <main id="app">
     <div class="container">
         <div id="evenement-app" class="evenement-container">

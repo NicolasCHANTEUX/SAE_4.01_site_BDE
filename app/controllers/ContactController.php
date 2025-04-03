@@ -62,7 +62,7 @@ class ContactController extends Controller {
     private function getSocialLinks() {
         return [
             'email' => 'contact@bde-iut.fr',
-            'discord' => 'https://discord.gg',
+            'discord' => 'https://discord.gg/FzYyWzb6',
             'instagram' => 'https://instagram.com'
         ];
     }

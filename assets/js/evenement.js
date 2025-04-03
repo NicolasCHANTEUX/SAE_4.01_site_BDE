@@ -156,50 +156,87 @@ function showEventDetails(event) {
     `;
 }
 
-// Modifier la fonction showEventDetails pour gérer le bouton désactivé
-function showEventDetails(event) {
-    const detailsContainer = document.getElementById('event-details');
-    detailsContainer.classList.remove('hidden');
-    
-    const date = new Date(event.date_evenement);
-    const formattedDate = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-    
-    // Vérifier si l'événement est complet
-    const isEventFull = event.max_participants && event.nb_inscrits >= event.max_participants;
-    
-    detailsContainer.innerHTML = `
-        <h2>${event.titre}</h2>
-        <div class="event-details-content">
-            <div class="event-details-item">
-                <span class="event-details-label">Date:</span>
-                <span>${formattedDate}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Places:</span>
-                <span>${event.nb_inscrits}/${event.max_participants || '∞'}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Prix:</span>
-                <span>${event.prix == 0 ? 'Gratuit' : event.prix + '€'}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Description:</span>
-                <p>${event.description}</p>
-            </div>
-            <button class="btn-secondary ${isEventFull ? 'disabled' : ''}" 
-                    onclick="registerForEvent(${event.id})"
-                    ${isEventFull ? 'disabled' : ''}>
-                ${isEventFull ? 'Complet' : 'Je participe'}
-            </button>
+async function handleParticipation(button, evenementId) {
+    try {
+        const response = await fetch('/evenement.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                evenement_id: evenementId,
+                action: 'participer'
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            showNotification(
+                'Super !',
+                'Votre participation a bien été enregistrée',
+                'success'
+            );
+            
+            // Mettre à jour le bouton et le compteur
+            button.disabled = true;
+            button.textContent = 'Inscrit';
+            const counter = button.closest('.event-card').querySelector('.participants-count');
+            if (counter) {
+                const currentCount = parseInt(counter.textContent);
+                counter.textContent = currentCount + 1;
+            }
+        } else {
+            showNotification(
+                'Attention',
+                result.message || 'Une erreur est survenue',
+                'warning'
+            );
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        showNotification(
+            'Erreur',
+            'Une erreur est survenue lors de l\'inscription',
+            'error'
+        );
+    }
+}
+
+function showNotification(title, message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} notification-icon"></i>
+        <div class="notification-content">
+            <p class="notification-title">${title}</p>
+            <p class="notification-message">${message}</p>
         </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
     `;
+
+    document.body.appendChild(notification);
+    
+    // Force un reflow pour déclencher l'animation
+    notification.offsetHeight;
+    
+    // Afficher la notification
+    setTimeout(() => notification.classList.add('show'), 10);
+
+    // Gestionnaire pour le bouton de fermeture
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    // Auto-fermeture après 3 secondes
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
 function displayEmptyShop(container) {

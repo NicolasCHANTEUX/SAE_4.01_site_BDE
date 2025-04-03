@@ -53,6 +53,12 @@
     color: white;
 }
 
+.size-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
 .color-circles {
     display: flex;
     gap: 1rem;
@@ -93,6 +99,11 @@
 /* Style spécifique pour le bouton blanc */
 .color-btn[data-color="blanc"] {
     border: 2px solid #e1e1e1;
+}
+
+.color-btn.active {
+    transform: scale(1.2);
+    border: 3px solid var(--primary-color);
 }
 
 .product-actions {
