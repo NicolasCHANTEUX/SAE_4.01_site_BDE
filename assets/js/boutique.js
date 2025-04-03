@@ -71,7 +71,7 @@ function createProductCard(product) {
 function displayEmptyShop(container) {
     container.innerHTML = `
         <div class="boutique-empty">
-            <img src="./images/empty-shop.svg" alt="Boutique vide" 
+            <img src="./assets/images/calendrier-empty.jpg" alt="Boutique vide"
                  onerror="this.onerror=null; this.src='${DEFAULT_IMAGE}';">
             <p>Notre boutique est temporairement vide</p>
             <p class="subtitle">Revenez bientôt pour découvrir nos nouveaux produits !</p>
