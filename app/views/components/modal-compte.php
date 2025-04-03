@@ -1,3 +1,11 @@
+<?php
+require_once 'app/entities/User.php';
+
+if (isset($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+}
+?>
+
 <div class="modal fade" id="compteModal" tabindex="-1" aria-labelledby="compteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -21,10 +29,10 @@
                 <div class="tab-content mt-3">
                     <div class="tab-pane fade show active" id="infos" role="tabpanel">
                         <div class="user-info">
-                            <p><strong>Nom :</strong> <?php echo htmlspecialchars($_SESSION['user_nom']); ?></p>
-                            <p><strong>Prénom :</strong> <?php echo htmlspecialchars($_SESSION['user_prenom']); ?></p>
-                            <p><strong>Email :</strong> <?php echo htmlspecialchars($_SESSION['user_email']); ?></p>
-                            <p><strong>Rôle :</strong> <?php echo htmlspecialchars($_SESSION['user_role']); ?></p>
+                            <p><strong>Nom :</strong> <?php echo htmlspecialchars($user->getNom()); ?></p>
+                            <p><strong>Prénom :</strong> <?php echo htmlspecialchars($user->getPrenom()); ?></p>
+                            <p><strong>Email :</strong> <?php echo htmlspecialchars($user->getEmail()); ?></p>
+                            <p><strong>Rôle :</strong> <?php echo htmlspecialchars($user->getRole()); ?></p>
                             
                             <div class="account-actions mt-4">
                                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#passwordModal">
