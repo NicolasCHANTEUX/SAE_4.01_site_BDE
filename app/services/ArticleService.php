@@ -29,7 +29,7 @@ class ArticleService {
             throw new Exception(implode(', ', $errors));
         }
 
-        
+        $article = new Article(null, $data['titre'], $data['description'], $data['date_creation']);
 
         $repository = new ArticleRepository();
         if (!$repository->create($article)) {
