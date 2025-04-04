@@ -13,8 +13,8 @@ require_once 'app/views/template/header.php';
 				<?php foreach ($_SESSION['panier'] as $index => $item): ?>
 					<div class="cart-item" data-index="<?= $index ?>">
 						<div class="item-image">
-							<img src="/<?= htmlspecialchars($item['image'] ?? 'assets/images/product-default.jpg') ?>" 
-								alt="<?= htmlspecialchars($item['nom'] ?? 'Produit') ?>"
+							<img src="<?= htmlspecialchars($item['image'] ?? 'assets/images/product-default.jpg') ?>" 
+								alt="<?= htmlspecialchars($item['nom']) ?>"
 								onerror="this.src='/assets/images/product-default.jpg'">
 						</div>
 						<div class="item-details">

@@ -17,7 +17,7 @@ require_once 'app/views/template/header.php';
         <div class="container">
             <div class="product-details">
                 <div class="product-image">
-                    <img src="/<?= htmlspecialchars($produit['image'] ?? 'assets/images/product-default.jpg') ?>" 
+                    <img src="/<?= htmlspecialchars($produit['chemin_image'] ?? 'assets/images/product-default.jpg') ?>" 
                         alt="<?= htmlspecialchars($produit['nom'] ?? 'Produit') ?>" 
                         onerror="this.src='/assets/images/product-default.jpg'">
                 </div>

@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     taille: taille,
                     couleur: couleur,
                     nom: document.querySelector('.product-info h1').textContent.trim(),
-                    prix: parseFloat(document.querySelector('.product-price').textContent.replace('€', '').trim()),
-                    image: document.querySelector('.product-image img').getAttribute('src').replace(/^\//, '')
+                    prix: parseFloat(document.querySelector('.product-price').textContent.replace('€', '').replace(',', '.').trim()),
+                    image: document.querySelector('.product-image img').getAttribute('src')
                 };
 
                 const response = await fetch('/panier.php', {
