@@ -2,6 +2,7 @@
 require_once 'app/views/template/header.php';
 ?>
 	<link rel="stylesheet" href="/assets/css/boutique.css">
+	<link rel="stylesheet" href="/assets/css/notifications.css">
 
 	<div class="navigation-buttons">
 		<a href="/panier.php" class="nav-btn cart-btn">

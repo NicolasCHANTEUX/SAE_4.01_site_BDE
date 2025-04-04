@@ -2,7 +2,7 @@
 require_once 'app/views/template/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/produit.css">
-
+<link rel="stylesheet" href="/assets/css/notifications.css">
     <div class="navigation-buttons">
         <a href="/boutique.php" class="nav-btn back-btn">
             <i class="fas fa-arrow-left"></i>
@@ -13,21 +13,18 @@ require_once 'app/views/template/header.php';
             <i class="fas fa-shopping-cart"></i>
         </a>
     </div>
-
     <main id="app">
         <div class="container">
             <div class="product-details">
                 <div class="product-image">
                     <img src="/<?= htmlspecialchars($produit['image'] ?? 'assets/images/product-default.jpg') ?>" 
-                        alt="<?= htmlspecialchars($produit['nom'] ?? 'Produit') ?>"
+                        alt="<?= htmlspecialchars($produit['nom'] ?? 'Produit') ?>" 
                         onerror="this.src='/assets/images/product-default.jpg'">
                 </div>
-                
                 <div class="product-info">
                     <h1><?= htmlspecialchars($produit['nom'] ?? 'Produit non disponible') ?></h1>
                     <p class="product-description"><?= htmlspecialchars($produit['description'] ?? 'Description non disponible') ?></p>
                     <div class="product-price"><?= number_format($produit['prix'] ?? 0, 2, ',', ' ') ?> €</div>
-                    
                     <div class="product-options">
                         <div class="size-selection">
                             <h3>Taille</h3>
@@ -39,7 +36,6 @@ require_once 'app/views/template/header.php';
                                 <button class="size-btn" data-size="XL">XL</button>
                             </div>
                         </div>
-
                         <div class="color-selection">
                             <h3>Couleur</h3>
                             <div class="color-circles">
@@ -50,7 +46,6 @@ require_once 'app/views/template/header.php';
                             </div>
                         </div>
                     </div>
-
                     <div class="product-actions">
                         <form method="POST" action="/app/controllers/commander.php">
                             <input type="hidden" name="produit_id" value="<?= $produit['id'] ?>">

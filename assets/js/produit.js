@@ -1,94 +1,114 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Gestion des erreurs d'image
-    const productImage = document.querySelector('.product-image img');
-    if (productImage) {
-        productImage.onerror = function() {
-            this.src = '/assets/images/product-default.jpg';
-        };
-    }
-
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion des boutons de taille
     const sizeButtons = document.querySelectorAll('.size-btn');
-    const colorButtons = document.querySelectorAll('.color-btn');
-    const orderButton = document.querySelector('.btn-order');
-    const cartButton = document.querySelector('.btn-cart');
-
-    // Gestion de la sélection des tailles
     sizeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            sizeButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
+        button.addEventListener('click', function() {
+            // Retirer la classe active des autres boutons
+            sizeButtons.forEach(btn => btn.classList.remove('active'));
+            // Ajouter la classe active au bouton cliqué
+            this.classList.add('active');
+            // Mettre à jour l'input hidden
+            document.querySelector('#taille_selected').value = this.dataset.size;
         });
     });
 
-    // Gestion de la sélection des couleurs
+    // Gestion des boutons de couleur
+    const colorButtons = document.querySelectorAll('.color-btn');
     colorButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            colorButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
+        button.addEventListener('click', function() {
+            // Retirer la classe active des autres boutons
+            colorButtons.forEach(btn => btn.classList.remove('active'));
+            // Ajouter la classe active au bouton cliqué
+            this.classList.add('active');
+            // Mettre à jour l'input hidden
+            document.querySelector('#couleur_selected').value = this.dataset.color;
         });
     });
 
-    // Gestion du bouton commander
-    orderButton?.addEventListener('click', () => {
-        const selectedSize = document.querySelector('.size-btn.selected')?.dataset.size;
-        const selectedColor = document.querySelector('.color-btn.selected')?.dataset.color;
+    const btnCart = document.querySelector('.btn-cart');
+    if (btnCart) {
+        btnCart.addEventListener('click', async function() {
+            const produitId = document.querySelector('input[name="produit_id"]').value;
+            const taille = document.querySelector('#taille_selected').value;
+            const couleur = document.querySelector('#couleur_selected').value;
+            
+            if (!taille || !couleur) {
+                showNotification('Attention', 'Veuillez sélectionner une taille et une couleur', 'warning');
+                return;
+            }
 
-        if (!selectedSize || !selectedColor) {
-            alert('Veuillez sélectionner une taille et une couleur');
-            return;
-        }
-
-        // Ajouter ici la logique de commande
-    });
-
-    cartButton?.addEventListener('click', async () => {
-        const selectedSize = document.querySelector('.size-btn.selected')?.dataset.size;
-        const selectedColor = document.querySelector('.color-btn.selected')?.dataset.color;
-
-        if (!selectedSize || !selectedColor) {
-            alert('Veuillez sélectionner une taille et une couleur');
-            return;
-        }
-
-        // Get product data from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-
-        // Get product details from the page
-        const productName = document.querySelector('.product-info h1').textContent;
-        const productPrice = parseFloat(document.querySelector('.product-price').textContent.replace('€', '').trim());
-        const productImage = document.querySelector('.product-image img').getAttribute('src');
-
-        try {
-            const response = await fetch('/panier.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    produitId: productId,
-                    nom: productName,
-                    prix: productPrice,
-                    image: productImage.replace(/^\//, ''),
+            try {
+                const productData = {
+                    produitId: produitId,
                     quantite: 1,
-                    taille: selectedSize,
-                    couleur: selectedColor
-                })
-            });
+                    taille: taille,
+                    couleur: couleur,
+                    nom: document.querySelector('h1').textContent,
+                    prix: parseFloat(document.querySelector('.product-price').textContent),
+                    image: document.querySelector('.product-image img').getAttribute('src')
+                };
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+                const response = await fetch('/panier.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                });
 
-            const result = await response.json();
-            if (result.success) {
-                alert('Produit ajouté au panier');
-            } else {
-                alert(result.message || 'Erreur lors de l\'ajout au panier');
+                const result = await response.json();
+                if (result.success) {
+                    showNotification(
+                        'Parfait !',
+                        'Le produit a été ajouté à votre panier',
+                        'success'
+                    );
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                showNotification(
+                    'Erreur',
+                    error.message || 'Une erreur est survenue',
+                    'error'
+                );
             }
-        } catch (error) {
-            console.error('Erreur:', error);
-            alert('Erreur lors de l\'ajout au panier');
-        }
-    });
+        });
+    }
 });
+
+function showNotification(title, message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} notification-icon"></i>
+        <div class="notification-content">
+            <p class="notification-title">${title}</p>
+            <p class="notification-message">${message}</p>
+        </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+
+    document.body.appendChild(notification);
+    
+    // Force un reflow pour déclencher l'animation
+    notification.offsetHeight;
+    
+    // Afficher la notification
+    setTimeout(() => notification.classList.add('show'), 10);
+
+    // Gestionnaire pour le bouton de fermeture
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    // Auto-fermeture après 3 secondes
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}

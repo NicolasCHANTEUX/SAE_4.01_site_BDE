@@ -97,16 +97,26 @@ async function registerForEvent(eventId) {
 
         const result = await response.json();
 
-        if (result.status === 'success') {
-            // Recharger les événements pour mettre à jour l'affichage
-            await loadEvents();
-            alert('Inscription réussie !');
+        if (result.success) {
+            showNotification(
+                'Super !',
+                'Votre inscription a été enregistrée',
+                'success'
+            );
+            await loadEvents(); // Recharger après la notification
         } else {
-            alert(result.message);
+            showNotification(
+                'Attention',
+                result.message || 'Une erreur est survenue',
+                'warning'
+            );
         }
     } catch (error) {
-        console.error('Erreur:', error);
-        alert('Erreur lors de l\'inscription à l\'événement');
+        showNotification(
+            'Erreur',
+            'Une erreur lors de l\'inscription',
+            'error'
+        );
     }
 }
 
@@ -156,50 +166,34 @@ function showEventDetails(event) {
     `;
 }
 
-// Modifier la fonction showEventDetails pour gérer le bouton désactivé
-function showEventDetails(event) {
-    const detailsContainer = document.getElementById('event-details');
-    detailsContainer.classList.remove('hidden');
-    
-    const date = new Date(event.date_evenement);
-    const formattedDate = date.toLocaleDateString('fr-FR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-    
-    // Vérifier si l'événement est complet
-    const isEventFull = event.max_participants && event.nb_inscrits >= event.max_participants;
-    
-    detailsContainer.innerHTML = `
-        <h2>${event.titre}</h2>
-        <div class="event-details-content">
-            <div class="event-details-item">
-                <span class="event-details-label">Date:</span>
-                <span>${formattedDate}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Places:</span>
-                <span>${event.nb_inscrits}/${event.max_participants || '∞'}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Prix:</span>
-                <span>${event.prix == 0 ? 'Gratuit' : event.prix + '€'}</span>
-            </div>
-            <div class="event-details-item">
-                <span class="event-details-label">Description:</span>
-                <p>${event.description}</p>
-            </div>
-            <button class="btn-secondary ${isEventFull ? 'disabled' : ''}" 
-                    onclick="registerForEvent(${event.id})"
-                    ${isEventFull ? 'disabled' : ''}>
-                ${isEventFull ? 'Complet' : 'Je participe'}
-            </button>
+function showNotification(title, message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} notification-icon"></i>
+        <div class="notification-content">
+            <p class="notification-title">${title}</p>
+            <p class="notification-message">${message}</p>
         </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
     `;
+
+    document.body.appendChild(notification);
+    notification.offsetHeight;
+    setTimeout(() => notification.classList.add('show'), 10);
+
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
 function displayEmptyShop(container) {
@@ -240,4 +234,97 @@ function displayEmptyEvents() {
     `;
 }
 
-document.addEventListener('DOMContentLoaded', loadEvents);
+document.addEventListener('DOMContentLoaded', function() {
+    // Charger les événements initiaux
+    loadEvents();
+
+    // Gestion des clics sur les cartes d'événements
+    document.addEventListener('click', function(e) {
+        const card = e.target.closest('.evenement-card');
+        if (card) {
+            const eventId = card.dataset.eventId;
+            // Mettre à jour les détails de l'événement
+            const event = EVENTS_DATA.find(event => event.id === parseInt(eventId));
+            if (event) {
+                showEventDetails(event);
+            }
+        }
+    });
+
+    // Gestion des boutons "Participer"
+    document.addEventListener('click', async function(e) {
+        const button = e.target.closest('.btn-participer');
+        if (button && !button.disabled) {
+            e.stopPropagation();
+            
+            const evenementId = button.dataset.id;
+            try {
+                const response = await fetch('/evenement.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        evenement_id: evenementId,
+                        action: 'participer'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(
+                        'Super !',
+                        'Votre participation a bien été enregistrée',
+                        'success'
+                    );
+                    button.disabled = true;
+                    button.textContent = 'Inscrit';
+                } else {
+                    showNotification(
+                        'Attention',
+                        result.message || 'Une erreur est survenue',
+                        'warning'
+                    );
+                }
+            } catch (error) {
+                showNotification(
+                    'Erreur',
+                    'Une erreur est survenue lors de l\'inscription',
+                    'error'
+                );
+            }
+        }
+    });
+});
+
+function updateEventSummary(eventId) {
+    const evenement = document.querySelector(`.evenement-card[data-event-id="${eventId}"]`);
+    const details = document.getElementById('event-details');
+    
+    if (evenement && details) {
+        const titre = evenement.querySelector('.evenement-title').textContent;
+        const date = evenement.querySelector('.date').textContent;
+        const description = evenement.querySelector('p').textContent;
+        const places = evenement.querySelector('.places').textContent;
+        const prix = evenement.querySelector('.prix').textContent;
+
+        details.innerHTML = `
+            <h2>${titre}</h2>
+            <div class="event-details-content">
+                <div class="event-info">
+                    <p><strong>Date:</strong> ${date}</p>
+                    <p><strong>Places:</strong> ${places}</p>
+                    <p><strong>Prix:</strong> ${prix}</p>
+                </div>
+                <div class="event-description">
+                    <h3>Description</h3>
+                    <p>${description}</p>
+                </div>
+            </div>
+        `;
+        
+        // Afficher le conteneur de détails
+        details.classList.remove('hidden');
+    }
+}

@@ -109,14 +109,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const result = await response.json();
             if (result.success) {
-                alert(result.message);
-                window.location.reload();
+                showNotification(
+                    'Merci !',
+                    'Votre commande a été envoyée avec succès',
+                    'success'
+                );
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             } else {
-                alert(result.message || 'Erreur lors de l\'envoi de la commande');
+                showNotification(
+                    'Erreur',
+                    result.message || 'Erreur lors de l\'envoi de la commande',
+                    'error'
+                );
             }
         } catch (error) {
             console.error('Erreur:', error);
-            alert('Erreur lors de l\'envoi de la commande');
+            showNotification(
+                'Erreur',
+                'Une erreur est survenue lors de l\'envoi de la commande',
+                'error'
+            );
         }
         document.getElementById('confirmationModal').style.display = 'none';
     });
@@ -133,4 +147,36 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'none';
         }
     });
+
+    function showNotification(title, message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} notification-icon"></i>
+            <div class="notification-content">
+                <p class="notification-title">${title}</p>
+                <p class="notification-message">${message}</p>
+            </div>
+            <button class="notification-close">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+
+        document.body.appendChild(notification);
+        
+        notification.offsetHeight;
+        
+        setTimeout(() => notification.classList.add('show'), 10);
+
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        });
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
 });

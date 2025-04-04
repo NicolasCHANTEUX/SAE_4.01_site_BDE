@@ -1,10 +1,10 @@
 /* Layout principal */
 .evenement-container {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Modification du ratio pour un meilleur équilibre */
+    grid-template-columns: 2fr 1fr;
     gap: 30px;
-    max-width: 1200px; /* Définir une largeur maximale */
-    margin: 0 auto; /* Centrer le conteneur */
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
@@ -31,7 +31,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Ajout d'une ombre légère */
     box-sizing: border-box;
     overflow: hidden;
-
+    cursor: pointer;
 }
 
 /* Assurer que les détails restent bien positionnés */
@@ -223,6 +223,7 @@ textarea.form-control {
 .btn-warning {
     background-color: #ffc107;
     color: black;
+
 }
 
 .btn-danger {

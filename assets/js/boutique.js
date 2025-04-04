@@ -58,7 +58,7 @@ function createProductCard(product) {
                 <p class="product-description">${description}</p>
                 <div class="product-footer">
                     <span class="product-price">${price.toFixed(2)}€</span>
-                    <div class="btn btn-secondary">
+                    <div class="btn btn-secondary" onclick="addToCart({ id: ${id}, nom: '${name}', prix: ${price} })">
                         <i class="fas fa-shopping-cart"></i>
                         Voir produit
                     </div>
@@ -90,6 +90,76 @@ function displayError(message) {
             </button>
         </div>
     `;
+}
+
+function showNotification(title, message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} notification-icon"></i>
+        <div class="notification-content">
+            <p class="notification-title">${title}</p>
+            <p class="notification-message">${message}</p>
+        </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+
+    document.body.appendChild(notification);
+    
+    // Force un reflow pour déclencher l'animation
+    notification.offsetHeight;
+    
+    // Afficher la notification
+    setTimeout(() => notification.classList.add('show'), 10);
+
+    // Gestionnaire pour le bouton de fermeture
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    });
+
+    // Auto-fermeture après 3 secondes
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+async function addToCart(productData) {
+    try {
+        const response = await fetch('/panier.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productData)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            showNotification(
+                'Panier mis à jour',
+                'Le produit a été ajouté à votre panier',
+                'success'
+            );
+        } else {
+            showNotification(
+                'Erreur',
+                result.message || 'Erreur lors de l\'ajout au panier',
+                'error'
+            );
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        showNotification(
+            'Erreur',
+            'Une erreur est survenue lors de l\'ajout au panier',
+            'error'
+        );
+    }
 }
 
 document.addEventListener('DOMContentLoaded', loadProducts);
