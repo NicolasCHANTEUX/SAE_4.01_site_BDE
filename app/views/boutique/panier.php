@@ -14,7 +14,7 @@ require_once 'app/views/template/header.php';
 					<div class="cart-item" data-index="<?= $index ?>">
 						<div class="item-image">
 							<img src="/<?= htmlspecialchars($item['image'] ?? 'assets/images/product-default.jpg') ?>" 
-								alt="<?= htmlspecialchars($item['nom']) ?>"
+								alt="<?= htmlspecialchars($item['nom'] ?? 'Produit') ?>"
 								onerror="this.src='/assets/images/product-default.jpg'">
 						</div>
 						<div class="item-details">
