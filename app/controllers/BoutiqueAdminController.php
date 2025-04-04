@@ -18,7 +18,7 @@ class BoutiqueAdminController extends Controller {
     }
 
     public function index() {
-        //$this->checkAuth();
+        $this->checkAuth();
         $produits = $this->boutiqueRepository->getAllProduits();
         $commandes = $this->commandeRepository->findAll();
         
@@ -30,6 +30,7 @@ class BoutiqueAdminController extends Controller {
     }
 
     public function create() {
+        $this->checkAuth();
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$produitData = [
 				'nom' => $_POST['nom'] ?? '',
@@ -51,6 +52,7 @@ class BoutiqueAdminController extends Controller {
 	}
 	
 	public function update() {
+        $this->checkAuth();
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$produitData = [
 				'id' => $_POST['product_id'] ?? null,
@@ -73,6 +75,7 @@ class BoutiqueAdminController extends Controller {
 	}
 	
 	public function delete() {
+        $this->checkAuth();
 		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
 			$id = (int)$_POST['product_id'];
 			
@@ -86,6 +89,7 @@ class BoutiqueAdminController extends Controller {
 	}
 
     public function reglerCommande() {
+        $this->checkAuth();
         header('Content-Type: application/json');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
@@ -99,6 +103,7 @@ class BoutiqueAdminController extends Controller {
     }
 
     public function supprimerCommande() {
+        $this->checkAuth();
         header('Content-Type: application/json');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
@@ -129,10 +134,14 @@ class BoutiqueAdminController extends Controller {
         return $this->boutiqueRepository->findById($id);
     }
 
+    
     private function checkAuth() {
         $auth = new AuthService();
         if (!$auth->isLoggedIn()) {
             $this->redirectTo('connexion.php');
+        }
+        if ($auth->getUser()->getRole() !== 'admin') {
+            $this->redirectTo('index.php');
         }
     }
 }

@@ -12,6 +12,7 @@ class ContactAdminController extends Controller {
     }
 
     public function index() {
+        $this->checkAuth();
         $contacts = $this->contactRepository->findAll();
         $this->view('contact/contactAdmin.php', [
             'title' => 'Gestion des contacts',
@@ -20,6 +21,7 @@ class ContactAdminController extends Controller {
     }
 
     public function updateStatut() {
+        $this->checkAuth();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $contactId = $_POST['contact_id'] ?? null;
             $nouveauStatut = $_POST['statut'] ?? null;
@@ -36,6 +38,7 @@ class ContactAdminController extends Controller {
     }
 
     public function getContact($id) {
+        $this->checkAuth();
         $contact = $this->contactRepository->findById($id);
         if (!$contact) {
             return [
@@ -64,6 +67,7 @@ class ContactAdminController extends Controller {
     }
 
     public function envoyerReponse() {
+        $this->checkAuth();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
             
@@ -112,6 +116,7 @@ class ContactAdminController extends Controller {
     }
 
     public function deleteMessage() {
+        $this->checkAuth();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents('php://input'), true);
             
@@ -136,6 +141,7 @@ class ContactAdminController extends Controller {
     }
 
     private function envoyerEmail($to, $message) {
+        $this->checkAuth();
         try {
             $subject = "Réponse demande Site BDE IUT le Havre";
             
@@ -209,6 +215,17 @@ class ContactAdminController extends Controller {
             error_log("Erreur détaillée d'envoi d'email : " . $e->getMessage());
             error_log("Trace : " . $e->getTraceAsString());
             throw $e;
+        }
+    }
+
+
+    private function checkAuth() {
+        $auth = new AuthService();
+        if (!$auth->isLoggedIn()) {
+            $this->redirectTo('connexion.php');
+        }
+        if ($auth->getUser()->getRole() !== 'admin') {
+            $this->redirectTo('index.php');
         }
     }
 }

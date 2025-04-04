@@ -15,7 +15,7 @@ class EvenementAdminController extends Controller {
     }
 
     public function index() {
-        //$this->checkAuth();
+        $this->checkAuth();
         $evenements = $this->evenementRepository->findAll();
         
         $this->view('evenement/form.php', [
@@ -25,7 +25,7 @@ class EvenementAdminController extends Controller {
     }
 
     public function create() {
-        //$this->checkAuth();
+        $this->checkAuth();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $eventData = [
@@ -43,7 +43,7 @@ class EvenementAdminController extends Controller {
     }
 
     public function update() {
-        //$this->checkAuth();
+        $this->checkAuth();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $eventData = [
@@ -62,7 +62,7 @@ class EvenementAdminController extends Controller {
     }
 
     public function delete() {
-        //$this->checkAuth();
+        $this->checkAuth();
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
             $eventId = (int)$_POST['event_id'];
@@ -71,10 +71,14 @@ class EvenementAdminController extends Controller {
         }
     }
 
+    
     private function checkAuth() {
         $auth = new AuthService();
         if (!$auth->isLoggedIn()) {
             $this->redirectTo('connexion.php');
+        }
+        if ($auth->getUser()->getRole() !== 'admin') {
+            $this->redirectTo('index.php');
         }
     }
 }
