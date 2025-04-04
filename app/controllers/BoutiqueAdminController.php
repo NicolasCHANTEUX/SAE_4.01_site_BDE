@@ -80,6 +80,7 @@ class BoutiqueAdminController extends Controller {
 		}
 	}
 
+    //methode
     private function checkAuth() {
         $auth = new AuthService();
         if (!$auth->isLoggedIn()) {
